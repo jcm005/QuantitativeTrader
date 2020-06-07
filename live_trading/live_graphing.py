@@ -1,0 +1,106 @@
+import datetime
+
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import plotly
+from dash.dependencies import Input, Output
+import ast
+
+# pip install pyorbital
+
+def data_sender():
+    some_list = []
+    columns = ['symbol', 'time', 'open', 'high', 'low', 'close', 'hlmean', 'volatility', 'v_factor']
+    file = open('candle.txt', 'r')
+    lines = file.readlines()
+    for line in lines:
+        dd = ast.literal_eval(line)
+        some_list.append(dd)
+    high = []
+    time = []
+    volatility_coeff = []
+    volatility = []
+    for i in some_list:
+        high.append(i['high'])
+        time.append(i['time'][12:])
+        volatility_coeff.append(i['v_factor'])
+        volatility.append(i['volatilty'])
+    return time,high,volatility_coeff
+
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app.layout = html.Div(
+    html.Div([
+        html.H4('Volatility Analysis'),
+        html.Div(id='live-update-text'),
+        dcc.Graph(id='live-update-graph'),
+        dcc.Interval(
+            id='interval-component',
+            interval=6*1000, # in milliseconds
+            n_intervals=0
+        )
+    ])
+)
+
+
+@app.callback(Output('live-update-text', 'children'),
+              [Input('interval-component', 'n_intervals')])
+def update_metrics(n):
+    time1, high, v_factor = data_sender()
+    style = {'padding': '5px', 'fontSize': '16px'}
+    return [
+        html.Span('High:', style=style),
+        html.Span('V_factor:', style=style),
+        html.Span('Time:', style=style)
+    ]
+
+
+# Multiple components can update everytime interval gets fired.
+@app.callback(Output('live-update-graph', 'figure'),
+              [Input('interval-component', 'n_intervals')])
+def update_graph_live(n):
+    time1, high, v_factor = data_sender()
+    data = {
+        'time': [],
+        'high': [],
+        'v_factor': [],
+
+    }
+
+    # Collect some data
+    for i in range(len(time1)):
+        data['time'].append(time1[i])
+        data['high'].append(high[i])
+        data['v_factor'].append(v_factor[i])
+
+
+    # Create the graph with subplots
+    fig = plotly.subplots.make_subplots(rows=2, cols=1, vertical_spacing=0.2)
+    fig['layout']['margin'] = {
+        'l': 30, 'r': 10, 'b': 30, 't': 10
+    }
+    fig['layout']['legend'] = {'x': 0, 'y': 1, 'xanchor': 'left'}
+
+    fig.append_trace({
+        'x': data['time'],
+        'y': data['high'],
+        'name': 'High',
+        'mode': 'lines+markers',
+        'type': 'scatter'
+    }, 1, 1)
+    fig.append_trace({
+        'x': data['time'],
+        'y': data['v_factor'],
+        'text': data['time'],
+        'name': 'v_factor',
+        'mode': 'lines+markers',
+        'type': 'scatter'
+    }, 2, 1)
+
+    return fig
+
+
+if __name__ == '__main__':
+    app.run_server(debug=True)

@@ -1,0 +1,9 @@
+#trying to use polygon io because it ties into alpaca we are looking for websocketa api
+
+
+wscat -c wss://alpaca.socket.polygon.io/stocks
+
+{"action":"auth","params":"PKG0X64Z99CS722HNUYL"}
+
+{"action":"subscribe","params":"T.TSLA"}
+{"action":"unsubscribe","params":"T.TSLA"}
