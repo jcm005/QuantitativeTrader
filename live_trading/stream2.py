@@ -7,8 +7,6 @@ import pytz
 import access as a
 import time
 
-
-
 est = pytz.timezone('US/Eastern')
 minutes_processed = {}
 minute_candlestick = []
@@ -18,7 +16,7 @@ in_position = False
 
 candles = open('candle.txt', 'a')
 connection_log = open('log_on.txt', 'a')
-log = open('stream2.txt','a')
+log = open('stream2.txt', 'a')
 
 candles.truncate()
 
@@ -27,10 +25,13 @@ def _reopen(file):
     log = open(file, 'a')
     return log
 
+
 def time_converter(some_time):
     newtime = datetime.fromtimestamp(some_time / 1000)
     newtimes = newtime.strftime('%Y-%m-%d, %a, %H:%M')
     return newtimes
+
+
 def intiate_order(
         symbol,
         qty=1,
@@ -42,7 +43,7 @@ def intiate_order(
         order_class=None,
         stop_limit_price=None):
     '''INTIATION OF AN ORDER TO BE PASSED IN ACCESS.PY PLACE_ORDER COMMAND'''
-    global  log
+    global log
     log.write('Initiating Order\n')
     order = {
         'symbol': symbol,
@@ -90,6 +91,7 @@ def intiate_order(
         order['stop_price'] = stop_price
         return order
 
+
 def order_sequence(order,
                    current_price,
                    order_details='detailed'):
@@ -132,6 +134,8 @@ def order_sequence(order,
         sell = 'Order_Sell_Failed'
 
     return buy, sell
+
+
 def check_time():
     connection_log = _reopen('log_on.txt')
     print('Checking Time')
@@ -158,6 +162,8 @@ def check_time():
     else:
         print('The Day Has Ended')
         connection_log.write('The day has ended\n')
+
+
 # ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
 def onn_open(ws):
     connection_log = _reopen('log_on.txt')
@@ -175,8 +181,12 @@ def onn_open(ws):
     print("\nConnected...")
     connection_log.write(f'Logged In @ {datetime.now()}\n')
     connection_log.close()
+
+
 def on_error(ws, error):
     print(error)
+
+
 def on_close(ws):
     global connection_log
     log = _reopen('stream2.txt')
@@ -188,7 +198,8 @@ def on_close(ws):
     connection_log.close()
     log.close()
 
-#-----------------------------
+
+# -----------------------------
 
 def tesla(ws, message):
     candles = _reopen('candle.txt')
@@ -251,9 +262,9 @@ def tesla(ws, message):
     print(f'Position Status is: {position}')
     # NEEDS AT LEAST TWO CANDLESTICKS TO BE RAN
     if len(minute_candlestick) > 1:
-        #candles = _reopen('candle.txt')
-        #log = _reopen('stream2.txt')
-        #connection_log = _reopen('log_on.txt')
+        # candles = _reopen('candle.txt')
+        # log = _reopen('stream2.txt')
+        # connection_log = _reopen('log_on.txt')
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
         print('Strategy is Running...')
         log.write('Strategy is Running...\n')
@@ -291,7 +302,6 @@ def tesla(ws, message):
                 log.write(f'\n{sell}\n')
         if 300 < _high < 500:
             if volatility_coefficient > 1:
-
                 log.write(
                     f'Attempting an order of {ticker} @ {_high} with volatility_coefficent of {volatility_coefficient}\n')
                 log.write('Buying Ref #2\n')
@@ -330,7 +340,8 @@ def tesla(ws, message):
     candles.close()
     log.close()
 
-def jblu(ws,message):
+
+def jblu(ws, message):
     candles = _reopen('candle.txt')
     log = _reopen('stream2.txt')
 
