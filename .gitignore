@@ -7,3 +7,7 @@ Analysis
 live_trading/streamkeys.py
 etc/jupyter/nbconfig/notebook.d/
 __pycache__/
+.ipynb_checkpoints/
+lib/python3.8/site-packages/
+paper_live_test.txt
+scrap.py
