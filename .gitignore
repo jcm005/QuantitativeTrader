@@ -11,3 +11,6 @@ __pycache__/
 lib/python3.8/site-packages/
 paper_live_test.txt
 scrap.py
+live_trading/log_on.txt
+live_trading/candle.txt
+live_trading/stream2.txt
