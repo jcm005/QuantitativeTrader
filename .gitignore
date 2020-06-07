@@ -5,3 +5,5 @@ paper_live_test.txt
 
 Analysis
 live_trading/streamkeys.py
+etc/jupyter/nbconfig/notebook.d/
+__pycache__/
