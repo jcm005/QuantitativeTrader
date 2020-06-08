@@ -159,6 +159,18 @@ def check_time():
         except:
             print('Connection Failed')
             connection_log.write('Connection Failed')
+
+            try:
+                socket = "wss://alpaca.socket.polygon.io/stocks"
+                ws = websocket.WebSocketApp(socket,
+                                            on_open=onn_open,
+                                            on_message=on_message,
+                                            on_error=on_error,
+                                            on_close=on_close
+                                            )
+                ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
+            except:
+                print('Connection Failed')
     else:
         print('The Day Has Ended')
         connection_log.write('The day has ended\n')
