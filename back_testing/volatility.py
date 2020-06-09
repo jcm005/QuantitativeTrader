@@ -19,11 +19,11 @@ df= None
 #========================================
 #========================================
 
-asset = ['TSLA']
-time_interval = 'hour'
-start_date = '2020-01-01'
-time_delt = 7
-time_period = 23
+asset = ['ACB']
+time_interval = 'minute'
+start_date = '2020-05-10'
+time_delt = 1
+time_period = 5
 
 def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
     """Retrieves historical data based on passed values of the polygon api
@@ -115,7 +115,8 @@ def volatility(df,symbol):
     df['month'] = [month[5:7] for month in df.timestamp]
     df['year'] = [year[:4] for year in df.timestamp]
     df['hour'] = [hour[-8:] for hour in df.timestamp]
-    df['time'] = df.timestamp
+    df['time'] = [time[:18] for time in df.timestamp]
+
     #df['time'] = [time[12:] for time in times]
 
 #================================
@@ -147,7 +148,7 @@ if __name__ =='__main__':
             'x': df['time'],
             'y': df['high'],
             'name': 'High',
-            'mode': 'lines+markers',
+            'mode': 'markers',
             'type': 'scatter'
         }, 1, 1)
         fig.append_trace({
@@ -155,7 +156,7 @@ if __name__ =='__main__':
             'y': df['vola_coeff'],
             'text': df['time'],
             'name': 'v_factor',
-            'mode': 'lines+markers',
+            'mode': 'markers',
             'type': 'scatter'
         }, 2, 1)
         fig.append_trace({
@@ -163,7 +164,7 @@ if __name__ =='__main__':
             'y': rolling_mean_20,
             'text': df['time'],
             'name': 'rolling_v',
-            'mode': 'lines+markers',
+            'mode': 'lines',
             'type': 'scatter'
         }, 3, 1)
 
