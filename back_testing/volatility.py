@@ -19,11 +19,12 @@ df= None
 #========================================
 #========================================
 
-asset = ['ACB']
+asset = ['TSLA']ls
 time_interval = 'minute'
-start_date = '2020-05-10'
+start_date = '2020-06-
 time_delt = 1
-time_period = 5
+time_period = 0
+
 
 def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
     """Retrieves historical data based on passed values of the polygon api
@@ -148,7 +149,7 @@ if __name__ =='__main__':
             'x': df['time'],
             'y': df['high'],
             'name': 'High',
-            'mode': 'markers',
+            'mode': 'lines+markers',
             'type': 'scatter'
         }, 1, 1)
         fig.append_trace({
@@ -156,7 +157,7 @@ if __name__ =='__main__':
             'y': df['vola_coeff'],
             'text': df['time'],
             'name': 'v_factor',
-            'mode': 'markers',
+            'mode': 'lines+markers',
             'type': 'scatter'
         }, 2, 1)
         fig.append_trace({

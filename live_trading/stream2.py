@@ -151,7 +151,7 @@ def check_time():
             socket = "wss://alpaca.socket.polygon.io/stocks"
             ws = websocket.WebSocketApp(socket,
                                         on_open=onn_open,
-                                        on_message=on_message,
+                                        on_message=tesla,
                                         on_error=on_error,
                                         on_close=on_close
                                         )
@@ -164,7 +164,7 @@ def check_time():
                 socket = "wss://alpaca.socket.polygon.io/stocks"
                 ws = websocket.WebSocketApp(socket,
                                             on_open=onn_open,
-                                            on_message=on_message,
+                                            on_message=tesla,
                                             on_error=on_error,
                                             on_close=on_close
                                             )
@@ -439,6 +439,13 @@ def jblu(ws, message):
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
                 log.write(f'{buy}\n')
                 log.write(f'\n{sell}')
+        else:
+            if volatility_coefficient > 5:
+                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
+                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
+                log.write(f'{buy}\n')
+                log.write(f'\n{sell}')
+
     # WITH A POSITION
     else:
         print(f'High: {_high}')
