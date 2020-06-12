@@ -3,14 +3,13 @@ from volatility import *
 
 import backtrader as bt
 import backtrader.feeds as btfeeds
-import pygal
 from data_grabber import *
 
 asset = ['TSLA']
-start_date = '2020-01-01'           # ticker symbols to be testedp
-time_interval = 'day'            #collect data per each ---
+start_date = '2020-05-01'           # ticker symbols to be testedp
+time_interval = 'minute'            #collect data per each ---
 time_delt = 7             # difference in days between end time and start time, lowe number is suggested so no data lost
-time_period =26
+time_period =6
 
 def strat_runner(asset,strat_name, cash=10000.0,test=False ):
 
@@ -45,9 +44,7 @@ def strat_runner(asset,strat_name, cash=10000.0,test=False ):
     print('Final portfolio: %.2f' % cerebro.broker.getvalue())
     print('Final Cash Amount Is %.2f' % cerebro.broker.get_cash())
 
-
-
-    cerebro.plot()
+    cerebro.plot(iplot=False)
 
     if test:
        # Skipps the logging process if test mode is of
@@ -239,6 +236,7 @@ class SummerHaus05042020(bt.Strategy):
 
                 self.succesful.append(self.sellprice)
                 print(f'Opened shares: {self.bought}')
+
                 print(self.position)
             self.bar_executed = len(self)
 
@@ -261,4 +259,4 @@ class SummerHaus05042020(bt.Strategy):
 if __name__ == '__main__':
     data_flusher(asset, time_interval) # here in case program fails it will not double data
     Acummator(asset,start_date,time_interval,time_delt,time_period)
-    strat_runner(asset,SummerHaus05042020,3000,test=False)
+    strat_runner(asset,SummerHaus05042020,10000,test=False)

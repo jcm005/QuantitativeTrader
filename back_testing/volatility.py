@@ -19,9 +19,9 @@ df= None
 #========================================
 #========================================
 
-asset = ['TSLA']ls
-time_interval = 'minute'
-start_date = '2020-06-
+asset = ['TSLA']
+time_interval = 'hour'
+start_date = '2020-06-12'
 time_delt = 1
 time_period = 0
 
@@ -139,7 +139,7 @@ if __name__ =='__main__':
         rolling_mean_10 = df.vola_coeff.rolling(window=10).mean()
         rolling_mean_20 = df.vola_coeff.rolling(window=20).mean()
 
-        fig = plotly.subplots.make_subplots(rows=3, cols=1, vertical_spacing=0.2)
+        fig = plotly.subplots.make_subplots(rows=4, cols=1, vertical_spacing=0.2)
         fig['layout']['margin'] = {
             'l': 30, 'r': 10, 'b': 30, 't': 10
         }
@@ -162,12 +162,21 @@ if __name__ =='__main__':
         }, 2, 1)
         fig.append_trace({
             'x': df['time'],
-            'y': rolling_mean_20,
+            'y': rolling_mean_10,
             'text': df['time'],
-            'name': 'rolling_v',
+            'name': 'rolling_v_10',
             'mode': 'lines',
             'type': 'scatter'
         }, 3, 1)
+        fig.append_trace({
+            'x': df['time'],
+            'y': rolling_mean_20,
+            'text': df['time'],
+            'name': 'rolling_v_20',
+            'mode': 'lines',
+            'type': 'scatter'
+        }, 3, 1)
+        #fig.append_trace({'x': df['time'],'y': df['volatility'],'name': 'High','mode': 'lines+markers','type': 'scatter'}, 4, 1)
 
         fig.show()
         #df.to_csv(f'./Data/{symbol}_{time_interval}_intraday_trading.csv')
