@@ -19,14 +19,16 @@ def data_sender():
         some_list.append(dd)
     high = []
     time = []
+    low = []
     volatility_coeff = []
     volatility = []
     for i in some_list:
         high.append(i['high'])
         time.append(i['time'][12:])
+        low.append(i['low'])
         volatility_coeff.append(i['v_factor'])
         volatility.append(i['volatilty'])
-    return time,high,volatility_coeff
+    return time,high,low, volatility_coeff
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -48,7 +50,7 @@ app.layout = html.Div(
 @app.callback(Output('live-update-text', 'children'),
               [Input('interval-component', 'n_intervals')])
 def update_metrics(n):
-    time1, high, v_factor = data_sender()
+    time1, high, low,  v_factor = data_sender()
     style = {'padding': '5px', 'fontSize': '16px'}
     return [
         html.Span('High:', style=style),
@@ -61,10 +63,11 @@ def update_metrics(n):
 @app.callback(Output('live-update-graph', 'figure'),
               [Input('interval-component', 'n_intervals')])
 def update_graph_live(n):
-    time1, high, v_factor = data_sender()
+    time1, high,low, v_factor = data_sender()
     data = {
         'time': [],
         'high': [],
+        'low': [],
         'v_factor': [],
 
     }
@@ -74,6 +77,7 @@ def update_graph_live(n):
         data['time'].append(time1[i])
         data['high'].append(high[i])
         data['v_factor'].append(v_factor[i])
+        data['low'].append(low[i])
 
 
     # Create the graph with subplots
@@ -98,6 +102,14 @@ def update_graph_live(n):
         'mode': 'lines+markers',
         'type': 'scatter'
     }, 2, 1)
+    fig.append_trace({
+        'x': data['time'],
+        'y': data['low'],
+        'name': 'low',
+        'mode':'lines+markers'
+
+
+    }, 1, 1)
 
     return fig
 

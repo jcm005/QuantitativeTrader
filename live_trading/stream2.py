@@ -144,7 +144,7 @@ def check_time():
     right_now = datetime.strftime(right_now, '%H:%M:%S')
     print((right_now[:2]))
     connection_log.write(f'{right_now[:2]}\n')
-    if 8 < int(right_now[:2]) < 19:
+    if 8 < int(right_now[:2]) < 23:
         print('Good... reconnecting')
         connection_log.write(f'Good..Reconnecting, the time is :{right_now}\n')
         try:
