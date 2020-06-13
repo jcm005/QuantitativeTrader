@@ -15,3 +15,6 @@ live_trading/log_on.txt
 live_trading/candle.txt
 live_trading/stream2.txt
 node_modules/bootstrap/
+bin/
+.idea/
+share/
