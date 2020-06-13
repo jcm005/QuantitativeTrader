@@ -20,7 +20,7 @@ df= None
 #========================================
 
 asset = ['TSLA']
-time_interval = 'hour'
+time_interval = 'minute'
 start_date = '2020-06-12'
 time_delt = 1
 time_period = 0
