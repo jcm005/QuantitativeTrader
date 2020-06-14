@@ -6,9 +6,9 @@ import backtrader.feeds as btfeeds
 from data_grabber import *
 
 asset = ['TSLA']
-start_date = '2020-05-01'           # ticker symbols to be testedp
-time_interval = 'minute'            #collect data per each ---
-time_delt = 7             # difference in days between end time and start time, lowe number is suggested so no data lost
+start_date = '2020-05-01'           # ticker symbols to be tested
+time_interval = 'minute'            # collect data per each ---
+time_delt = 7
 time_period =6
 
 def strat_runner(asset,strat_name, cash=10000.0,test=False ):
