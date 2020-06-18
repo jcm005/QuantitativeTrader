@@ -107,7 +107,7 @@ class SummerHaus05042020(bt.Strategy):
         self.sma_20 = bt.indicators.MovingAverageSimple(self.vole_coeff,
                                                         plotname='SMA_20',
                                                         subplot=True,
-                                                        period=20)
+                                                        period=100)
     def next(self):
 
 
@@ -259,4 +259,4 @@ class SummerHaus05042020(bt.Strategy):
 if __name__ == '__main__':
     data_flusher(asset, time_interval) # here in case program fails it will not double data
     Acummator(asset,start_date,time_interval,time_delt,time_period)
-    strat_runner(asset,SummerHaus05042020,10000,test=False)
+    strat_runner(asset,SummerHaus05042020,3000,test=False)
