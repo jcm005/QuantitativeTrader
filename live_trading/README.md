@@ -32,3 +32,4 @@ stream2.txt relays the step by step processes the program takes in the strategy/
 A great feature of this repo is the live_graphing feature.
 By executing live_graphing.py, the program will use the dash module to produce an html with a live rendering of the information in candle.txt
 this program can be modified to watch the graphing of your favorite indicators in real time, giving insightful knowledge on algorithm optimization. 
+Please do note stream2.py must be running in order to use the live graphing. An update to merge these two to run coincidentally is under way.
