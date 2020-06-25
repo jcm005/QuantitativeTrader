@@ -1,3 +1,5 @@
+#Back_Testing
+
 If you do not yet have a trading account opened with alpaca.markets, please create one to be able to use this framework.
 Once that is established, you should have obtained an
 
@@ -25,11 +27,11 @@ By changing these variables,
     
 You can test and grab any historical data for a desired stock and date.
 
-The time interval has three options, 'minute','hour' or 'day'.
+The time interval has three options, 'minute', 'hour' or 'day'.
 The (time delt * the time period)  gives you the total amount of days your historical data will aggregate data for.
 The time delt is simply the 'how many days' the datagrabber.py file will grab at a time, keeping this value at 7 days prevents the loss of data in the pipeline. So by simply setting the time period to the number of weeks for your testing period ensures no data is lost or corrupted. 
 
-At the moment, the best way to create an algorithm is by going to the next() function in the class that's being passed as a strategy and developing the logic for your algorithm. there.
+At the moment, the best way to create an algorithm is by going to the next() function in the class that's being passed as a strategy and developing the logic for your algorithm there.
 
 The frameworks awaits a massive update to practice more 'SOLID' principles of programming
 
