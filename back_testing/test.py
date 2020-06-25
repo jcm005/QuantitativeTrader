@@ -6,17 +6,17 @@ import backtrader.feeds as btfeeds
 from data_grabber import *
 
 asset = ['TSLA']
-start_date = '2020-05-01'           # ticker symbols to be tested
-time_interval = 'minute'            # collect data per each ---
-time_delt = 7
-time_period =6
+start_date = '2020-06-22'           # ticker symbols to be tested
+time_interval = 'day'            # collect data per each ---
+time_delt = 3
+time_period =1
 
 def strat_runner(asset,strat_name, cash=10000.0,test=False ):
 
     cerebro = bt.Cerebro()
     cerebro.addstrategy(strat_name)
     for symbol in asset:
-        path =  symbol + f'_{time_interval}_intraday_trading.csv'
+        path =  f'{symbol}_{time_interval}_intraday_trading.csv'
         data  = btfeeds.GenericCSVData(
             dataname=f'Data/{path}',
             nullvalue=0.0,
@@ -30,6 +30,8 @@ def strat_runner(asset,strat_name, cash=10000.0,test=False ):
             close=4,
             volume=5,
             openinterest=-1)
+        for i in data:
+            print(i)
 
         cerebro.adddata(data)
 

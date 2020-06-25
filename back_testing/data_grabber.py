@@ -8,11 +8,11 @@ pd.set_option('max_rows', None)
 
 # make a function that automatically makes end date today
 
-start_date = '2020-05-28'
-asset = ['AMZN']  # ticker symbols to be testedp
-time_interval = 'minute'  # collect data per each ---
+start_date = '2020-06-01'
+asset = ['TSLA']  # ticker symbols to be testedp
+time_interval = 'hour'  # collect data per each ---
 time_delt = 7  # difference in days between end time and start time, lowe number is suggested so no data lost
-time_period = 2  # time_period * time_delt = number of days need for data accumualation
+time_period = 3  # time_period * time_delt = number of days need for data accumualation
 
 
 def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
@@ -31,6 +31,7 @@ def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
         data_file = open(file_path, 'a')
 
         # for manually grabbing data and doing an analysis by hand or ipython file
+
         data = api.polygon.historic_agg_v2(symbol, 1, time_interval, train_date_s, train_date_e)
         for bar in data:
             x = str(bar.timestamp)
@@ -42,7 +43,6 @@ def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
             _low = str(bar.low)
             _close = str(bar.close)
             _volume = str(bar.volume)
-
             data_file.write(f'{y}' + ',' + _open + ',' + _high + ',' + _low + ',' + _close + ',' + _volume + '\n')
 
     data_file.close()
@@ -59,7 +59,8 @@ def Acummator(asset, start_date, time_interval, time_delt, time_period):
 
     if time_period == 0:
         end = pre_start + future  # INCREASING END TIME BY A WEEK
-        final_end = str(end)[:-9]  # FORMATTING  END TIME BY DROPPING NON FORMATED TIME
+        final_end = str(end)[:-9]
+        print(final_end)# FORMATTING  END TIME BY DROPPING NON FORMATED TIME
         # PREVENTS 500 ERROR
 
         final_start = str(pre_start)[:-9]
@@ -67,8 +68,9 @@ def Acummator(asset, start_date, time_interval, time_delt, time_period):
     else:
         try:
             for i in range(0, time_period):  # 33o for prensent  INSERT DESIRED AMOUNT OF ITERATIN YOU WANT
+                print(i)
                 end = pre_start + future  # INCREASING END TIME BY A WEEK
-                final_end = str(end)[:-9]  # FORMATTING  END TIME BY DROPPING NON FORMATED TIME
+                final_end = str(end)[:-9]
                 # PREVENTS 500 ERROR
 
                 final_start = str(pre_start)[:-9]
