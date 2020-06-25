@@ -36,4 +36,5 @@ At the moment, the best way to create an algorithm is by going to the next() fun
 The frameworks awaits a massive update to practice more 'SOLID' principles of programming
 
 
+The volatility.py module is design the same way as back_testing, simply change you variabels to access your desired data and a volatility analysis will be produced in a plotly styled graph
 
