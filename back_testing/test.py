@@ -7,7 +7,7 @@ from data_grabber import *
 
 asset = ['TSLA']
 start_date = '2020-06-22'           # ticker symbols to be tested
-time_interval = 'day'            # collect data per each ---
+time_interval = 'hour'            # collect data per each ---
 time_delt = 3
 time_period =1
 
