@@ -19,11 +19,11 @@ df= None
 #========================================
 #========================================
 
-asset = ['NKLA']
+asset = ['TSLA']
 time_interval = 'hour'
-start_date = '2020-06-01'
-time_delt = 7
-time_period = 2
+start_date = '2020-06-12'
+time_delt = 2
+time_period = 1
 
 
 def grab_data(asset, train_date_s, train_date_e, time_interval='day'):

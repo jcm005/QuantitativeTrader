@@ -8,11 +8,11 @@ pd.set_option('max_rows', None)
 
 # make a function that automatically makes end date today
 
-start_date = '2020-06-01'
+start_date = '2020-06-18'
 asset = ['TSLA']  # ticker symbols to be testedp
-time_interval = 'minute'  # collect data per each ---
-time_delt = 7  # difference in days between end time and start time, lowe number is suggested so no data lost
-time_period = 3  # time_period * time_delt = number of days need for data accumualation
+time_interval = 'hour'  # collect data per each ---
+time_delt = 10  # difference in days between end time and start time, lowe number is suggested so no data lost
+time_period = 1  # time_period * time_delt = number of days need for data accumualation
 
 
 def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
@@ -33,6 +33,7 @@ def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
         # for manually grabbing data and doing an analysis by hand or ipython file
 
         data = api.polygon.historic_agg_v2(symbol, 1, time_interval, train_date_s, train_date_e)
+
         for bar in data:
             x = str(bar.timestamp)
             y = x[:-6]

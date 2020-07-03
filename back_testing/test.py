@@ -7,9 +7,9 @@ from data_grabber import *
 
 asset = ['TSLA']
 start_date = '2020-06-22'           # ticker symbols to be tested
-time_interval = 'hour'            # collect data per each ---
-time_delt = 3
-time_period =1
+time_interval = 'minute'            # collect data per each ---
+time_delt = 5
+time_period =2
 
 def strat_runner(asset,strat_name, cash=10000.0,test=False ):
 

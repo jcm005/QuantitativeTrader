@@ -431,7 +431,7 @@ def jblu(ws, message):
     if not position:
         print('There is No Position.')
         log.write('There is no position\n')
-        if _high < 900:
+        if _high < 1500:
             if volatility_coefficient > 1:
                 log.write(f'Condition: Volatility Coeff: {volatility_coefficient}\n')
                 log.write(f'Attempting Buy --(Ref #1)-- Price:{_high}, Volatility_Coeff: {volatility_coefficient}\n')
