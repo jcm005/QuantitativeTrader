@@ -18,12 +18,13 @@ candles = open('candle.txt', 'a')
 connection_log = open('log_on.txt', 'a')
 log = open('stream2.txt', 'a')
 
-candles.truncate()
+candles.truncate(0)
+log.truncate(50)
 
 
 def _reopen(file):
-    log = open(file, 'a')
-    return log
+    file_to_repoen = open(file, 'a')
+    return file_to_repoen
 
 
 def time_converter(some_time):
@@ -128,8 +129,10 @@ def order_sequence(order,
     if 200 < current_price < 500:
         order_sell['limit_price'] = current_price + 30
     try:
+        log.write(f'Order sell = :{order_sell}')
         ordered_S, status = a.place_order(order_sell)
         sell = a.order_details(ordered_S, order_details)
+        log.write(f'sell  = :{sell}')
     except:
         sell = 'Order_Sell_Failed'
 
@@ -144,7 +147,7 @@ def check_time():
     right_now = datetime.strftime(right_now, '%H:%M:%S')
     print((right_now[:2]))
     connection_log.write(f'{right_now[:2]}\n')
-    if 8 < int(right_now[:2]) < 23:
+    if 7 < int(right_now[:2]) < 23:
         print('Good... reconnecting')
         connection_log.write(f'Good..Reconnecting, the time is :{right_now}\n')
         try:
@@ -289,158 +292,13 @@ def tesla(ws, message):
     # =======================================================
     # WITH NO POSITION HERE
     if not position:
-        print('There is No Position.')
+        print('There is no position.')
         log.write('There is no position\n')
-        if _high < 900:
+        if _high < 2000:
+            print(volatility_coefficient)
             if volatility_coefficient > 1:
                 log.write(f'Condition: Volatility Coeff: {volatility_coefficient}\n')
                 log.write(f'Attempting Buy --(Ref #1)-- Price:{_high}, Volatility_Coeff: {volatility_coefficient}\n')
-                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                log.write(f'{buy}\n')
-                log.write(f'\n{sell}')
-    # WITH A POSITION
-    else:
-        print(f'High: {_high}')
-        if _high < 300:
-
-            if volatility_coefficient > 1:
-                log.write(
-                    f'Attempting an order of {ticker} @ {_high} with volatility_coefficent of {volatility_coefficient}\n')
-                log.write('Buying Ref #1 with position\n')
-                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                log.write(f'{buy}\n')
-                log.write(f'\n{sell}\n')
-        if 300 < _high < 500:
-            if volatility_coefficient > 1:
-                log.write(
-                    f'Attempting an order of {ticker} @ {_high} with volatility_coefficent of {volatility_coefficient}\n')
-                log.write('Buying Ref #2\n')
-                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                log.write(f'{buy}\n')
-                log.write(f'\n{sell}')
-        if 500 <= _high < 900:
-            if volatility_coefficient > 1:
-                print(
-                    f'Attempting an order of {ticker} @ {_high} with volatility_coefficent of {volatility_coefficient}')
-                print('Buying Ref #4')
-                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                print(f'{buy}\n')
-                print(f'\n{sell}')
-    print('No Action Taken')
-    log.write('No action Taken\n')
-    # ----------------------------------------------------
-    # TEST BUY UNDER HERE
-    # ----------------------------------------------------
-    # else:
-    #   # REAL ORDER TERRITORY HERE USE THIS AS BASELINE
-    #   print(f'Attempting an order of {ticker} @ {_high}')
-    #   print('buying ref -- TEST BUY --')
-    #   order_buy = intiate_order(symbol=ticker,order_type='market',side='buy')
-    #   buy,sell = order_sequence(order_buy,current_price=_high,order_details='simple')
-    #   print(f'{buy}\n')
-    #   print(f'\n{sell}')
-
-    position = a.get_position()
-    open_orders = a.get_orders()
-    print(position)
-    log.write(f'Open Orders {open_orders}\n')
-    log.write(f'Current Positions: {position}\n')
-    candles.close()
-    log.close()
-
-
-def jblu(ws, message):
-    candles = _reopen('candle.txt')
-    log = _reopen('stream2.txt')
-
-    #   CHECK FOR OPEN ORDERS AND RETURN IF ANY ARE PRESENT
-    # ===================================
-    global current_tick, previous_tick
-    previous_tick = current_tick
-    message = a.clean_and_load(message)
-    # ====================================
-    current_tick = json.loads(message)
-    # ===================================
-    times = current_tick['e']  # DATA TYPE IS INT
-    times = time_converter(times)  # CONVERTS TYPE INT INTO DATETIME OBJECT THEN A STRING
-    # ===================================
-    ticker = current_tick['sym']
-    open = current_tick['o']
-    high = current_tick['h']
-    low = current_tick['l']
-    close = current_tick['c']
-    volatility = current_tick['h'] - current_tick['l']
-    hlmean = (current_tick['h'] + current_tick['l']) / 2
-    v_factor = (volatility / hlmean) * 100
-    # ===================================
-
-    # ADDS NEW CANDLESTICK AS TIME PROGRESSES
-    print("=== Appending Candle Stick ===")
-    minute_candlestick.append({
-        'symbol': ticker,
-        'time': times,
-        'open': open,
-        'high': high,
-        'low': low,
-        'close': close,
-        'hlmean': round(hlmean, ndigits=2),
-        'volatilty': round(volatility, ndigits=2),
-        'v_factor': round(v_factor, ndigits=2),
-    })
-
-    latest_candle = minute_candlestick[-1]
-    print(latest_candle)
-    candles.write(f'{latest_candle}\n')
-
-    # ===================================
-    _high = minute_candlestick[-1]['high']
-    _time = minute_candlestick[-1]['time']
-    _volatility_coeff = minute_candlestick[-1]['volatilty']
-    log.write(f'Time: {_time}, High: {_high}, Volatility: {_volatility_coeff}\n')
-    # ===================================
-
-    # =======================================================
-    #                   START STRATEGY HERE
-    # =======================================================
-    print('Checking Position...\n')
-    position = a.get_position_for(ticker)
-    log.write(f'Position Check... Position Status is: {position}\n')
-
-    # TRUE OF FALSE VARIABLE MAYBE USELESS A PROBLEM FOR LATER 5-21-20
-    print(f'Position Status is: {position}')
-    # NEEDS AT LEAST TWO CANDLESTICKS TO BE RAN
-    if len(minute_candlestick) > 1:
-        # candles = _reopen('candle.txt')
-        # log = _reopen('stream2.txt')
-        # connection_log = _reopen('log_on.txt')
-        volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
-        print('Strategy is Running...')
-        log.write('Strategy is Running...\n')
-    else:
-        print('Collecting Information')
-        return
-
-    # ========kl;'===============================================
-
-    # =======================================================
-    # WITH NO POSITION HERE
-    if not position:
-        print('There is No Position.')
-        log.write('There is no position\n')
-        if _high < 1500:
-            if volatility_coefficient > 1:
-                log.write(f'Condition: Volatility Coeff: {volatility_coefficient}\n')
-                log.write(f'Attempting Buy --(Ref #1)-- Price:{_high}, Volatility_Coeff: {volatility_coefficient}\n')
-                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                log.write(f'{buy}\n')
-                log.write(f'\n{sell}')
-        else:
-            if volatility_coefficient > 5:
                 order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
                 log.write(f'{buy}\n')
@@ -468,7 +326,7 @@ def jblu(ws, message):
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
                 log.write(f'{buy}\n')
                 log.write(f'\n{sell}')
-        if 500 <= _high < 900:
+        if 500 <= _high < 2000:
             if volatility_coefficient > 1:
                 print(
                     f'Attempting an order of {ticker} @ {_high} with volatility_coefficent of {volatility_coefficient}')
