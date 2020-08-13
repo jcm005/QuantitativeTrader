@@ -3,9 +3,11 @@ from streamkeys import *
 import ssl
 from datetime import datetime
 import dateutil.parser
-import pytz
 import access as a
 import time
+import pytz
+
+
 
 est = pytz.timezone('US/Eastern')
 minutes_processed = {}
@@ -16,22 +18,19 @@ in_position = False
 
 candles = open('candle.txt', 'a')
 connection_log = open('log_on.txt', 'a')
-log = open('stream2.txt', 'a')
+log = open('action.txt', 'a')
 
 candles.truncate(0)
 log.truncate(50)
-
 
 def _reopen(file):
     file_to_repoen = open(file, 'a')
     return file_to_repoen
 
-
 def time_converter(some_time):
     newtime = datetime.fromtimestamp(some_time / 1000)
     newtimes = newtime.strftime('%Y-%m-%d, %a, %H:%M')
     return newtimes
-
 
 def intiate_order(
         symbol,
@@ -178,7 +177,6 @@ def check_time():
         print('The Day Has Ended')
         connection_log.write('The day has ended\n')
 
-
 # ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
 def onn_open(ws):
     connection_log = _reopen('log_on.txt')
@@ -201,7 +199,6 @@ def onn_open(ws):
 def on_error(ws, error):
     print(error)
 
-
 def on_close(ws):
     global connection_log
     log = _reopen('stream2.txt')
@@ -212,13 +209,10 @@ def on_close(ws):
     check_time()
     connection_log.close()
     log.close()
-
-
 # -----------------------------
-
 def tesla(ws, message):
     candles = _reopen('candle.txt')
-    log = _reopen('stream2.txt')
+    log = _reopen('action.txt')
 
     #   CHECK FOR OPEN ORDERS AND RETURN IF ANY ARE PRESENT
     # ===================================
@@ -242,7 +236,6 @@ def tesla(ws, message):
     # ===================================
 
     # ADDS NEW CANDLESTICK AS TIME PROGRESSES
-    print("=== Appending Candle Stick ===")
     minute_candlestick.append({
         'symbol': ticker,
         'time': times,
@@ -254,27 +247,27 @@ def tesla(ws, message):
         'volatilty': round(volatility, ndigits=2),
         'v_factor': round(v_factor, ndigits=2),
     })
-
     latest_candle = minute_candlestick[-1]
     print(latest_candle)
     candles.write(f'{latest_candle}\n')
 
-    # ===================================
+# ===================================
     _high = minute_candlestick[-1]['high']
     _time = minute_candlestick[-1]['time']
     _volatility_coeff = minute_candlestick[-1]['volatilty']
     log.write(f'Time: {_time}, High: {_high}, Volatility: {_volatility_coeff}\n')
-    # ===================================
+# ===================================
 
-    # =======================================================
-    #                   START STRATEGY HERE
-    # =======================================================
-    print('Checking Position...\n')
+
+    from order import Order
+    TSLA = Order('TSLA',high)
+
+
+# =======================================================
+#                   START STRATEGY HERE
+# =======================================================
     position = a.get_position_for(ticker)
     log.write(f'Position Check... Position Status is: {position}\n')
-
-    # TRUE OF FALSE VARIABLE MAYBE USELESS A PROBLEM FOR LATER 5-21-20
-    print(f'Position Status is: {position}')
     # NEEDS AT LEAST TWO CANDLESTICKS TO BE RAN
     if len(minute_candlestick) > 1:
         # candles = _reopen('candle.txt')
@@ -299,6 +292,9 @@ def tesla(ws, message):
             if volatility_coefficient > 1:
                 log.write(f'Condition: Volatility Coeff: {volatility_coefficient}\n')
                 log.write(f'Attempting Buy --(Ref #1)-- Price:{_high}, Volatility_Coeff: {volatility_coefficient}\n')
+
+                #TSLA.buy(order_type='market',qty=1,tif='gtc',profit=100)
+
                 order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
                 log.write(f'{buy}\n')
@@ -356,7 +352,6 @@ def tesla(ws, message):
     log.write(f'Current Positions: {position}\n')
     candles.close()
     log.close()
-
 
 if __name__ == '__main__':
     socket = "wss://alpaca.socket.polygon.io/stocks"
