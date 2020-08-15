@@ -6,6 +6,8 @@ import dateutil.parser
 import access as a
 import time
 import pytz
+from pytz import timezone
+
 
 
 
@@ -142,7 +144,9 @@ def check_time():
     connection_log = _reopen('log_on.txt')
     print('Checking Time')
     connection_log.write('Checking Time\n')
-    right_now = datetime.now()
+
+    tiz = timezone('US/Eastern')
+    right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tiz)
     right_now = datetime.strftime(right_now, '%H:%M:%S')
     print((right_now[:2]))
     connection_log.write(f'{right_now[:2]}\n')
