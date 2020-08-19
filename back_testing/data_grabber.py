@@ -8,10 +8,10 @@ pd.set_option('max_rows', None)
 
 # make a function that automatically makes end date today
 
-start_date = '2020-06-18'
+start_date = '2020-07-13'
 asset = ['TSLA']  # ticker symbols to be testedp
-time_interval = 'hour'  # collect data per each ---
-time_delt = 10  # difference in days between end time and start time, lowe number is suggested so no data lost
+time_interval = 'day'  # collect data per each ---
+time_delt = 7  # difference in days between end time and start time, lowe number is suggested so no data lost
 time_period = 1  # time_period * time_delt = number of days need for data accumualation
 
 
@@ -37,13 +37,20 @@ def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
         for bar in data:
             x = str(bar.timestamp)
             y = x[:-6]
+
+            if y[-8:] == '00:00:00':
+                y = y[:10]+ ' ' +  '09:00:00'
+                print(y)
+
+
+
             # catenuated the last few items from the time stamp
             # to removve errors unsure what this information provides
             _open = str(bar.open)
             _high = str(bar.high)
             _low = str(bar.low)
             _close = str(bar.close)
-            _volume = str(bar.volume)
+            _volume = str(int(bar.volume))
             data_file.write(f'{y}' + ',' + _open + ',' + _high + ',' + _low + ',' + _close + ',' + _volume + '\n')
 
     data_file.close()

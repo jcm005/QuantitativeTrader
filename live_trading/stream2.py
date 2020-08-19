@@ -30,7 +30,9 @@ def _reopen(file):
     return file_to_repoen
 
 def time_converter(some_time):
+
     newtime = datetime.fromtimestamp(some_time / 1000)
+
     newtimes = newtime.strftime('%Y-%m-%d, %a, %H:%M')
     return newtimes
 
@@ -130,7 +132,7 @@ def order_sequence(order,
     if 200 < current_price < 500:
         order_sell['limit_price'] = current_price + 30
     try:
-        log.write(f'Order sell = :{order_sell}')
+        log.write(f'Order Sell = :{order_sell}')
         ordered_S, status = a.place_order(order_sell)
         sell = a.order_details(ordered_S, order_details)
         log.write(f'sell  = :{sell}')
@@ -180,7 +182,6 @@ def check_time():
     else:
         print('The Day Has Ended')
         connection_log.write('The day has ended\n')
-
 # ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
 def onn_open(ws):
     connection_log = _reopen('log_on.txt')
@@ -199,17 +200,18 @@ def onn_open(ws):
     connection_log.write(f'Logged In @ {datetime.now()}\n')
     connection_log.close()
 
-
 def on_error(ws, error):
     print(error)
 
 def on_close(ws):
     global connection_log
-    log = _reopen('stream2.txt')
+    tiz = timezone('US/Eastern')
+    right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tiz)
+    right_now = datetime.strftime(right_now, '%H:%M:%S')
+    log = _reopen('action.txt')
     connection_log = _reopen('log_on.txt')
-    print("Connection Closed \n Working on Re-establishing Connection ...")
     log.write('Lost Connection See Log_on.txt\n')
-    connection_log.write(f'Connection Closed\nWorking on Re-establishing Connection...@{datetime.now()}\n')
+    connection_log.write(f'Connection Closed {right_now} \nWorking on Re-establishing Connection...@{datetime.now()}\n')
     check_time()
     connection_log.close()
     log.close()
@@ -252,14 +254,13 @@ def tesla(ws, message):
         'v_factor': round(v_factor, ndigits=2),
     })
     latest_candle = minute_candlestick[-1]
-    print(latest_candle)
     candles.write(f'{latest_candle}\n')
-
+    print(f'$$::{latest_candle}\n')
 # ===================================
     _high = minute_candlestick[-1]['high']
     _time = minute_candlestick[-1]['time']
     _volatility_coeff = minute_candlestick[-1]['volatilty']
-    log.write(f'Time: {_time}, High: {_high}, Volatility: {_volatility_coeff}\n')
+    log.write(f'Time: {_time}, High: {_high}, Volatility_Coefficient: {_volatility_coeff}\n')
 # ===================================
 
 
@@ -270,8 +271,11 @@ def tesla(ws, message):
 # =======================================================
 #                   START STRATEGY HERE
 # =======================================================
-    position = a.get_position_for(ticker)
-    log.write(f'Position Check... Position Status is: {position}\n')
+    position,position_num = a.get_position_for(ticker)
+    qty_pos = position['qty']
+    print('\n')
+
+    log.write(f'Position...$${position_num}\n')
     # NEEDS AT LEAST TWO CANDLESTICKS TO BE RAN
     if len(minute_candlestick) > 1:
         # candles = _reopen('candle.txt')
@@ -306,6 +310,7 @@ def tesla(ws, message):
 
     # WITH A POSITION
     else:
+        print(f'{qty_pos} Shares of {ticker.upper()}')
         print(f'High: {_high}')
         if _high < 300:
 
@@ -335,8 +340,6 @@ def tesla(ws, message):
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
                 print(f'{buy}\n')
                 print(f'\n{sell}')
-    print('No Action Taken')
-    log.write('No action Taken\n')
     # ----------------------------------------------------
     # TEST BUY UNDER HERE
     # ----------------------------------------------------
@@ -350,10 +353,11 @@ def tesla(ws, message):
     #   print(f'\n{sell}')
 
     position = a.get_position()
+    print(f'NumBer Of Positions Held ::{len(position)}')
     open_orders = a.get_orders()
-    print(position)
-    log.write(f'Open Orders {open_orders}\n')
-    log.write(f'Current Positions: {position}\n')
+    prin(len(open_orders))
+    #log.write(f'Open Orders {open_orders}\n')
+   # log.write(f'Current Positions: {position}\n')
     candles.close()
     log.close()
 

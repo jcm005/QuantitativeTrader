@@ -6,9 +6,9 @@ import backtrader.feeds as btfeeds
 from data_grabber import *
 
 asset = ['TSLA']
-start_date = '2020-06-22'           # ticker symbols to be tested
+start_date = '2020-08-01'           # ticker symbols to be tested
 time_interval = 'minute'            # collect data per each ---
-time_delt = 5
+time_delt = 7
 time_period =2
 
 def strat_runner(asset,strat_name, cash=10000.0,test=False ):
@@ -122,11 +122,20 @@ class SummerHaus05042020(bt.Strategy):
 # 5-16-20 editted the buy technigque for faster performance for program tonss of redundancy
             if self.high[0] <900:
                 if (self.sma_1[0]- self.sma_1[-1]) > 1:
-                    self.log('Buy attempt :: ref -- (#1) < 800 %.2f, sma[0] :%.2f, sma[-1] :%.2f' % (self.high[0],self.sma_1[0],self.sma_1[-1]))
+                    self.log('Buy attempt :: ref -- (#1) < 900 %.2f, sma[0] :%.2f, sma[-1] :%.2f' % (self.high[0],self.sma_1[0],self.sma_1[-1]))
+                    self.order = self.buy(size=1, price=self.high[0])
+
+            if self.high[0] > 900:
+                if (self.sma_1[0] - self.sma_1[-1]) > 1:
+                    self.log('Buy attempt :: ref -- (##### > 900 ')
                     self.order = self.buy(size=1, price=self.high[0])
 
 
+
         if self.position:
+            print(self.bought)
+
+
 
             for i in self.bought:
                 #if self.high[0] > 850:
@@ -184,9 +193,12 @@ class SummerHaus05042020(bt.Strategy):
                     self.order = self.sell(size=1,price=(self.high[0]))
                     self.bought.remove(i)
 
+                if self.high[0] > 900:
+                    if (self.sma_1[0] - self.sma_1[-1]) > 1:
+                        self.log('Buy attempt ~ ref > 900)')
+                        self.order = self.buy(size=1, price=self.high[0])
+
                    #method one needs to be more refined
-
-
 
 
 
@@ -261,4 +273,4 @@ class SummerHaus05042020(bt.Strategy):
 if __name__ == '__main__':
     data_flusher(asset, time_interval) # here in case program fails it will not double data
     Acummator(asset,start_date,time_interval,time_delt,time_period)
-    strat_runner(asset,SummerHaus05042020,3000,test=False)
+    strat_runner(asset,SummerHaus05042020,30000,test=False)

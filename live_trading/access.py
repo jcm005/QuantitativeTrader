@@ -50,12 +50,13 @@ def get_position_for(symbol):
      return the positions'''
     position_for = requests.get(f'{POSITION_FOR_URL}{symbol}',headers=HEADERS)
     decoded =  byte_decoder(position_for)
+
     try:
         if decoded['message'] == 'position does not exist':
             return False
 
     except:
-        return decoded
+        return decoded, True
 def place_order(order):
     '''
     SENDS ORDER TO ALPACA FOR PROCESSING
@@ -70,7 +71,6 @@ def order_details(raw_order,output='detailed'):
     :param output: PASS 'simple' FOR BASIC ORDER INFO OR 'detailed' for detailed out
     :return: WILL RETURN ORDER DETAILS AS A DICT
     '''
-
 
     if output == 'simple':
         simple = {
@@ -111,7 +111,6 @@ order = {
     # 'stop_price':int,
     # https://alpaca.markets/docs/api-documentation/api-v2/orders/
 }
-
 
 order['limit_price'] = limit_price
 
