@@ -353,7 +353,7 @@ def tesla(ws, message):
     #   print(f'\n{sell}')
 
     position = a.get_position()
-    print(f'NumBer Of Positions Held ::{len(position)}')
+    print(f'NumBer Of Positions Held ::{len(position)}\n')
     open_orders = a.get_orders()
     prin(len(open_orders))
     #log.write(f'Open Orders {open_orders}\n')
