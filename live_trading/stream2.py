@@ -110,6 +110,7 @@ def order_sequence(order,
     '''
     order_buy = order
     global log
+    _reopen(log)
     log.write('Sending Order\n')
     try:
         ordered_B, status = a.place_order(order_buy)
@@ -293,9 +294,8 @@ def tesla(ws, message):
     # =======================================================
     # WITH NO POSITION HERE
     if not position:
-        print('There is no position.')
         log.write('There is no position\n')
-        if _high < 2000:
+        if _high < 5000:
             print(volatility_coefficient)
             if volatility_coefficient > 1:
                 log.write(f'Condition: Volatility Coeff: {volatility_coefficient}\n')
@@ -331,7 +331,7 @@ def tesla(ws, message):
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
                 log.write(f'{buy}\n')
                 log.write(f'\n{sell}')
-        if 500 <= _high < 2000:
+        if 500 <= _high < 4000:
             if volatility_coefficient > 1:
                 print(
                     f'Attempting an order of {ticker} @ {_high} with volatility_coefficent of {volatility_coefficient}')
