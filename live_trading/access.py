@@ -86,34 +86,6 @@ def order_details(raw_order,output='detailed'):
         return raw_order
 
 
+if __name__ == '__main__':
 
-
-
-# CODE FOR STREAM 2
-symbol = 'TSLA'
-qty = 1
-side = 'sell'
-order_type = 'limit'
-time_in_force= 'day'
-limit_price = 900
-stop_price = 800
-stop_limit_price = 799
-
-order = {
-    'symbol': symbol,
-    'qty': qty,
-    'side': side,
-    'type': order_type,
-    'time_in_force': 'gtc',
-
-    # append this into the dictionary if order type is limit or stop limit
-    # 'stop_price':int,
-    # https://alpaca.markets/docs/api-documentation/api-v2/orders/
-}
-
-order['limit_price'] = limit_price
-
-
-
-#position = get_position_for('TSLA')
-#print(position)
+    get_position_for('TSLA')

@@ -6,10 +6,10 @@ import backtrader.feeds as btfeeds
 from data_grabber import *
 
 asset = ['TSLA']
-start_date = '2020-08-01'           # ticker symbols to be tested
+start_date = '2020-08-21'           # ticker symbols to be tested
 time_interval = 'minute'            # collect data per each ---
-time_delt = 7
-time_period =2
+time_delt = 1
+time_period =1
 
 def strat_runner(asset,strat_name, cash=10000.0,test=False ):
 
@@ -129,19 +129,26 @@ class SummerHaus05042020(bt.Strategy):
                 if (self.sma_1[0] - self.sma_1[-1]) > 1:
                     self.log('Buy attempt :: ref -- (##### > 900 ')
                     self.order = self.buy(size=1, price=self.high[0])
+            if self.sma_10[0] > 3:
+                self.log('Buying for sma 10')
+                self.order = self.buy(price=self.high[0])
 
 
 
         if self.position:
-            print(self.bought)
 
+            if len(self.bought) > 5:
+                print('to many shares held')
+                pass
 
 
             for i in self.bought:
-                #if self.high[0] > 850:
-                 #   self.log('JACKPOT')
-                  #  self.order = self.sell()
 
+
+                if self.sma_10[0] > 3:
+                    print('SMA 10 ---> ')
+                    self.log('Buying for sma 10')
+                    self.order = self.buy(price=self.high[0])
 
                 if i < 500:
                     if i < 300:
@@ -230,7 +237,7 @@ class SummerHaus05042020(bt.Strategy):
             if order.isbuy():
 
                 self.log(
-                    'BUY EXECUTED, Price: %.2f, Cost: %.2f, Comm %.2f' %
+                    'BUY EXECUTED, Price: %.2f, Cost: %.2f, Comm %.2f \n' %
                     (order.executed.price,
                      order.executed.value,
                      order.executed.comm))
@@ -249,9 +256,8 @@ class SummerHaus05042020(bt.Strategy):
                 self.sellprice = order.executed.price
 
                 self.succesful.append(self.sellprice)
-                print(f'Opened shares: {self.bought}')
+                print(f'Opened shares: {self.bought}\n')
 
-                print(self.position)
             self.bar_executed = len(self)
 
 

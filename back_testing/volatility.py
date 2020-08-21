@@ -14,16 +14,17 @@ import plotly
 # will be measurning volatility as the difference
 # between high and low price of the stock
 #import format must be in the order of time, ohlc, volume
+
 df= None
 
 #========================================
 #========================================
 
 asset = ['TSLA']
-time_interval = 'day'
-start_date = '2020-01-01'
-time_delt = 7
-time_period = 32
+time_interval = 'minute'
+start_date = '2020-08-21'
+time_delt = 1
+time_period = 1
 
 
 def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
@@ -37,8 +38,7 @@ def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
     api = tradeapi.REST(API_KEY, SECRET_KEY, api_version='v2')
 
     for symbol in asset:
-
-        file_path = f'./Data/{symbol}_{time_interval}_intraday_trading.csv'
+        file_path = f'../Data/{symbol}_{time_interval}_intraday_trading.csv'
         data_file = open(file_path, 'a')
 
         # for manually grabbing data and doing an analysis by hand or ipython file
@@ -56,17 +56,14 @@ def grab_data(asset, train_date_s, train_date_e, time_interval='day'):
 
             data_file.write(f'{x}' + ',' + _open + ',' + _high + ',' + _low + ',' + _close + ',' + _volume + '\n')
 
-    data_file.close()
+        data_file.close()
 
 def Acummator(asset, start_date, time_interval, time_delt, time_period):
     """A better way of advancing time """
-
     print(f'Grabbing...Data...')
-
     end = ''  # INTIALIZING EMPYTY END STRING
     future = timedelta(days=time_delt)  # INTERVALS DATA GRABBER WILL RUN
     pre_start = datetime.strptime(start_date, '%Y-%m-%d')  # CONVERT STRING TO DATETIM
-
     if time_period == 0:
         end = pre_start + future  # INCREASING END TIME BY A WEEK
         final_end = str(end)[:-9]  # FORMATTING  END TIME BY DROPPING NON FORMATED TIME
@@ -91,17 +88,15 @@ def data_flusher(asset, time_interval):
     """Removes data from file """
 
     for symbol in asset:
-        file_path = f'./Data/{symbol}_{time_interval}_intraday_trading.csv'
-
+        file_path = f'../Data/{symbol}_{time_interval}_intraday_trading.csv'
         clean = open(file_path, 'w')
         clean.truncate(0)
-
-    clean.close()
+        clean.close()
 
 def read_and_clean(df,symbol):
     """Read and cleans the data
      """
-    df = pd.read_csv(f'./Data/{symbol}_{time_interval}_intraday_trading.csv')
+    df = pd.read_csv(f'../Data/{symbol}_{time_interval}_intraday_trading.csv')
 
     df.columns = [col.strip() for col in df.columns]
     df.columns = ['timestamp', 'open', 'high', 'low', 'close', 'volume']
@@ -132,7 +127,10 @@ def volatility(df,symbol):
 
 if __name__ =='__main__':
     for symbol in asset:
+
         data_flusher(asset, time_interval)  # here in case program fails it will not double data
+
+
         Acummator(asset, start_date, time_interval, time_delt, time_period)
         df = read_and_clean(df,symbol)
         df = volatility(df,symbol)

@@ -30,6 +30,7 @@ class Order():
         :return:
         '''
         orders_list = []
+        print(raw_order)
         if raw_order['legs'] != None:
             limit_order = raw_order['legs'][0]
             try:
@@ -117,6 +118,9 @@ class Order():
             stop_price=None,
             limit_price=None,
             stop_limit_price=None):
+
+        if stop_price < (self.price/1001):
+            return 'stop price has to be greater then current price/1001'
 
         self.qty = qty
         self.profit = profit
