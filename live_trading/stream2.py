@@ -72,7 +72,7 @@ def intiate_order(
     # OCO ORDER CURRENTLY NOT WORKING HOWEVER NOT MY MAIN CONCERN ATM
 
     elif order_class == 'oco':
-        order['type'] = 'limit'
+        order['type'] = order_type
         order['order_class'] = 'oco'
         order['take_profit'] = {
             'limit_price': limit_price
@@ -152,7 +152,7 @@ def check_time():
     right_now = datetime.strftime(right_now, '%H:%M:%S')
     print((right_now[:2]))
     connection_log.write(f'{right_now[:2]}\n')
-    if 6 < int(right_now[:2]) < 23:
+    if 6  < int(right_now[:2]) < 23:
         print('Good... reconnecting')
         connection_log.write(f'Good..Reconnecting, the time is :{right_now}\n')
         try:

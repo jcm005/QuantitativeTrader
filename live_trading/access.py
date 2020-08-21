@@ -85,8 +85,7 @@ def order_details(raw_order,output='detailed'):
     elif output == 'detailed':
         return raw_order
 
-date_time = '2020-05-21T13:59:03.266008Z'
-date = date_time[:10]
+
 
 
 

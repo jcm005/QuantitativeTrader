@@ -1,4 +1,6 @@
-
+import requests, json, time
+from streamkeys import *
+import access as a
 
 class Order():
 # LOGGIN FUNCTION FOR OUTPUTTNIG TO LOG FILES
@@ -27,23 +29,67 @@ class Order():
         :param output:
         :return:
         '''
-        print(raw_order)
+        orders_list = []
+        if raw_order['legs'] != None:
+            limit_order = raw_order['legs'][0]
+            try:
+                stop_order = raw_order['legs'][1]
+                print(stop_order)
+            except:
+                pass
         try:
             if output == 'simple':
                 simple = {
                     'symbol': raw_order['symbol'],
                     'status': raw_order['status'],
                     'order_type': raw_order['order_type'],
+                    'order_class':raw_order['order_class'],
                     'side': raw_order['side'],
                     # 'submitted_at': time,
                     'order_id': raw_order['id'],
                 }
-                return simple
+                orders_list.append(simple)
+
+                if raw_order['legs'] != None:
+                    limit_order = raw_order['legs'][0]
+                    limit = {
+                        'symbol': limit_order['symbol'],
+                        'status': limit_order['status'],
+                        'order_type': limit_order['order_type'],
+                        'limit_price': limit_order['limit_price'],
+                        'side': limit_order['side'],
+                        # 'submitted_at': time,
+                        'order_id': limit_order['id'],
+                    }
+                    orders_list.append(limit)
+                    try:
+                        stop_order = raw_order['legs'][1]
+                        stop = {
+                            'symbol': stop_order['symbol'],
+                            'status': stop_order['status'],
+                            'order_type': stop_order['order_type'],
+                            'limit_price': stop_order['limit_price'],
+                            'stop_price': stop_order['stop_price'],
+                            'side': stop_order['side'],
+                            # 'submitted_at': time,
+                            'order_id': stop_order['id'],
+                        }
+                        orders_list.append(stop)
+
+                    except:
+                        pass
+
+
+                return orders_list
             elif output == 'detailed':
                 return raw_order
         except KeyError:
             return 'Order Failed'
 
+    def position_check_for_selling(self):
+        position = a.get_orders() # this does no work because it could be get sell orders
+        lenny = len(position)
+        return lenny
     def place_order(self,order):
         '''
         SENDS ORDER TO ALPACA FOR PROCESSING
@@ -52,7 +98,6 @@ class Order():
         ALONG WITH A BOOLEAN BASED ON SUCCESSION STATUS
         '''
         HEADERS = {'APCA-API-KEY-ID': PAPER_KEY, 'APCA-API-SECRET-KEY': SECRET__KEY}
-
         order_sent = self.byte_decoder(
             requests.post(
                 self.ORDER_URL,
@@ -61,29 +106,62 @@ class Order():
             ))
         status = self.order_details(order_sent,'simple')
         self.log(self.candle,f'Order Status is: {status}\n')
-        return order_sent
-# DO I WANT TO ADD THE OCO ORDERING BRACKETING? ORDERS
-    def buy(self,order_type,qty,tif,profit=0,ref=None):
+        return status
+#  NEWLY ORDERS OTO BRACKET LIMIT MARKET
+    def buy(self,order_type,
+            qty,
+            tif,
+            profit=0,
+            ref=None,
+            order_class=None,
+            stop_price=None,
+            limit_price=None,
+            stop_limit_price=None):
+
         self.qty = qty
         self.profit = profit
         order = {
-            'symbol':self.symbol,
-            'qty':self.qty,
+            'symbol': self.symbol,
+            'qty': self.qty,
             'side': 'buy',
             'type': order_type,
-            'time_in_force': tif
+            'time_in_force': tif,
         }
+
+        # OTO IS GOOD FOR A BUY AND A TAKE PROFIT WITH NO SELLING POINT FOR SAFETY
+        if order_class == 'oto':
+            order['order_class'] = 'oto'
+            order['take_profit'] = {
+                'limit_price': self.price + profit
+            }
+        elif order_class == 'bracket':
+            order['order_class'] = order_class
+            order['take_profit'] = {
+                'limit_price': self.price + profit
+            }
+            order['stop_loss'] = {
+                'stop_price': stop_price,
+                'limit_price': stop_limit_price,
+            }
+        elif order_type == 'limit':
+            order['limit_price'] = limit_price
+
+
+
         self.log(self.candle,f'Attempting To Buy With Ref Number: {ref} @ {self.price}\n')
-        buy = self.place_order(order)
-        if self.profit != 0:
-            time.sleep(5)
-            self.log(self.candle,f'Attempting To Sell With Ref Number: {ref} @ {self.price + self.profit}\n')
-            sell = self.sell()
-            return buy,sell
-        else:
-            return buy
+        buy = self.place_order(order) # returns a simplified order detail status
+
+        #if self.profit != 0:
+         #   time.sleep(5)
+          #  self.log(self.candle,f'Attempting To Sell With Ref Number: {ref} @ {self.price + self.profit}\n')
+          #  sell = self.sell()
+          #  return buy,sell
+        #else:
+
+        return buy
 
     def sell(self):
+
         sell_order = {
             'symbol': self.symbol,
             'qty': self.qty,
@@ -94,3 +172,4 @@ class Order():
         }
         sell = self.place_order(sell_order)
         return sell
+
