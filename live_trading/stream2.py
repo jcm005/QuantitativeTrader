@@ -256,7 +256,7 @@ def tesla(ws, message):
     })
     latest_candle = minute_candlestick[-1]
     candles.write(f'{latest_candle}\n')
-    print(f'$$::{latest_candle}\n')
+    print(f'{latest_candle}\n')
 # ===================================
     _high = minute_candlestick[-1]['high']
     _time = minute_candlestick[-1]['time']
@@ -266,23 +266,16 @@ def tesla(ws, message):
 # ===================================
 
 
-    from order import Order
-    TSLA = Order('TSLA',high)
-
-
 # =======================================================
 #                   START STRATEGY HERE
 # =======================================================
-    position,position_num = a.get_position_for(ticker)
-    qty_pos = position['qty']
-    print('\n')
+    position = a.get_position_for(ticker)
 
-    log.write(f'Position --> {position_num}\n')
-    # NEEDS AT LEAST TWO CANDLESTICKS TO BE RAN
+
+
+
+
     if len(minute_candlestick) > 1:
-        # candles = _reopen('candle.txt')
-        # log = _reopen('stream2.txt')
-        # connection_log = _reopen('log_on.txt')
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
         print('Strategy is Running...')
         log.write('Strategy Activated..\n\n')
@@ -291,11 +284,22 @@ def tesla(ws, message):
         return
 
     # ========kl;'===============================================
+    print(len(minute_candlestick))
+    if len(minute_candlestick) > 10:
+        indexed = minute_candlestick[-10:]
+        rolling_10 = sum(indexed)/len(indexed)
+        print(f'rolling 10: {rolling_10}')
+
+
+
+
 
     # =======================================================
     # WITH NO POSITION HERE
+
     if not position:
         log.write('There is no position\n')
+        print('NO_POS')
         if _high < 5000:
             print(volatility_coefficient)
             if volatility_coefficient > 1:
@@ -311,12 +315,16 @@ def tesla(ws, message):
 
     # WITH A POSITION
     else:
-        log.write(f'{qty_pos} Shares of {ticker.upper()}')
-        print(f'{qty_pos} Shares of {ticker.upper()}')
+
+        qty_pos = position['qty']
+        cost_basis = position['cost_basis']
+        avg_price = position['avg_entry_price']
+
+        log.write(f'{qty_pos} Shares of {ticker.upper()} @ avg_cost: {avg_price}\n')
+        print(f'{qty_pos} Shares of {ticker.upper()} @ {cost_basis}')
         print(f'High: {_high}')
 
         if _high < 300:
-
             if volatility_coefficient > 1:
                 log.write(
                     f'Attempting an order of {ticker} @ {_high} with volatility_coefficent of {volatility_coefficient}\n')
@@ -343,25 +351,18 @@ def tesla(ws, message):
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
                 print(f'{buy}\n')
                 print(f'\n{sell}')
-    # ----------------------------------------------------
-    # TEST BUY UNDER HERE
-    # ----------------------------------------------------
-    # else:
-    #   # REAL ORDER TERRITORY HERE USE THIS AS BASELINE
-    #   print(f'Attempting an order of {ticker} @ {_high}')
-    #   print('buying ref -- TEST BUY --')
-    #   order_buy = intiate_order(symbol=ticker,order_type='market',side='buy')
-    #   buy,sell = order_sequence(order_buy,current_price=_high,order_details='simple')
-    #   print(f'{buy}\n')
-    #   print(f'\n{sell}')
+
+
+
+
 
     position = a.get_position()
-    print(f'NumBer Of Positions Held ::{len(position)}\n')
+    print(f'NumBer Of Positions Held :: {len(position)}\n')
     log.write(f'NumBer Of Positions Held ::{len(position)}\n\n')
     open_orders = a.get_orders()
-    prin(len(open_orders))
-    #log.write(f'Open Orders {open_orders}\n')
-   # log.write(f'Current Positions: {position}\n')
+    log.write(f'Open orders: {len(open_orders)}')
+
+# close out loggin files
     candles.close()
     log.close()
 

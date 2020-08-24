@@ -53,10 +53,11 @@ def get_position_for(symbol):
 
     try:
         if decoded['message'] == 'position does not exist':
-            return False
+            decoded = False
+            return decoded
 
     except:
-        return decoded, True
+        return decoded
 def place_order(order):
     '''
     SENDS ORDER TO ALPACA FOR PROCESSING
@@ -88,4 +89,9 @@ def order_details(raw_order,output='detailed'):
 
 if __name__ == '__main__':
 
-    get_position_for('TSLA')
+    position = get_position_for('TSLA')
+    if position:
+        qty_pos = position['qty']
+        cost_basis = position['cost_basis']
+        avg_price = position['avg_entry_price']
+

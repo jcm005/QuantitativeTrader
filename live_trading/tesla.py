@@ -54,11 +54,8 @@ def tesla(ws, message):
 # =======================================================
     tsla = Order('TSLA',_high)
 
-    position,position_num = a.get_position_for(ticker)
-    qty_pos = position['qty']
-    print('\n')
+    position = a.get_position_for(ticker)
 
-    log.write(f'Position...$${position_num}\n')
 
     if len(minute_candlestick) > 1:
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
