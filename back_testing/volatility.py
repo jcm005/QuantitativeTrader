@@ -22,8 +22,8 @@ df= None
 
 asset = ['TSLA']
 time_interval = 'minute'
-start_date = '2020-08-21'
-time_delt = 1
+start_date = '2020-08-20'
+time_delt = 4
 time_period = 1
 
 
@@ -107,11 +107,14 @@ def volatility(df,symbol):
     df['_hlMean'] = (df['high'] + df['low']) / 2
     df['vola_coeff'] = (df['volatility'] / df['_hlMean']) * 100
 
+
     df['day'] = [day[8:10] for day in df.timestamp]
     df['month'] = [month[5:7] for month in df.timestamp]
     df['year'] = [year[:4] for year in df.timestamp]
     df['hour'] = [hour[-8:] for hour in df.timestamp]
     df['time'] = [time[:18] for time in df.timestamp]
+    #df['corre'] = df.corr()['volume']['vola_coeff']
+
 
     #df['time'] = [time[12:] for time in times]
 
@@ -137,7 +140,7 @@ if __name__ =='__main__':
         rolling_mean_10 = df.vola_coeff.rolling(window=10).mean()
         rolling_mean_20 = df.vola_coeff.rolling(window=20).mean()
 
-        fig = plotly.subplots.make_subplots(rows=4, cols=1, vertical_spacing=0.2)
+        fig = plotly.subplots.make_subplots(rows=5, cols=1, vertical_spacing=0.2)
         fig['layout']['margin'] = {
             'l': 30, 'r': 10, 'b': 30, 't': 10
         }
@@ -174,6 +177,7 @@ if __name__ =='__main__':
             'mode': 'lines',
             'type': 'scatter'
         }, 3, 1)
+
         #fig.append_trace({'x': df['time'],'y': df['volatility'],'name': 'High','mode': 'lines+markers','type': 'scatter'}, 4, 1)
 
         fig.show()

@@ -6,10 +6,10 @@ import backtrader.feeds as btfeeds
 from data_grabber import *
 
 asset = ['TSLA']
-start_date = '2020-08-21'           # ticker symbols to be tested
+start_date = '2019-09-01'           # ticker symbols to be tested
 time_interval = 'minute'            # collect data per each ---
-time_delt = 1
-time_period =1
+time_delt = 7
+time_period =6
 
 def strat_runner(asset,strat_name, cash=10000.0,test=False ):
 
@@ -279,4 +279,4 @@ class SummerHaus05042020(bt.Strategy):
 if __name__ == '__main__':
     data_flusher(asset, time_interval) # here in case program fails it will not double data
     Acummator(asset,start_date,time_interval,time_delt,time_period)
-    strat_runner(asset,SummerHaus05042020,30000,test=False)
+    strat_runner(asset,SummerHaus05042020,3000,test=False)
