@@ -94,4 +94,7 @@ if __name__ == '__main__':
         qty_pos = position['qty']
         cost_basis = position['cost_basis']
         avg_price = position['avg_entry_price']
-
+    else:
+        pass
+    order = get_orders()
+    print(orders)

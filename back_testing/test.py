@@ -6,10 +6,10 @@ import backtrader.feeds as btfeeds
 from data_grabber import *
 
 asset = ['TSLA']
-start_date = '2019-09-01'           # ticker symbols to be tested
+start_date = '2019-11-21'           # ticker symbols to be tested
 time_interval = 'minute'            # collect data per each ---
 time_delt = 7
-time_period =6
+time_period =12
 
 def strat_runner(asset,strat_name, cash=10000.0,test=False ):
 
@@ -112,117 +112,162 @@ class SummerHaus05042020(bt.Strategy):
                                                         period=100)
     def next(self):
 
+        def volatility(self, variable, num, ref):
+            """compares the current volatility with the previous volatitlty and takes in a reference number
+             the number given is the condition for volatility"""
+            if (variable[0] - variable[1]) >= num:
+                self.log(f'Volatility Condition >= {num}; Satisfied! Ref#:{ref}')
+                return True
+            else:
+                return False
+        def tesla(self):
 
-        #print(len(self.bought))
-        #check if we are in the market
-        if not self.position:
-        # if we dont hold position lets buy iffff
-# TEMPORARY THRESHOLD UNTIL MOMENTUM IS DISCOVERED
-        #ADD MORE VOLATILITY PERFORMANCE IM THIKKING
-# 5-16-20 editted the buy technigque for faster performance for program tonss of redundancy
-            if self.high[0] <900:
-                if (self.sma_1[0]- self.sma_1[-1]) > 1:
-                    self.log('Buy attempt :: ref -- (#1) < 900 %.2f, sma[0] :%.2f, sma[-1] :%.2f' % (self.high[0],self.sma_1[0],self.sma_1[-1]))
-                    self.order = self.buy(size=1, price=self.high[0])
+            if not self.position:
 
-            if self.high[0] > 900:
-                if (self.sma_1[0] - self.sma_1[-1]) > 1:
-                    self.log('Buy attempt :: ref -- (##### > 900 ')
-                    self.order = self.buy(size=1, price=self.high[0])
-            if self.sma_10[0] > 3:
-                self.log('Buying for sma 10')
-                self.order = self.buy(price=self.high[0])
-
-
-
-        if self.position:
-
-            if len(self.bought) > 5:
-                print('to many shares held')
-                pass
-
-
-            for i in self.bought:
-
-
-                if self.sma_10[0] > 3:
-                    print('SMA 10 ---> ')
-                    self.log('Buying for sma 10')
-                    self.order = self.buy(price=self.high[0])
-
-                if i < 500:
-                    if i < 300:
-    #SELL COMMAND FOR LESS THEN 300
-                        if (self.high[-1] - i) > 20:
-                            self.log('SELL CREATE < 200 , %.2f' % self.dataclose[0])
-                            self.order = self.sell()
-                            self.bought.remove(i)
-    #BUY COMMAND FOR LESS THAN 300
-
-                        if (self.sma_1[0] - self.sma_1[-2]) > 1:
-                            self.log('Buy attempt :: ref -- (#2) < 800 %.2f' % self.high[0])
-                            self.order = self.buy(size=1, price=self.high[0])
-
-        #------------------------------------------------------------------::
-    #BUY COMMAND FOR LESS THEN 500
-                    else:
-                        if (i - self.high[-1]) > 80: # greater then 300
-                            self.log('Buy attempted with possesion > 300 already  %.2f' % self.high[0])
-                            self.order = self.buy(size=1, price=(i - self.high[-1]))
-    #SELL COMMAND FOR LESS THEN 500
-        # IF PRICE DIFFERS BY 50 THEN BUY
-                        if (self.high[0] - i ) > 50:
-                            self.log('SELL CREATE < 500 , %.2f' % self.dataclose[0])
-                            self.order = self.sell()
-                            self.bought.remove(i)
-                    #------------------------------------------------------------------::
-    #IF I IS GREATER THEN 500
-                elif i > 500:
-            #IF VOLATILITY DIFFERENCE IS GREATER THEN 1.5
-                    if (self.sma_10[0] - self.sma_10[-2]) > 1.5:
-                        # THE STOCK IS SO VOLATILE THAT I WILL BUY SHARE EXTREMELY LOW BECAUSE ITS MOVING
-
-                        if (i - self.high[-1]) > 200:
-                            #BUY IF A THE HIGH IS 200 LOWER THEN AN ALREADY OBTAINED POSITION
-                            self.log('THE MARKET IS VERY VOLATILE --BUY--  %.2f' % self.high[0])
-                            self.order = self.buy()
-                    #------------------------------------------------------------------::
-
-    # BUY COMMAND FOR GREATER THAN 500
-                    if (i - self.high[-1]) > 100:
-                        #self.log('Buy attempted with possesion  > 500 already  %.2f' % self.high[0])
-                        self.order = self.buy()
-
-    # SELL COMMAND FOR GREATER THAN 500
-                if (self.high[0] - i) > 100:
-                    #print(f'High: {self.high[0]}, i-value: {i}')
-                    self.log('SELL CREATE:: REF -- (#3), High: %.2f, i : %.2f' % (self.dataclose[0],i))
-                    self.order = self.sell(size=1,price=(self.high[0]))
-                    self.bought.remove(i)
-
-                if self.high[0] > 900:
-                    if (self.sma_1[0] - self.sma_1[-1]) > 1:
-                        self.log('Buy attempt ~ ref > 900)')
+                if self.high[0] <900:
+                    if volatility(self,self.sma_1,1,1):
+                        self.log('Buy attempt :: ref -- (#1) < 900 %.2f, sma[0] :%.2f, sma[-1] :%.2f' % (self.high[0],self.sma_1[0],self.sma_1[-1]))
                         self.order = self.buy(size=1, price=self.high[0])
 
-                   #method one needs to be more refined
+                if self.high[0] > 900:
+                    if volatility(self,self.sma_1,1,1):
+                        self.log('Buy attempt :: ref -- (##### > 900 ')
+                        self.order = self.buy(size=1, price=self.high[0])
+                if self.sma_10[0] > 3:
+                    self.log('Buying for sma 10')
+                    self.order = self.buy(price=self.high[0])
+            if self.position:
+
+                if len(self.bought) > 5:
+                    pass
+                for i in self.bought:
+                    if self.sma_10[0] > 3:
+                        print('SMA 10 ---> ')
+                        self.log(f'Buying for sma 10 {self.high[0]}')
+                        self.order = self.buy(price=self.high[0])
+                    if i < 500:
+                        if i < 300:
+        #SELL COMMAND FOR LESS THEN 300
+                            if (self.high[-1] - i) > 20:
+                                self.log('SELL CREATE < 200 , %.2f' % self.dataclose[0])
+                                self.order = self.sell()
+                                self.bought.remove(i)
+        #BUY COMMAND FOR LESS THAN 300
+
+                            if (self.sma_1[0] - self.sma_1[-2]) > 1:
+                                self.log('Buy attempt :: ref -- (#2) < 800 %.2f' % self.high[0])
+                                self.order = self.buy(size=1, price=self.high[0])
+
+            #------------------------------------------------------------------::
+        #BUY COMMAND FOR LESS THEN 500
+                        else:
+                            if (i - self.high[-1]) > 80: # greater then 300
+                                self.log('Buy attempted with possesion > 300 already  %.2f' % self.high[0])
+                                self.order = self.buy(size=1, price=(i - self.high[-1]))
+        #SELL COMMAND FOR LESS THEN 500
+            # IF PRICE DIFFERS BY 50 THEN BUY
+                            if (self.high[0] - i ) > 50:
+                                self.log('SELL CREATE < 500 , %.2f' % self.dataclose[0])
+                                self.order = self.sell()
+                                self.bought.remove(i)
+                        #------------------------------------------------------------------::
+        #IF I IS GREATER THEN 500
+                    elif i > 500:
+                #IF VOLATILITY DIFFERENCE IS GREATER THEN 1.5
+                        if (self.sma_10[0] - self.sma_10[-2]) > 1.5:
+                            # THE STOCK IS SO VOLATILE THAT I WILL BUY SHARE EXTREMELY LOW BECAUSE ITS MOVING
+
+                            if (i - self.high[-1]) > 200:
+                                #BUY IF A THE HIGH IS 200 LOWER THEN AN ALREADY OBTAINED POSITION
+                                self.log('THE MARKET IS VERY VOLATILE --BUY--  %.2f' % self.high[0])
+                                self.order = self.buy()
+                        #------------------------------------------------------------------::
+
+        # BUY COMMAND FOR GREATER THAN 500
+                        if (i - self.high[-1]) > 100:
+                            #self.log('Buy attempted with possesion  > 500 already  %.2f' % self.high[0])
+                            self.order = self.buy()
+
+    # SELL COMMAND FOR GREATER THAN 500
+                    if (self.high[0] - i) > 100:
+                        #print(f'High: {self.high[0]}, i-value: {i}')
+                        self.log('SELL CREATE:: REF -- (#3), High: %.2f, i : %.2f' % (self.dataclose[0],i))
+                        self.order = self.sell(size=1,price=(self.high[0]))
+                        self.bought.remove(i)
+
+                    if self.high[0] > 900:
+                        if (self.sma_1[0] - self.sma_1[-1]) > 1:
+                            self.log('Buy attempt ~ ref > 900)')
+                            self.order = self.buy(size=1, price=self.high[0])
+
+        def mod_tesla(self):
+            ''' 137% return '''
+        # NO POSITION
+            if not self.position:
+
+                # enter momentum thing here with ties to volatility
+
+                if self.high[0] < 900:
+                    if self.sma_10[0] >=.5:
+                        self.log(f'Lower 900 -- High: {self.high[0]} sma_10: {self.sma_10[0]}')
+                        self.order = self.buy()
+                    if self.sma_1[0] - self.sma_1[-1] >= 1:
+                        self.log(f'Lower 900 -- High: {self.high[0]} sma_1: {self.sma_1[0]-self.sma_1[-1]}')
+                        self.order = self.buy()
+                else:
+                    # -- BUY --
+                    if self.sma_10[0] >= .5:
+                        self.log(f'sma_10  -- High: {self.high[0]} sma_10: {self.sma_10[0]}')
+                        self.order = self.buy()
+                    if self.sma_1[0] - self.sma_1[-1] >= 1:
+                        self.log(f'higher 900 -- High: {self.high[0]} sma_1: {self.sma_1[0]-self.sma_1[-1]}')
+                        self.order = self.buy()
+                    # -- SELL --
+
+        # WITH POSITION
+            else:
+                for i in self.bought:
+                    if i > 1000:
+                        if self.high[0] - i >= 120:
+                            self.log(f'Selling --120 -- High: {self.high[0]} profit: {self.high[0] -i}')
+                            self.order = self.sell()
+                            self.bought.remove(i)
+                    if 1000> i > 700:
+                        if self.high[0] - i >= 100:
+                            self.log(f'Selling --100 -- High: {self.high[0]} profit: {self.high[0] -i}')
+                            self.order = self.sell()
+                            self.bought.remove(i)
+                    if 700> i > 500:
+                        if self.high[0] - i >= 80:
+                            self.log(f'Selling-- 80 -- High: {self.high[0]} profit: {self.high[0] -i}')
+                            self.order = self.sell()
+                            self.bought.remove(i)
+                    if 500> i > 350:
+                        if self.high[0] - i >= 50:
+                            self.log(f'Selling-- 50 -- High: {self.high[0]} profit: {self.high[0] -i}')
+                            self.order = self.sell()
+                            self.bought.remove(i)
+                    if 350 > i:
+                        if self.high[0] - i >= 30:
+                            self.log(f'Selling-- 30 -- High: {self.high[0]} profit: {self.high[0] -i}')
+                            self.order = self.sell()
+                            self.bought.remove(i)
+
+                    if i - self.high[0] > 120:
+                        self.log(f'CLEARANCE 120 --: {self.high[0]} i: {i}')
+                        self.order = self.buy()
+
+                if self.sma_10[0] >= .5:
+                    self.log(f'sma_10 900 -- High: {self.high[0]} sma_10: {self.sma_10[0]}')
+                    self.order = self.buy()
+                if self.sma_1[0] - self.sma_1[-1] >= 1:
+                    self.log(f'higher 900 -- High: {self.high[0]} sma_1: {self.sma_1[0] - self.sma_1[-1]}')
+                    self.order = self.buy()
 
 
 
 
-
-
-
-        # this may render useless
-
-
-        # Already in the market ... we might sell
-         #   print(len(self),self.bar_executed + 5 )
-            #if len(self) >= (self.bar_executed + 5):
-                # SELL, SELL, SELL!!! (with all possible default parameters)
-             #   self.log('SELL CREATE, %.2f' % self.dataclose[0])
-
-                # Keep track of the created order to avoid a 2nd order
+        mod_tesla(self)
     def notify_order(self, order):
 
         self.trade_info = {
@@ -279,4 +324,4 @@ class SummerHaus05042020(bt.Strategy):
 if __name__ == '__main__':
     data_flusher(asset, time_interval) # here in case program fails it will not double data
     Acummator(asset,start_date,time_interval,time_delt,time_period)
-    strat_runner(asset,SummerHaus05042020,3000,test=False)
+    strat_runner(asset,SummerHaus05042020,2000,test=False)

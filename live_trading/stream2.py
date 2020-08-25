@@ -14,6 +14,7 @@ from pytz import timezone
 est = pytz.timezone('US/Eastern')
 minutes_processed = {}
 minute_candlestick = []
+rolling_ten = []
 current_tick = None
 previous_tick = None
 in_position = False
@@ -223,7 +224,7 @@ def tesla(ws, message):
 
     #   CHECK FOR OPEN ORDERS AND RETURN IF ANY ARE PRESENT
     # ===================================
-    global current_tick, previous_tick
+    global current_tick, previous_tick, rolling_ten
     previous_tick = current_tick
     message = a.clean_and_load(message)
     # ====================================
@@ -270,25 +271,26 @@ def tesla(ws, message):
 #                   START STRATEGY HERE
 # =======================================================
     position = a.get_position_for(ticker)
-
-
-
-
-
     if len(minute_candlestick) > 1:
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
-        print('Strategy is Running...')
+        try:
+            rolling_ten.append(volatility_coefficient)
+        except:
+            log.write('Rolling ten appending failure')
+
+        print('Strategy is Running...\n')
         log.write('Strategy Activated..\n\n')
     else:
         print('Pending Action\n')
         return
 
-    # ========kl;'===============================================
-    print(len(minute_candlestick))
-    if len(minute_candlestick) > 10:
-        indexed = minute_candlestick[-10:]
-        rolling_10 = sum(indexed)/len(indexed)
-        print(f'rolling 10: {rolling_10}')
+    # =======================================================
+
+
+    if len(rolling_ten) > 10:
+        rolling_10 = sum(rolling_ten[-10:])/10
+        log.write(f'Rolling_10: {rolling_10}')
+        print(f'Rolling_10{rolling_10}')
 
 
 
@@ -298,20 +300,24 @@ def tesla(ws, message):
     # WITH NO POSITION HERE
 
     if not position:
-        log.write('There is no position\n')
-        print('NO_POS')
+        log.write(f'There is no shares for {ticker}\n')
+        print('NS')
         if _high < 5000:
-            print(volatility_coefficient)
             if volatility_coefficient > 1:
                 log.write(f'Condition: Volatility Coeff: {volatility_coefficient}\n')
                 log.write(f'Attempting Buy --(Ref #1)-- Price:{_high}, Volatility_Coeff: {volatility_coefficient}\n')
-
-                #TSLA.buy(order_type='market',qty=1,tif='gtc',profit=100)
-
                 order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
                 log.write(f'{buy}\n')
                 log.write(f'\n{sell}')
+
+        if rolling_10 > .5:
+            log.write(f'Condition: Rolling_10: {rolling_10}\n')
+            log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
+            order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
+            buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
+            log.write(f'{buy}\n')
+            log.write(f'\n{sell}')
 
     # WITH A POSITION
     else:
@@ -321,8 +327,9 @@ def tesla(ws, message):
         avg_price = position['avg_entry_price']
 
         log.write(f'{qty_pos} Shares of {ticker.upper()} @ avg_cost: {avg_price}\n')
-        print(f'{qty_pos} Shares of {ticker.upper()} @ {cost_basis}')
+        print(f'{qty_pos} Shares of {ticker.upper()} @ {avg_price}')
         print(f'High: {_high}')
+
 
         if _high < 300:
             if volatility_coefficient > 1:
@@ -352,15 +359,20 @@ def tesla(ws, message):
                 print(f'{buy}\n')
                 print(f'\n{sell}')
 
-
-
-
+        if rolling_10 > .5:
+            log.write(f'Condition: Rolling_10: {rolling_10}\n')
+            log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
+            order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
+            buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
+            log.write(f'{buy}\n')
+            log.write(f'\n{sell}')
 
     position = a.get_position()
     print(f'NumBer Of Positions Held :: {len(position)}\n')
     log.write(f'NumBer Of Positions Held ::{len(position)}\n\n')
     open_orders = a.get_orders()
-    log.write(f'Open orders: {len(open_orders)}')
+    log.write(f'Open orders: {len(open_orders)}\n ---------------\n')
+
 
 # close out loggin files
     candles.close()
