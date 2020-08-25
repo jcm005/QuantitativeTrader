@@ -22,9 +22,11 @@ in_position = False
 candles = open('candle.txt', 'a')
 connection_log = open('log_on.txt', 'a')
 log = open('action.txt', 'a')
+order_log = open('order.txt','a')
 
 candles.truncate(0)
 log.truncate(50)
+order_log.truncate(0)
 
 def _reopen(file):
     file_to_repoen = open(file, 'a')
@@ -187,7 +189,7 @@ def check_time():
 # ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
 def onn_open(ws):
     connection_log = _reopen('log_on.txt')
-    print("\nConnecting...")
+    print("\nConnecting --> ")
     auth_data = {
         "action": "auth",
         "params": PAPER_KEY
@@ -198,7 +200,7 @@ def onn_open(ws):
         "params": "AM.TSLA"
     }
     ws.send(json.dumps(channel_data))
-    print("\nConnected...")
+    print("Connected.")
     connection_log.write(f'Logged In @ {datetime.now()}\n')
     connection_log.close()
 
@@ -221,18 +223,19 @@ def on_close(ws):
 def tesla(ws, message):
     candles = _reopen('candle.txt')
     log = _reopen('action.txt')
+    order_log = _reopen('order.txt')
 
-    #   CHECK FOR OPEN ORDERS AND RETURN IF ANY ARE PRESENT
-    # ===================================
+#   CHECK FOR OPEN ORDERS AND RETURN IF ANY ARE PRESENT
+# ===================================
     global current_tick, previous_tick, rolling_ten
     previous_tick = current_tick
     message = a.clean_and_load(message)
-    # ====================================
+# ====================================
     current_tick = json.loads(message)
-    # ===================================
+# ===================================
     times = current_tick['e']  # DATA TYPE IS INT
     times = time_converter(times)  # CONVERTS TYPE INT INTO DATETIME OBJECT THEN A STRING
-    # ===================================
+# ===================================
     ticker = current_tick['sym']
     open = current_tick['o']
     high = current_tick['h']
@@ -241,7 +244,7 @@ def tesla(ws, message):
     volatility = current_tick['h'] - current_tick['l']
     hlmean = (current_tick['h'] + current_tick['l']) / 2
     v_factor = (volatility / hlmean) * 100
-    # ===================================
+# ===================================
 
     # ADDS NEW CANDLESTICK AS TIME PROGRESSES
     minute_candlestick.append({
@@ -255,8 +258,11 @@ def tesla(ws, message):
         'volatilty': round(volatility, ndigits=2),
         'v_factor': round(v_factor, ndigits=2),
     })
+
     latest_candle = minute_candlestick[-1]
+
     candles.write(f'{latest_candle}\n')
+
     print(f'{latest_candle}\n')
 # ===================================
     _high = minute_candlestick[-1]['high']
@@ -278,27 +284,19 @@ def tesla(ws, message):
         except:
             log.write('Rolling ten appending failure')
 
-        print('Strategy is Running...\n')
-        log.write('Strategy Activated..\n\n')
+        print('-- Active --')
+        log.write('Strategy Activated..\n')
     else:
         print('Pending Action\n')
         return
-
     # =======================================================
-
-
     if len(rolling_ten) > 10:
-        rolling_10 = sum(rolling_ten[-10:])/10
-        log.write(f'Rolling_10: {rolling_10}')
+        rolling_10 = round(sum(rolling_ten[-10:])/10,3)
+        log.write(f'Rolling_10: {rolling_10}\n')
         print(f'Rolling_10{rolling_10}')
-
-
-
-
-
     # =======================================================
-    # WITH NO POSITION HERE
 
+    # WITH NO POSITION HERE
     if not position:
         log.write(f'There is no shares for {ticker}\n')
         print('NS')
@@ -308,16 +306,20 @@ def tesla(ws, message):
                 log.write(f'Attempting Buy --(Ref #1)-- Price:{_high}, Volatility_Coeff: {volatility_coefficient}\n')
                 order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                log.write(f'{buy}\n')
-                log.write(f'\n{sell}')
+                order_log.write(f'{buy}\n')
+                order_log.write(f'\n{sell}')
 
-        if rolling_10 > .5:
-            log.write(f'Condition: Rolling_10: {rolling_10}\n')
-            log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
-            order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-            buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-            log.write(f'{buy}\n')
-            log.write(f'\n{sell}')
+            try:
+                if rolling_10 > .5:
+                    log.write(f'Condition: Rolling_10: {rolling_10}\n')
+                    log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
+                    order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
+                    buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
+                    order_log.write(f'{buy}\n')
+                    order_log.write(f'\n{sell}')
+            except:
+                pass
+
 
     # WITH A POSITION
     else:
@@ -338,8 +340,8 @@ def tesla(ws, message):
                 log.write('Buying Ref #1 with position\n')
                 order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                log.write(f'{buy}\n')
-                log.write(f'\n{sell}\n')
+                order_log.write(f'{buy}\n')
+                order_log.write(f'\n{sell}\n')
         if 300 < _high < 500:
             if volatility_coefficient > 1:
                 log.write(
@@ -347,8 +349,9 @@ def tesla(ws, message):
                 log.write('Buying Ref #2\n')
                 order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                log.write(f'{buy}\n')
-                log.write(f'\n{sell}')
+                order_log.write(f'{buy}\n')
+                order_log.write(f'\n{sell}')
+
         if 500 <= _high < 4000:
             if volatility_coefficient > 1:
                 print(
@@ -356,27 +359,33 @@ def tesla(ws, message):
                 print('Buying Ref #4')
                 order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                print(f'{buy}\n')
-                print(f'\n{sell}')
+                order_log.write(f'{buy}\n')
+                order_log.write(f'\n{sell}')
 
-        if rolling_10 > .5:
-            log.write(f'Condition: Rolling_10: {rolling_10}\n')
-            log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
-            order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-            buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-            log.write(f'{buy}\n')
-            log.write(f'\n{sell}')
+            try:
+                if rolling_10 > .5:
+                    log.write(f'Condition: Rolling_10: {rolling_10}\n')
+                    log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
+                    order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
+                    buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
+                    order_log.write(f'{buy}\n')
+                    order_log.write(f'\n{sell}\n')
+            except:
+                pass
 
-    position = a.get_position()
-    print(f'NumBer Of Positions Held :: {len(position)}\n')
-    log.write(f'NumBer Of Positions Held ::{len(position)}\n\n')
+    positions = a.get_position()
+    print(f'Number Of Positions Held :: {len(positions)}')
+    log.write(f'Number Of Positions Held ::{len(positions)}\n')
     open_orders = a.get_orders()
-    log.write(f'Open orders: {len(open_orders)}\n ---------------\n')
+    log.write(f'Open orders: {len(open_orders)}\n ---------------\n\n')
+    print(f'Open orders: {len(open_orders)}\n ---------------\n')
 
-
-# close out loggin files
+    #-----------------------
+    # close out loggin files
+    #-----------------------
     candles.close()
     log.close()
+    order_log.close()
 
 if __name__ == '__main__':
     socket = "wss://alpaca.socket.polygon.io/stocks"
