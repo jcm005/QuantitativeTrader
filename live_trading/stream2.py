@@ -200,7 +200,7 @@ def onn_open(ws):
         "params": "AM.TSLA"
     }
     ws.send(json.dumps(channel_data))
-    print("Connected.")
+    print("Connected <--")
     connection_log.write(f'Logged In @ {datetime.now()}\n')
     connection_log.close()
 
@@ -283,7 +283,7 @@ def tesla(ws, message):
         try:
             rolling_ten.append(volatility_coefficient)
         except:
-            log.write('Rolling ten appending failure')
+            log.write('Rolling ten appending failure\n')
 
         print('-- Active --')
         log.write('Strategy Activated..\n')
@@ -291,15 +291,18 @@ def tesla(ws, message):
         print('Pending Action\n')
         return
 
-    if len(minute_candlestick) > 2:
-        big_drop_2 = (minute_candlestick[-3]['high'] - minute_candlestick[-1]['low'])
-    if len(minute_candlestick) > 4:
-        big_drop_4 = (minute_candlestick[-5]['high'] - minute_candlestick[-1]['low'])
+    try:
+        if len(minute_candlestick) > 2:
+            big_drop_2 = (minute_candlestick[-3]['high'] - minute_candlestick[-1]['low'])
+        if len(minute_candlestick) > 4:
+            big_drop_4 = (minute_candlestick[-5]['high'] - minute_candlestick[-1]['low'])
 
-    if big_drop_2 > 50:
-        log.write(f'Big drop 2 :{big_drop_2}')
-    if big_drop_4 > 50:
-        log.write(f'Big drop 4 :{big_drop_4}')
+        if big_drop_2 > 50:
+            log.write(f'Big drop 2 :{big_drop_2}\n')
+        if big_drop_4 > 50:
+            log.write(f'Big drop 4 :{big_drop_4}\n')
+    except:
+        log.write('Big drop failed\n')
 
 
     # =======================================================
@@ -385,6 +388,21 @@ def tesla(ws, message):
                     order_log.write(f'\n{sell}\n')
             except:
                 pass
+    # NOT IDEAL BUT IT MAY WORK
+        # maybe use close or low price....????
+    #  SHARE DEFICIT
+
+        try:
+            if (avg_price - _high) > 80:
+                log.write(f'Price is lower than avg share price: {avg_price - _high}\n')
+                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
+                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
+                order_log.write(f'{buy}\n')
+                order_log.write(f'\n{sell}\n')
+        except:
+            log.write('share deficit failed\n')
+
+
 
     positions = a.get_position()
     print(f'Number Of Positions Held :: {len(positions)}')
