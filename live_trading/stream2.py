@@ -8,7 +8,7 @@ import time
 import pytz
 from pytz import timezone
 
-
+# DO I DARE PUT IN BACKFILLING DATA Function
 
 
 est = pytz.timezone('US/Eastern')
@@ -298,11 +298,11 @@ def tesla(ws, message):
             big_drop_4 = (minute_candlestick[-5]['high'] - minute_candlestick[-1]['low'])
 
         if big_drop_2 > 50:
-            log.write(f'Big drop 2 :{big_drop_2}\n')
+            log.write(f'Big drop 2 -- Active -- :{big_drop_2}\n')
         if big_drop_4 > 50:
-            log.write(f'Big drop 4 :{big_drop_4}\n')
+            log.write(f'Big drop 4 -- Active -- :{big_drop_4}\n')
     except:
-        log.write('Big drop failed\n')
+        log.write('Big drop inactive\n')
 
 
     # =======================================================
@@ -334,7 +334,7 @@ def tesla(ws, message):
                     order_log.write(f'{buy}\n')
                     order_log.write(f'\n{sell}')
             except:
-                pass
+                log.write('Rolling_10 inactive')
 
 
     # WITH A POSITION
@@ -400,7 +400,7 @@ def tesla(ws, message):
                 order_log.write(f'{buy}\n')
                 order_log.write(f'\n{sell}\n')
         except:
-            log.write('share deficit failed\n')
+            log.write('No share deficit\n')
 
 
 

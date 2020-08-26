@@ -23,7 +23,7 @@ df= None
 asset = ['TSLA']
 time_interval = 'minute'
 start_date = '2020-08-25'
-time_delt = 1
+time_delt = 2
 time_period = 1
 
 
