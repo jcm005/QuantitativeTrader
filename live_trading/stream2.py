@@ -277,6 +277,7 @@ def tesla(ws, message):
 #                   START STRATEGY HERE
 # =======================================================
     position = a.get_position_for(ticker)
+
     if len(minute_candlestick) > 1:
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
         try:
@@ -289,6 +290,18 @@ def tesla(ws, message):
     else:
         print('Pending Action\n')
         return
+
+    if len(minute_candlestick) > 2:
+        big_drop_2 = (minute_candlestick[-3]['high'] - minute_candlestick[-1]['low'])
+    if len(minute_candlestick) > 4:
+        big_drop_4 = (minute_candlestick[-5]['high'] - minute_candlestick[-1]['low'])
+
+    if big_drop_2 > 50:
+        log.write(f'Big drop 2 :{big_drop_2}')
+    if big_drop_4 > 50:
+        log.write(f'Big drop 4 :{big_drop_4}')
+
+
     # =======================================================
     if len(rolling_ten) > 10:
         rolling_10 = round(sum(rolling_ten[-10:])/10,3)

@@ -6,10 +6,10 @@ import backtrader.feeds as btfeeds
 from data_grabber import *
 
 asset = ['TSLA']
-start_date = '2019-11-21'           # ticker symbols to be tested
+start_date = '2020-07-13'           # ticker symbols to be tested
 time_interval = 'minute'            # collect data per each ---
-time_delt = 7
-time_period =12
+time_delt = 1
+time_period =1
 
 def strat_runner(asset,strat_name, cash=10000.0,test=False ):
 
@@ -63,8 +63,11 @@ def logger():
 
 #===============================
 #===============================
-
 class SummerHaus05042020(bt.Strategy):
+    params = dict(
+        pfast = 10,
+        pslow = 30
+    )
     def log(self, txt, dt=None):
         ''' Logging function for this strategy'''
 
@@ -87,16 +90,13 @@ class SummerHaus05042020(bt.Strategy):
         self.failure = []
         self.opened =[]
 
-
         self.volatility = (self.high - self.low)
         self.hlmean = (self.high + self.low) / 2
         self.vole_coeff = (self.volatility / self.hlmean) * 100
-
         self.sma_1 = bt.indicators.MovingAverageSimple(self.vole_coeff,
                                                         plotname='SMA_1',
                                                         subplot=True,
                                                         period=1)
-
 
         self.sma_5 = bt.indicators.MovingAverageSimple(self.vole_coeff,
                                                      plotname='SMA_5',
@@ -108,8 +108,15 @@ class SummerHaus05042020(bt.Strategy):
                                                      period=10)
         self.sma_20 = bt.indicators.MovingAverageSimple(self.vole_coeff,
                                                         plotname='SMA_20',
-                                                        subplot=True,
+                                                        subplot=False,
                                                         period=100)
+
+        rolling_1 = bt.ind.SMA(period=self.p.pfast,subplot=True)
+        rolling_2 = bt.ind.SMA(period=self.p.pslow,subplot=True)
+        self.crossover = bt.ind.CrossOver(rolling_1,self.high[0])
+
+
+
     def next(self):
 
         def volatility(self, variable, num, ref):
@@ -201,7 +208,7 @@ class SummerHaus05042020(bt.Strategy):
                             self.order = self.buy(size=1, price=self.high[0])
 
         def mod_tesla(self):
-            ''' 137% return '''
+            ''' 37% return '''
         # NO POSITION
             if not self.position:
 
@@ -263,11 +270,72 @@ class SummerHaus05042020(bt.Strategy):
                 if self.sma_1[0] - self.sma_1[-1] >= 1:
                     self.log(f'higher 900 -- High: {self.high[0]} sma_1: {self.sma_1[0] - self.sma_1[-1]}')
                     self.order = self.buy()
+        def mod_tesla_2(self):
+            if not self.position:
+                # enter momentum thing here with ties to volatility
+                if self.sma_10[0] >= .5:
+                    self.log(f'Lower 900 -- High: {self.high[0]} sma_10: {self.sma_10[0]}')
+                    self.order = self.buy()
+                if self.sma_1[0] - self.sma_1[-1] >= 1:
+                    self.log(f'Lower 900 -- High: {self.high[0]} sma_1: {self.sma_1[0] - self.sma_1[-1]}')
+                    self.order = self.buy()
+
+                #TO RISKY
+              #  if self.crossover > 0:
+               #     self.log(f'crossover')
+               #     self.order = self.buy()
+
+            # with position
+            else:
+                for i in self.bought:
+                    if i > 1000:
+                        if self.high[0] - i >= 120:
+                            self.log(f'Selling --120 -- High: {self.high[0]} profit: {self.high[0] - i}')
+                            self.order = self.sell()
+                            self.bought.remove(i)
+                    if 1000 > i > 700:
+                        if self.high[0] - i >= 100:
+                            self.log(f'Selling --100 -- High: {self.high[0]} profit: {self.high[0] - i}')
+                            self.order = self.sell()
+                            self.bought.remove(i)
+                    if 700 > i > 500:
+                        if self.high[0] - i >= 80:
+                            self.log(f'Selling-- 80 -- High: {self.high[0]} profit: {self.high[0] - i}')
+                            self.order = self.sell()
+                            self.bought.remove(i)
+                    if 500 > i > 350:
+                        if self.high[0] - i >= 50:
+                            self.log(f'Selling-- 50 -- High: {self.high[0]} profit: {self.high[0] - i}')
+                            self.order = self.sell()
+                            self.bought.remove(i)
+                    if 350 > i:
+                        if self.high[0] - i >= 30:
+                            self.log(f'Selling-- 30 -- High: {self.high[0]} profit: {self.high[0] - i}')
+                            self.order = self.sell()
+                            self.bought.remove(i)
+
+                    if i - self.high[0] > 120:
+                        self.log(f'CLEARANCE 120 --: {self.high[0]} i: {i}')
+                        self.order = self.buy()
+
+                if self.sma_10[0] >= .5:
+                    self.log(f'P-ROLLING -- High: {self.high[0]} sma_10: {self.sma_10[0]}')
+                    self.order = self.buy()
+                if self.sma_1[0] - self.sma_1[-1] >= 1:
+                    self.log(f'P-VOLATILTIY -- High: {self.high[0]} sma_1: {self.sma_1[0] - self.sma_1[-1]}')
+                    self.order = self.buy()
+
+                if self.high[-5] - self.high[0] > 50:
+                    self.log('BIG PRICE DROP')
+                    self.order = self.buy()
+
+               # if self.crossover < 0:
+                #    self.log(f'crossover')
+                 #   self.order = self.sell()
 
 
-
-
-        mod_tesla(self)
+       # mod_tesla(self)
+        mod_tesla_2(self)
     def notify_order(self, order):
 
         self.trade_info = {
@@ -324,4 +392,4 @@ class SummerHaus05042020(bt.Strategy):
 if __name__ == '__main__':
     data_flusher(asset, time_interval) # here in case program fails it will not double data
     Acummator(asset,start_date,time_interval,time_delt,time_period)
-    strat_runner(asset,SummerHaus05042020,2000,test=False)
+    strat_runner(asset,SummerHaus05042020,100000,test=False)
