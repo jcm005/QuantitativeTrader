@@ -97,4 +97,8 @@ if __name__ == '__main__':
     else:
         pass
     order = get_orders()
-    print(order)
+
+    account = get_account()
+    print(account)
+    buying_power = account['buying_power']
+    print(buying_power)

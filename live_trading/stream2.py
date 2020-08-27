@@ -7,17 +7,20 @@ import access as a
 import time
 import pytz
 from pytz import timezone
+from keys import *
 
-# DO I DARE PUT IN BACKFILLING DATA Function
+# DO I DARE PUT IN BACKFILLING DATA Function -- i did i did it
 
 
 est = pytz.timezone('US/Eastern')
 minutes_processed = {}
 minute_candlestick = []
 rolling_ten = []
+over_night = []
 current_tick = None
 previous_tick = None
 in_position = False
+back_log_volatility = False
 
 candles = open('candle.txt', 'a')
 connection_log = open('log_on.txt', 'a')
@@ -27,6 +30,56 @@ order_log = open('order.txt','a')
 candles.truncate(0)
 log.truncate(50)
 order_log.truncate(0)
+
+
+def back_logger(ticker, time_interval='minute'):
+    """Retrieves historical data based on passed values of the polygon api
+
+        asset:  pass in your desired ticker symbols
+        time_interval =  defaulted to day --> minute, hour,day,month,year
+        start and end date in the format 'yyyy-mm-dd'
+
+    """
+    import alpaca_trade_api as tradeapi
+    from datetime import datetime, timedelta
+    raw_past = timedelta(days=1)
+    raw_now = datetime.now()
+    yesterday = raw_now - raw_past
+    start = datetime.strftime(yesterday, '%Y-%m-%d')
+    final = datetime.strftime(raw_now, '%Y-%m-%d')
+    api = tradeapi.REST(API_KEY, SECRET_KEY, api_version='v2')
+    # for manually grabbing data and doing an analysis by hand or ipython file
+    data = api.polygon.historic_agg_v2(ticker, 1, time_interval, start, final)
+
+    for bar in data:
+
+        # catenuated the last few items from the time stamp
+        # to removve errors unsure what this information provides
+        _open = str(bar.open)
+        _high = str(bar.high)
+        _low = str(bar.low)
+        _close = str(bar.close)
+        _volume = str(int(bar.volume))
+
+        x = str(bar.timestamp)
+        hour = int(x[11:13])
+        day = int(x[8:10])
+        if day == 25:
+            if hour >= 16:
+                time = x[:19]
+                over_night.append({
+                    'time': time,
+                    'high': _high,
+                })
+        else:
+            if hour <= 7:
+                time2 = x[:19]
+                over_night.append({
+                    'time': time2,
+                    'high': _high,
+                })
+
+    return over_night
 
 def _reopen(file):
     file_to_repoen = open(file, 'a')
@@ -188,8 +241,30 @@ def check_time():
         connection_log.write('The day has ended\n')
 # ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
 def onn_open(ws):
+    global over_night
     connection_log = _reopen('log_on.txt')
+    log = _reopen('action.txt')
     print("\nConnecting --> ")
+
+    try:
+        back_logger('TSLA')
+        over_night = back_logger('TSLA')
+        print(len(over_night))
+
+        if len(over_night) > 2:
+            last_night = (over_night[0])
+            this_morn = (over_night[-1])
+            log.write(f'Back logging successful\n Last_night: {last_night}\n this morn: {this_morn}\n')
+            if int(this_morn['high'].split('.')[0]) - int(last_night['high'].split('.')[0]) >= 25:
+                back_log_volatility = True
+                log.write('Volatile pre-markets initiating order --> buy')
+            else:
+                pass
+
+    except:
+        log.write('Back Logging Function Failed\n')
+        print('Back Logging Function Failed')
+
     auth_data = {
         "action": "auth",
         "params": PAPER_KEY
@@ -202,7 +277,12 @@ def onn_open(ws):
     ws.send(json.dumps(channel_data))
     print("Connected <--")
     connection_log.write(f'Logged In @ {datetime.now()}\n')
+
+    #there will be a back log failure on mondays
+
+
     connection_log.close()
+
 
 def on_error(ws, error):
     print(error)
@@ -221,13 +301,14 @@ def on_close(ws):
     log.close()
 # -----------------------------
 def tesla(ws, message):
+
     candles = _reopen('candle.txt')
     log = _reopen('action.txt')
     order_log = _reopen('order.txt')
 
 #   CHECK FOR OPEN ORDERS AND RETURN IF ANY ARE PRESENT
 # ===================================
-    global current_tick, previous_tick, rolling_ten
+    global current_tick, previous_tick, rolling_ten, back_log_volatility
     previous_tick = current_tick
     message = a.clean_and_load(message)
 # ====================================
@@ -267,21 +348,40 @@ def tesla(ws, message):
 # ===================================
     _high = minute_candlestick[-1]['high']
     _time = minute_candlestick[-1]['time']
+    # difference between prices
     _volatility_coeff = minute_candlestick[-1]['volatilty']
+    #differnece in the volatility percentage of price
     v_param = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
     log.write(f'Time: {_time}, High: {_high}, V_param: {v_param}\n')
 # ===================================
 
+#       ^^^^ GENERIC STRATEGY INFORMATION ^^^^^^
 
 # =======================================================
 #                   START STRATEGY HERE
 # =======================================================
     position = a.get_position_for(ticker)
+    account = a.get_account()
 
-    if len(minute_candlestick) > 1:
+    buying_power = account['buying_power'].split('.')[0]
+   # print(buying_power)
+    try:
+        if back_log_volatility:
+            log.write(f'Condition: Back log volatility.\n')
+            log.write(f'Attempting Buy --(Ref #10101)-- Price:{_high}: back log volatility {back_log_volatility}\n')
+            order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
+            buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
+            order_log.write(f'{buy}\n')
+            order_log.write(f'\n{sell}')
+
+    except:
+        print('failure back log volatility')
+
+
+    if len(minute_candlestick) > 1 and int(buying_power) > _high:
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
         try:
-            rolling_ten.append(volatility_coefficient)
+            rolling_ten.append(minute_candlestick[-1]['v_factor'])
         except:
             log.write('Rolling ten appending failure\n')
 
@@ -304,13 +404,22 @@ def tesla(ws, message):
     except:
         log.write('Big drop inactive\n')
 
+# =======================================================
+#               INDICATORS
+# =======================================================
 
-    # =======================================================
-    if len(rolling_ten) > 10:
-        rolling_10 = round(sum(rolling_ten[-10:])/10,3)
-        log.write(f'Rolling_10: {rolling_10}\n')
-        print(f'Rolling_10{rolling_10}')
-    # =======================================================
+    try:
+        if len(rolling_ten) > 10:
+            rolling_10 = rolling_ten[-10:]
+            summed_up = sum(rolling_10)
+            roll = summed_up/10
+            log.write(f'Rolling_10: {roll}\n')
+    except:
+        log.write('Rolling_10 Faileure\n')
+
+# =======================================================
+#               LOGIC
+# =======================================================
 
     # WITH NO POSITION HERE
     if not position:
@@ -335,7 +444,6 @@ def tesla(ws, message):
                     order_log.write(f'\n{sell}')
             except:
                 log.write('Rolling_10 inactive')
-
 
     # WITH A POSITION
     else:
@@ -403,6 +511,9 @@ def tesla(ws, message):
             log.write('No share deficit\n')
 
 
+ # =======================================================
+ #               OUTRO
+ # =======================================================
 
     positions = a.get_position()
     print(f'Number Of Positions Held :: {len(positions)}')
