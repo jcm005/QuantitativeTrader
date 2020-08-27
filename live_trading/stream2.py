@@ -353,10 +353,8 @@ def tesla(ws, message):
     #differnece in the volatility percentage of price
     v_param = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
     log.write(f'Time: {_time}, High: {_high}, V_param: {v_param}\n')
-# ===================================
-
+# ======================================================
 #       ^^^^ GENERIC STRATEGY INFORMATION ^^^^^^
-
 # =======================================================
 #                   START STRATEGY HERE
 # =======================================================
@@ -365,6 +363,10 @@ def tesla(ws, message):
 
     buying_power = account['buying_power'].split('.')[0]
    # print(buying_power)
+
+# =======================================================
+#               back log volatility buy
+# =======================================================
     try:
         if back_log_volatility:
             log.write(f'Condition: Back log volatility.\n')
@@ -377,6 +379,9 @@ def tesla(ws, message):
     except:
         print('failure back log volatility')
 
+# =======================================================
+#               STrategy
+# =======================================================
 
     if len(minute_candlestick) > 1 and int(buying_power) > _high:
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
