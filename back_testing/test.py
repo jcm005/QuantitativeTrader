@@ -6,10 +6,10 @@ import backtrader.feeds as btfeeds
 from data_grabber import *
 
 asset = ['TSLA']
-start_date = '2020-08-24'           # ticker symbols to be tested
+start_date = '2020-07-13'           # ticker symbols to be tested
 time_interval = 'minute'            # collect data per each ---
-time_delt = 3
-time_period =1
+time_delt = 7
+time_period =4
 
 def strat_runner(asset,strat_name, cash=10000.0,test=False ):
 
@@ -288,7 +288,11 @@ class SummerHaus05042020(bt.Strategy):
                #     self.order = self.buy()
 
                 if self.high[-3] - self.high[0] > 50:
-                    self.log('BIG PRICE DROP')
+                    self.log('BIG PRICE DROP 3')
+                    self.order = self.buy()
+
+                if self.high[-3] - self.high[0] > 50:
+                    self.log('BIG PRICE DROP 5')
                     self.order = self.buy()
 
             # with position
@@ -332,7 +336,11 @@ class SummerHaus05042020(bt.Strategy):
                     self.order = self.buy()
 
                 if self.high[-3] - self.high[0] > 50:
-                    self.log('BIG PRICE DROP')
+                    self.log('BIG PRICE DROP 3 ')
+                    self.order = self.buy()
+
+                if self.high[-5] - self.high[0] > 50:
+                    self.log('BIG PRICE DROP 5 ')
                     self.order = self.buy()
 
                # if self.crossover < 0:
@@ -397,4 +405,4 @@ class SummerHaus05042020(bt.Strategy):
 if __name__ == '__main__':
     data_flusher(asset, time_interval) # here in case program fails it will not double data
     Acummator(asset,start_date,time_interval,time_delt,time_period)
-    strat_runner(asset,SummerHaus05042020,10000,test=False)
+    strat_runner(asset,SummerHaus05042020,2000,test=False)

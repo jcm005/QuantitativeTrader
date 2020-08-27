@@ -11,7 +11,7 @@ pd.set_option('max_rows', None)
 start_date = '2020-08-21'
 asset = ['TSLA']  # ticker symbols to be testedp
 time_interval = 'minute'  # collect data per each ---
-time_delt = 1  # difference in days between end time and start time, lowe number is suggested so no data lost
+time_delt = 3  # difference in days between end time and start time, lowe number is suggested so no data lost
 time_period = 1  # time_period * time_delt = number of days need for data accumualation
 
 

@@ -64,7 +64,7 @@ def back_logger(ticker, time_interval='minute'):
         x = str(bar.timestamp)
         hour = int(x[11:13])
         day = int(x[8:10])
-        if day == 25:
+        if day == int(start[-2:]): # Checks if it is previous day or not
             if hour >= 16:
                 time = x[:19]
                 over_night.append({
@@ -365,7 +365,7 @@ def tesla(ws, message):
    # print(buying_power)
 
 # =======================================================
-#               back log volatility buy
+#               Back log volatility buy
 # =======================================================
     try:
         if back_log_volatility:
@@ -391,11 +391,12 @@ def tesla(ws, message):
             log.write('Rolling ten appending failure\n')
 
         print('-- Active --')
-        log.write('Strategy Activated..\n')
+        log.write('-- Strategy Activated --\n')
     else:
         print('Pending Action\n')
         return
 
+# BIG DROP
     try:
         if len(minute_candlestick) > 2:
             big_drop_2 = (minute_candlestick[-3]['high'] - minute_candlestick[-1]['low'])
@@ -420,7 +421,7 @@ def tesla(ws, message):
             roll = summed_up/10
             log.write(f'Rolling_10: {roll}\n')
     except:
-        log.write('Rolling_10 Faileure\n')
+        log.write('Rolling_10 Failure\n')
 
 # =======================================================
 #               LOGIC
@@ -440,7 +441,7 @@ def tesla(ws, message):
                 order_log.write(f'\n{sell}')
 
             try:
-                if rolling_10 > .5:
+                if roll > .5:
                     log.write(f'Condition: Rolling_10: {rolling_10}\n')
                     log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
                     order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
@@ -492,8 +493,8 @@ def tesla(ws, message):
                 order_log.write(f'\n{sell}')
 
             try:
-                if rolling_10 > .5:
-                    log.write(f'Condition: Rolling_10: {rolling_10}\n')
+                if roll > .5:
+                    log.write(f'Condition: Rolling_10: {roll}\n')
                     log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
                     order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
                     buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')

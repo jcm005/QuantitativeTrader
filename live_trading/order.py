@@ -50,18 +50,20 @@ class Order():
                     'order_id': raw_order['id'],
                 }
                 orders_list.append(simple)
-
-                if raw_order['legs'] != None:
-                    limit_order = raw_order['legs'][0]
-                    limit = {
-                        'symbol': limit_order['symbol'],
-                        'status': limit_order['status'],
-                        'order_type': limit_order['order_type'],
-                        'limit_price': limit_order['limit_price'],
-                        'side': limit_order['side'],
-                        # 'submitted_at': time,
-                        'order_id': limit_order['id'],
-                    }
+                try:
+                    if raw_order['legs'] != None:
+                        limit_order = raw_order['legs'][0]
+                        limit = {
+                            'symbol': limit_order['symbol'],
+                            'status': limit_order['status'],
+                            'order_type': limit_order['order_type'],
+                            'limit_price': limit_order['limit_price'],
+                            'side': limit_order['side'],
+                            # 'submitted_at': time,
+                            'order_id': limit_order['id'],
+                        }
+                except:
+                    pass
                     orders_list.append(limit)
                     try:
                         stop_order = raw_order['legs'][1]
@@ -117,10 +119,11 @@ class Order():
             order_class=None,
             stop_price=None,
             limit_price=None,
-            stop_limit_price=None):
+            stop_limit_price=None,
+            extended_hours=None):
 
-        if stop_price < (self.price/1001):
-            return 'stop price has to be greater then current price/1001'
+
+
 
         self.qty = qty
         self.profit = profit
@@ -132,13 +135,27 @@ class Order():
             'time_in_force': tif,
         }
 
+        if extended_hours:
+            order['time_in_force'] = 'day'
+            if not limit_price:
+                print('need a limit price for extended hours')
+            order['type'] = 'limit'
+            order['limit_price'] = limit_price
+            order['extended_hours'] = True
+            print(order)
+
         # OTO IS GOOD FOR A BUY AND A TAKE PROFIT WITH NO SELLING POINT FOR SAFETY
+
         if order_class == 'oto':
+
             order['order_class'] = 'oto'
             order['take_profit'] = {
                 'limit_price': self.price + profit
             }
         elif order_class == 'bracket':
+            if stop_price < (self.price / 1001):
+                return 'stop price has to be greater then current price/1001'
+
             order['order_class'] = order_class
             order['take_profit'] = {
                 'limit_price': self.price + profit
