@@ -8,6 +8,7 @@ import time
 import pytz
 from pytz import timezone
 from order import Order
+from keys import *
 
 # this works tesla cannot be imported has to be inside
 est = pytz.timezone('US/Eastern')
@@ -42,6 +43,8 @@ def back_logger(ticker, time_interval='minute'):
     """
     import alpaca_trade_api as tradeapi
     from datetime import datetime, timedelta
+    global over_night
+
     raw_past = timedelta(days=1)
     raw_now = datetime.now()
     yesterday = raw_now - raw_past
@@ -144,12 +147,7 @@ def onn_open(ws):
     print("\nConnecting --> ")
 
     try:
-        try:
-            over_night = back_logger('TSLA')
-        except:
-            print('broken at the function')
-        print(len(over_night))
-
+        over_night = back_logger('TSLA')
         if len(over_night) > 2:
             last_night = (over_night[0])
             this_morn = (over_night[-1])
@@ -245,29 +243,37 @@ def tesla(ws, message):
     log.write(f'Time: {_time}, High: {_high}, Volatility_Coefficient: {_volatility_coeff}\n')
 
     v_param = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
-
+    log.write(f'Time: {_time}, High: {_high}, V_param: {v_param}\n')
 
 # =======================================================
 #                   START STRATEGY HERE
 # =======================================================
     tsla = Order('TSLA',_high)
-
     position = a.get_position_for(ticker)
     account = a.get_account()
+
     buying_power = account['buying_power'].split('.')[0]
     print(buying_power)
 
     try:
         if back_log_volatility:
             log.write(f'Condition: Back log volatility.\n')
-            log.write(f'Attempting Buy --(Ref #10101)-- Price:{_high}: back log volatility {back_log_volatility}\n')
-            order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-            buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-            order_log.write(f'{buy}\n')
-            order_log.write(f'\n{sell}')
+            log.write(f'Attempting Buy --(Ref NoRef)-- Price:{_high}: back log volatility {back_log_volatility}\n')
+
+            order_bV = tsla.buy(order_type='market',
+                               order_class='bracket',
+                               qty=1, tif='day',
+                               limit_price= 0,
+                               # ===  OTO / Bracket   ===
+                              # profit=100,
+                               # ===   Bracket   ===
+                               #stop_limit_price=_high - 51, stop_price=_high - 40,
+                               )
+            order_log.write(f'{order_bV}\n')
+
 
     except:
-        print('failure back log volatility')
+        print('failure back log volatility order')
 
     # BUYING POWER CONDITION MAY NOT HAVE TO BE MET BECAUE OF ALAPCA RULES
 
@@ -277,12 +283,12 @@ def tesla(ws, message):
             rolling_ten.append(minute_candlestick[-1]['v_factor'])
         except:
             log.write('Rolling ten appending failure\n')
-
         print('-- Active --')
         log.write('Strategy Activated..\n')
     else:
         print('Collecting Information')
         return
+#BIG DROP
     try:
         if len(minute_candlestick) > 2:
             big_drop_2 = (minute_candlestick[-3]['high'] - minute_candlestick[-1]['low'])
@@ -307,17 +313,15 @@ def tesla(ws, message):
             roll = summed_up/10
             log.write(f'Rolling_10: {roll}\n')
     except:
-        log.write('Rolling_10 Faileure\n')
+        log.write('Rolling_10 Failure\n')
 # =======================================================
 #               WITH NO POSITION HERE
 # =======================================================
 
     if not position:
-        log.write('no_position\n')
-
+        log.write(f'There is no shares for {ticker}\n')
         if _high < 5000:
             if volatility_coefficient > 1:
-                log.write(f'VC: {volatility_coefficient}')
                 log.write(f'Condition: Volatility Coeff: {volatility_coefficient}\n')
                 log.write(f'Attempting Buy --(Ref #1)-- Price:{_high}, Volatility_Coeff: {volatility_coefficient}\n')
 
@@ -325,24 +329,30 @@ def tesla(ws, message):
                              order_class='bracket',
                              qty=1,tif='gtc',
                              limit_price=0,
-                        # === bracket order options  ===
-                             profit=100,
-                             stop_limit_price=_high - 51, stop_price=_high - 40,
+                        # ===  OTO / Bracket   ===
+                             profit= 100,
+                        # ===   Bracket   ===
+                                   stop_limit_price=_high - 51, stop_price=_high - 40,
                              )
-    # tsla has its own logging function. implement this once this is integrated
                 log.write(f'Reference 1 Order: {order_1}\n')
                 print(order_1)
 
             try:
                 if roll > .5:
-                    log.write(f'Condition: Rolling_10: {rolling_10}\n')
-                    log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
-                    order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                    buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                    order_log.write(f'{buy}\n')
-                    order_log.write(f'\n{sell}')
+                    log.write(f'Condition: Rolling_10: {roll}\n')
+                    log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {roll}\n')
+                    order_rolling = tsla.buy(order_type='market',
+                                       order_class='bracket',
+                                       qty=1, tif='gtc',
+                                       # ===  OTO / Bracket   ===
+                                       profit=100,
+                                       # ===   Bracket   ===
+                                       stop_limit_price=_high - 51, stop_price=_high - 40,
+                                       )
+                    log.write(f'Reference 1 Order: {order_rolling}\n')
+                    print(order_rolling)
             except:
-                log.write('Rolling_10 inactive')
+                log.write('Rolling_10 inactive\n')
 
 
 # =======================================================
@@ -367,7 +377,7 @@ def tesla(ws, message):
                 log.write('Buying Ref #1 with position\n')
                 order_2 = tsla.buy(order_type='market',
                                    order_class='bracket',
-                                   qty=5, tif='gtc',
+                                   qty=3, tif='gtc',
                                    limit_price=0,
                                    # === bracket order options  ===
                                    profit=30,
@@ -411,14 +421,32 @@ def tesla(ws, message):
                 print(order_4)
         try:
             if roll > .5:
-                log.write(f'Condition: Rolling_10: {rolling_10}\n')
-                log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
+                log.write(f'Condition: Rolling_10: {roll}\n')
+                log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {roll}\n')
+                order_rolling = tsla.buy(order_type='market',
+                                         order_class='bracket',
+                                         qty=1, tif='gtc',
+                                         limit_price=0,
+                                         # ===  OTO / Bracket   ===
+                                         profit=100,
+                                         # ===   Bracket   ===
+                                         stop_limit_price=_high - 51, stop_price=_high - 40,
+                                         )
+                log.write(f'Reference 1 Order: {order_rolling}\n')
+                print(order_rolling)
+        except:
+            log.write('Rolling_10 inactive\n')
+
+        try:
+            if (avg_price - _high) > 80:
+                log.write(f'Price is lower than avg share price: {avg_price - _high}\n')
                 order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
                 buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
                 order_log.write(f'{buy}\n')
-                order_log.write(f'\n{sell}')
+                order_log.write(f'\n{sell}\n')
         except:
-            log.write('Rolling_10 inactive')
+            log.write('No share deficit\n')
+
 
     positions = a.get_position()
     print(f'Number Of Positions Held :: {len(positions)}')

@@ -1,6 +1,9 @@
 import requests, json, time
 from streamkeys import *
 import access as a
+from datetime import datetime
+import pytz
+from pytz import timezone
 
 class Order():
 # LOGGIN FUNCTION FOR OUTPUTTNIG TO LOG FILES
@@ -89,10 +92,22 @@ class Order():
         except KeyError:
             return 'Order Failed'
 
+    def check_time(self):
+        tz =timezone('US/Eastern')
+        right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tz)
+        right_now = datetime.strftime(right_now, '%H:%M:%S')
+        if int(right_now[0:2]) >= 16 or int(right_now[0:2]) <= 9:
+            extended_hours = True
+        else:
+            extended_hours = False
+        print(f'Extended hours are: {extended_hours}')
+        return extended_hours
+
     def position_check_for_selling(self):
-        position = a.get_orders() # this does no work because it could be get sell orders
-        lenny = len(position)
-        return lenny
+            position = a.get_orders() # this does no work because it could be get sell orders
+            lenny = len(position)
+            return lenny
+
     def place_order(self,order):
         '''
         SENDS ORDER TO ALPACA FOR PROCESSING
@@ -111,10 +126,12 @@ class Order():
         self.log(self.candle,f'Order Status is: {status}\n')
         return status
 #  NEWLY ORDERS OTO BRACKET LIMIT MARKET
-    def buy(self,order_type,
+    def buy(self,
+            order_type,
             qty,
             tif,
             profit=0,
+
             ref=None,
             order_class=None,
             stop_price=None,
@@ -123,7 +140,9 @@ class Order():
             extended_hours=None):
 
 
-
+        # CHECK TIME FIRST
+        extended_hours = self.check_time()
+        #________________
 
         self.qty = qty
         self.profit = profit
@@ -137,11 +156,16 @@ class Order():
 
         if extended_hours:
             order['time_in_force'] = 'day'
-            if not limit_price:
-                print('need a limit price for extended hours')
             order['type'] = 'limit'
-            order['limit_price'] = limit_price
             order['extended_hours'] = True
+            if not limit_price:
+                order['limit_price'] = self.price + 10
+                print('need a limit price for extended hours')
+            else:
+                order['limit_price'] = limit_price
+            if order_class:
+                order_class = None
+
             print(order)
 
         # OTO IS GOOD FOR A BUY AND A TAKE PROFIT WITH NO SELLING POINT FOR SAFETY

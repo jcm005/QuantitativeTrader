@@ -244,6 +244,7 @@ def onn_open(ws):
     global over_night
     connection_log = _reopen('log_on.txt')
     log = _reopen('action.txt')
+
     print("\nConnecting --> ")
 
     try:
@@ -282,7 +283,6 @@ def onn_open(ws):
 
 
     connection_log.close()
-
 
 def on_error(ws, error):
     print(error)
@@ -389,7 +389,6 @@ def tesla(ws, message):
             rolling_ten.append(minute_candlestick[-1]['v_factor'])
         except:
             log.write('Rolling ten appending failure\n')
-
         print('-- Active --')
         log.write('-- Strategy Activated --\n')
     else:
@@ -442,14 +441,14 @@ def tesla(ws, message):
 
             try:
                 if roll > .5:
-                    log.write(f'Condition: Rolling_10: {rolling_10}\n')
-                    log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
+                    log.write(f'Condition: Rolling_10: {roll}\n')
+                    log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {roll}\n')
                     order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
                     buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
                     order_log.write(f'{buy}\n')
                     order_log.write(f'\n{sell}')
             except:
-                log.write('Rolling_10 inactive')
+                log.write('Rolling_10 inactive\n')
 
     # WITH A POSITION
     else:

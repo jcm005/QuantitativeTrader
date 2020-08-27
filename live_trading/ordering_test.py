@@ -9,7 +9,7 @@ if __name__ == '__main__':
                    order_type='market',
                    qty=1, tif='gtc',
                 # USE THIS ONLY FOR LIMIT TYPE ORDER
-                   limit_price=0,
+                   #limit_price=0,
                 # UNCOMMENT, FOR THE USE OF BRACKETT ORDERS
                    profit=100,
                    #stop_limit_price=current_price - 51,
