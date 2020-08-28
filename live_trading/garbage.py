@@ -22,10 +22,10 @@ in_position = False
 back_log_volatility = False
 
 
-candles = open('candle.txt', 'a')
-connection_log = open('log_on.txt', 'a')
-log = open('action.txt', 'a')
-order_log = open('order.txt','a')
+candles = open('candle2.txt', 'a')
+connection_log = open('log_on2.txt', 'a')
+log = open('action2.txt', 'a')
+order_log = open('order2.txt','a')
 
 
 candles.truncate(0)
@@ -98,7 +98,7 @@ def time_converter(some_time):
     return newtimes
 
 def check_time():
-    connection_log = _reopen('log_on.txt')
+    connection_log = _reopen('log_on2.txt')
     print('Checking Time')
     connection_log.write('Checking Time\n')
 
@@ -140,9 +140,9 @@ def check_time():
 # ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
 def onn_open(ws):
     global over_night
-    connection_log = _reopen('log_on.txt')
+    connection_log = _reopen('log_on2.txt')
     log = _reopen('action.txt')
-    order_log = _reopen('order.txt')
+    order_log = _reopen('order2.txt')
 
     print("\nConnecting --> ")
 
@@ -185,8 +185,8 @@ def on_close(ws):
     tiz = timezone('US/Eastern')
     right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tiz)
     right_now = datetime.strftime(right_now, '%H:%M:%S')
-    log = _reopen('action.txt')
-    connection_log = _reopen('log_on.txt')
+    log = _reopen('action2.txt')
+    connection_log = _reopen('log_on2.txt')
     log.write('Lost Connection See Log_on.txt\n')
     connection_log.write(f'Connection Closed {right_now} \nWorking on Re-establishing Connection...@{datetime.now()}\n')
     check_time()
@@ -196,9 +196,9 @@ def on_close(ws):
 
 
 def tesla(ws, message):
-    candles = _reopen('candle.txt')
-    log = _reopen('action.txt')
-    order_log = _reopen('order.txt')
+    candles = _reopen('candle2.txt')
+    log = _reopen('action2.txt')
+    order_log = _reopen('order2.txt')
 
 
     global current_tick, previous_tick, rolling_ten, back_log_volatility
