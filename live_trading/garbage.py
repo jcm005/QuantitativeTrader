@@ -139,7 +139,7 @@ def check_time():
         connection_log.write('The day has ended\n')
 # ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
 def onn_open(ws):
-    global over_night
+    global over_night,back_log_volatility
     connection_log = _reopen('log_on2.txt')
     log = _reopen('action.txt')
     order_log = _reopen('order2.txt')

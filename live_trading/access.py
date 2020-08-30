@@ -4,12 +4,12 @@ import alpaca_trade_api as tradeapi
 from datetime import datetime
 #for non paper we can use tradeapi.REST(insert keys here)
 
-BASE_URL = "https://paper-api.alpaca.markets"
+BASE_URL = "https://api.alpaca.markets"
 ACCOUNT_URL = f'{BASE_URL}/v2/account'
 ORDERS_URL = f'{BASE_URL}/v2/orders'
 POSITIONS_URL = f'{BASE_URL}/v2/positions'
 POSITION_FOR_URL = f'{BASE_URL}/v2/positions/'
-HEADERS = {'APCA-API-KEY-ID': PAPER_KEY, 'APCA-API-SECRET-KEY':SECRET__KEY}
+HEADERS = {'APCA-API-KEY-ID': API_KEY, 'APCA-API-SECRET-KEY':SECRET__KEY}
 
 #requests.get(ACCOUNT_URL,headers=HEADERS)
 #api = tradeapi.REST(API_KEY, SECRET_KEY, api_version='v2')
@@ -89,16 +89,7 @@ def order_details(raw_order,output='detailed'):
 
 if __name__ == '__main__':
 
-    position = get_position_for('TSLA')
-    if position:
-        qty_pos = position['qty']
-        cost_basis = position['cost_basis']
-        avg_price = position['avg_entry_price']
-    else:
-        pass
-    order = get_orders()
+
 
     account = get_account()
     print(account)
-    buying_power = account['buying_power']
-    print(buying_power)

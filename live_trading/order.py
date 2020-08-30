@@ -11,7 +11,7 @@ class Order():
         self.symbol = symbol
         self.price = current_price
         # --------------------------
-        self.BASE_URL =  "https://paper-api.alpaca.markets"
+        self.BASE_URL =  "https://api.alpaca.markets"
         self.ORDER_URL = f'{self.BASE_URL}/v2/orders'
         self.candle = open('candle.txt','a')
         # --------------------------
@@ -33,6 +33,11 @@ class Order():
         :return:
         '''
         orders_list = []
+        try:
+            if raw_order['code']:
+                return raw_order
+        except:
+            pass
         print(raw_order)
         if raw_order['legs'] != None:
             limit_order = raw_order['legs'][0]
@@ -115,7 +120,7 @@ class Order():
         :return: DICTIONARY THAT WAS OUTPUTTED FROM BYTE DECODED,
         ALONG WITH A BOOLEAN BASED ON SUCCESSION STATUS
         '''
-        HEADERS = {'APCA-API-KEY-ID': PAPER_KEY, 'APCA-API-SECRET-KEY': SECRET__KEY}
+        HEADERS = {'APCA-API-KEY-ID': API_KEY, 'APCA-API-SECRET-KEY': SECRET__KEY}
         order_sent = self.byte_decoder(
             requests.post(
                 self.ORDER_URL,
@@ -142,6 +147,7 @@ class Order():
 
         # CHECK TIME FIRST
         extended_hours = self.check_time()
+        print(extended_hours)
         #________________
 
         self.qty = qty

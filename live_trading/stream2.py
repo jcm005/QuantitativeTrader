@@ -8,8 +8,8 @@ import time
 import pytz
 from pytz import timezone
 from keys import *
+from order import Order
 
-# DO I DARE PUT IN BACKFILLING DATA Function -- i did i did it
 
 
 est = pytz.timezone('US/Eastern')
@@ -17,6 +17,8 @@ minutes_processed = {}
 minute_candlestick = []
 rolling_ten = []
 over_night = []
+simple_moving_average_10 = []
+simple_moving_average_30 = []
 current_tick = None
 previous_tick = None
 in_position = False
@@ -47,7 +49,7 @@ def back_logger(ticker, time_interval='minute'):
     yesterday = raw_now - raw_past
     start = datetime.strftime(yesterday, '%Y-%m-%d')
     final = datetime.strftime(raw_now, '%Y-%m-%d')
-    api = tradeapi.REST(API_KEY, SECRET_KEY, api_version='v2')
+    api = tradeapi.REST(API__KEY, SECRET_KEY, api_version='v2')
     # for manually grabbing data and doing an analysis by hand or ipython file
     data = api.polygon.historic_agg_v2(ticker, 1, time_interval, start, final)
 
@@ -92,113 +94,6 @@ def time_converter(some_time):
     newtimes = newtime.strftime('%Y-%m-%d, %a, %H:%M')
     return newtimes
 
-def intiate_order(
-        symbol,
-        qty=1,
-        order_type='market',
-        side=None,
-        time_in_force='day',
-        limit_price=None,
-        stop_price=None,
-        order_class=None,
-        stop_limit_price=None):
-    '''INTIATION OF AN ORDER TO BE PASSED IN ACCESS.PY PLACE_ORDER COMMAND'''
-    global log
-    log.write('Initiating Order\n')
-    order = {
-        'symbol': symbol,
-        'qty': qty,
-        'side': side,
-        'type': order_type,
-        'time_in_force': time_in_force,
-        # append this into the dictionary if order type is limit or stop limit
-        # 'stop_price':int,
-        # https://alpaca.markets/docs/api-documentation/api-v2/orders/
-    }
-
-    if order_class == 'bracket':
-        order['order_class'] = 'bracket'
-        order['take_profit'] = {
-            'limit_price': limit_price
-        }
-        order['stop_loss'] = {
-            'stop_price': stop_price,
-            'limit_price': stop_limit_price
-        }
-    # OCO ORDER CURRENTLY NOT WORKING HOWEVER NOT MY MAIN CONCERN ATM
-
-    elif order_class == 'oco':
-        order['type'] = order_type
-        order['order_class'] = 'oco'
-        order['take_profit'] = {
-            'limit_price': limit_price
-        }
-        order['stop_loss'] = {
-            'stop_price': stop_price,
-            'limit_price': stop_limit_price
-        }
-        return order
-    else:
-        pass
-
-    if order_type == 'market':
-        return order
-    if order_type == 'limit':
-        order['limit_price'] = limit_price
-        return order
-    if order_type == 'stop':
-        order['limit_price'] = limit_price
-        order['stop_price'] = stop_price
-        return order
-
-
-def order_sequence(order,
-                   current_price,
-                   order_details='detailed'):
-    '''
-     FUNCTION TAKES IN A INITIATED ORDER CREATES THE SELL ORDER PAIRING WITH LIMIT
-     SET AT SELL_OFF_POINT AND RETURNS DETAILED ORDER WHETHER SIMPLE OR ORIGINAL
-
-    :param order: INITIATED_ORDER SEE STREAM2.PY
-    :param sell_off_point: YOUR TAKE PROFIT PARAMETER
-    :param order_details: SIMPLE OR DETAILED ORDER INFOMATION DEFUALT == DETIALED
-    :return: BUY AND SELL AS ORDER DETAILS
-    '''
-    order_buy = order
-    global log
-    _reopen(log)
-    log.write('Sending Order\n')
-    try:
-        ordered_B, status = a.place_order(order_buy)
-        buy = a.order_details(ordered_B, order_details)
-    except:
-        buy = 'Order_Buy_Failed'
-    # --------------------------
-    #       Sell Order
-    # --------------------------
-    order_sell = order
-    order_sell['side'] = 'sell'
-    order_sell['type'] = 'limit'
-    # --------------------------------------------------
-    #  INITIATING PROFIT MARGINS
-    # --------------------------------------------------
-    if current_price >= 800:
-        order_sell['limit_price'] = current_price + 100
-    if 500 < current_price < 800:
-        order_sell['limit_price'] = current_price + 50
-    if 200 < current_price < 500:
-        order_sell['limit_price'] = current_price + 30
-    try:
-        log.write(f'Order Sell = :{order_sell}')
-        ordered_S, status = a.place_order(order_sell)
-        sell = a.order_details(ordered_S, order_details)
-        log.write(f'sell  = :{sell}')
-    except:
-        sell = 'Order_Sell_Failed'
-
-    return buy, sell
-
-
 def check_time():
     connection_log = _reopen('log_on.txt')
     print('Checking Time')
@@ -241,7 +136,7 @@ def check_time():
         connection_log.write('The day has ended\n')
 # ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
 def onn_open(ws):
-    global over_night
+    global over_night, back_log_volatility
     connection_log = _reopen('log_on.txt')
     log = _reopen('action.txt')
 
@@ -268,7 +163,7 @@ def onn_open(ws):
 
     auth_data = {
         "action": "auth",
-        "params": PAPER_KEY
+        "params": API_KEY
     }
     ws.send(json.dumps(auth_data))
     channel_data = {
@@ -306,17 +201,21 @@ def tesla(ws, message):
     log = _reopen('action.txt')
     order_log = _reopen('order.txt')
 
-#   CHECK FOR OPEN ORDERS AND RETURN IF ANY ARE PRESENT
-# ===================================
-    global current_tick, previous_tick, rolling_ten, back_log_volatility
+    global current_tick, previous_tick, rolling_ten, back_log_volatility, simple_moving_average_10, simple_moving_average_30
     previous_tick = current_tick
     message = a.clean_and_load(message)
+
 # ====================================
+
     current_tick = json.loads(message)
+
 # ===================================
+
     times = current_tick['e']  # DATA TYPE IS INT
     times = time_converter(times)  # CONVERTS TYPE INT INTO DATETIME OBJECT THEN A STRING
+
 # ===================================
+
     ticker = current_tick['sym']
     open = current_tick['o']
     high = current_tick['h']
@@ -325,6 +224,7 @@ def tesla(ws, message):
     volatility = current_tick['h'] - current_tick['l']
     hlmean = (current_tick['h'] + current_tick['l']) / 2
     v_factor = (volatility / hlmean) * 100
+
 # ===================================
 
     # ADDS NEW CANDLESTICK AS TIME PROGRESSES
@@ -345,24 +245,41 @@ def tesla(ws, message):
     candles.write(f'{latest_candle}\n')
 
     print(f'{latest_candle}\n')
-# ===================================
+# ====================================================
     _high = minute_candlestick[-1]['high']
     _time = minute_candlestick[-1]['time']
-    # difference between prices
+
+    if 3000 > _high >= 1000:
+        profit = 100
+    elif 1000 > _high > 850:
+        profit = 100
+    elif 850 >= _high > 600:
+        profit = 75
+    elif 600 >= _high > 400:
+        profit = 50
+    elif 400 >= _high:
+        profit = 30
+
+# ---- DIFFERENCE BETWEEN PRICES ----
+
     _volatility_coeff = minute_candlestick[-1]['volatilty']
-    #differnece in the volatility percentage of price
+
+# ---- DIFFERENCE IN THE VOLATILITY COEFFICIENTS ----
+
     v_param = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
+
     log.write(f'Time: {_time}, High: {_high}, V_param: {v_param}\n')
+
 # ======================================================
 #       ^^^^ GENERIC STRATEGY INFORMATION ^^^^^^
 # =======================================================
 #                   START STRATEGY HERE
 # =======================================================
+    tsla = Order('TSLA',_high)
     position = a.get_position_for(ticker)
     account = a.get_account()
 
     buying_power = account['buying_power'].split('.')[0]
-   # print(buying_power)
 
 # =======================================================
 #               Back log volatility buy
@@ -371,24 +288,30 @@ def tesla(ws, message):
         if back_log_volatility:
             log.write(f'Condition: Back log volatility.\n')
             log.write(f'Attempting Buy --(Ref #10101)-- Price:{_high}: back log volatility {back_log_volatility}\n')
-            order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-            buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-            order_log.write(f'{buy}\n')
-            order_log.write(f'\n{sell}')
+
+# PROFIT PRICES SHOULD CHANGE WITH INCREASE IN HIGH price
+
+            order_back_log = tsla.buy(order_type='market',order_class='oto',
+                                      qty=1, tif='gtc',profit=profit)
+            order_log.write(f'Volatility Order: \n{order_back_log}\n')
+
+            back_log_volatility = False
 
     except:
-        print('failure back log volatility')
+        print('Failure Back Log Volatility')
 
 # =======================================================
 #               STrategy
 # =======================================================
 
-    if len(minute_candlestick) > 1 and int(buying_power) > _high:
+    if len(minute_candlestick) > 1:
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
         try:
             rolling_ten.append(minute_candlestick[-1]['v_factor'])
+            simple_moving_average_10.append(minute_candlestick[-1]['high'])
+            simple_moving_average_30.append(minute_candlestick[-1]['high'])
         except:
-            log.write('Rolling ten appending failure\n')
+            log.write('Rolling_ten and SMA_HIGH appending failure\n')
         print('-- Active --')
         log.write('-- Strategy Activated --\n')
     else:
@@ -399,15 +322,15 @@ def tesla(ws, message):
     try:
         if len(minute_candlestick) > 2:
             big_drop_2 = (minute_candlestick[-3]['high'] - minute_candlestick[-1]['low'])
+            if big_drop_2 > 50:
+                log.write(f'Big drop 2 -- Active -- :{big_drop_2}\n')
+
         if len(minute_candlestick) > 4:
             big_drop_4 = (minute_candlestick[-5]['high'] - minute_candlestick[-1]['low'])
-
-        if big_drop_2 > 50:
-            log.write(f'Big drop 2 -- Active -- :{big_drop_2}\n')
-        if big_drop_4 > 50:
-            log.write(f'Big drop 4 -- Active -- :{big_drop_4}\n')
+            if big_drop_4 > 50:
+                log.write(f'Big drop 4 -- Active -- :{big_drop_4}\n')
     except:
-        log.write('Big drop inactive\n')
+        log.write('Big Drop Inactive\n')
 
 # =======================================================
 #               INDICATORS
@@ -421,6 +344,18 @@ def tesla(ws, message):
             log.write(f'Rolling_10: {roll}\n')
     except:
         log.write('Rolling_10 Failure\n')
+    try:
+        if len(simple_moving_average_10) > 10:
+            SMA_HIGH_10 = sum(simple_moving_average_10[-10:])/10
+            log.write(f'SMA_HIGH_10: {SMA_HIGH_10}\n')
+    except:
+        log.write('Simple moving 10 high failed')
+    try:
+        if len(simple_moving_average_30) > 30:
+            SMA_HIGH_30 = sum(simple_moving_average_30[-30])/30
+            log.write(f'SMA_HIGH_30: {SMA_HIGH_30}\n')
+    except:
+        log.write('Simple moving 30 high fail')
 
 # =======================================================
 #               LOGIC
@@ -433,22 +368,54 @@ def tesla(ws, message):
         if _high < 5000:
             if volatility_coefficient > 1:
                 log.write(f'Condition: Volatility Coeff: {volatility_coefficient}\n')
-                log.write(f'Attempting Buy --(Ref #1)-- Price:{_high}, Volatility_Coeff: {volatility_coefficient}\n')
-                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                order_log.write(f'{buy}\n')
-                order_log.write(f'\n{sell}')
+                log.write(f'Attempting Buy --(Ref NP Volatility)-- Price:{_high}, Volatility_Coeff: {volatility_coefficient}\n')
+
+                order_1 = tsla.buy(order_type='market',order_class='oto',
+                                   qty=1,tif='gtc',profit=profit)
+                order_log.write(f'Order 1: \n{order_1}\n')
 
             try:
                 if roll > .5:
                     log.write(f'Condition: Rolling_10: {roll}\n')
-                    log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {roll}\n')
-                    order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                    buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                    order_log.write(f'{buy}\n')
-                    order_log.write(f'\n{sell}')
+
+                    if SMA_HIGH_10[0] - _high >= (SMA_HIGH_10*.025):
+                        log.write(f'STOP DROP AND ROLL CONDITION with NS\n'
+                                  f' SMA_HIGH_10: {SMA_HIGH_10}\n'
+                                  f' _high : {_high}\n')
+
+                        order_SDR = tsla.buy(order_class='oto',order_type='market',
+                                             qty=1,tif='gtc',profit=profit)
+                        order_log.write(f'order_sdr:\n{order_SDR}\n')
+
+                    if (_high - SMA_HIGH_30[0]) > (_high*.0125):
+                        log.write(f'CLIMB WITH LADDER with NS\n'
+                                  f' SMA_HIGH_30: {SMA_HIGH_30}\n'
+                                  f' _high : {_high}\n')
+
+                        order_ctl = tsla.buy(order_class='bracket',order_type='market',
+                                             qty=1,tif='gtc',
+                                             profit=profit,
+                                             stop_limit_price=_high - (profit/2),
+                                             stop_price=_high-(profit/2.25))
+
+                        order_log.write(f'order_ctl:\n{order_ctl}\n')
+
             except:
                 log.write('Rolling_10 inactive\n')
+
+            try:
+                if (_high - SMA_HIGH_30[0]) > (_high * .02):
+                    log.write(f'Stand alone sudden increase in price'
+                              f'_high: {_high} Sma_high_30: {SMA_HIGH_30}\n')
+
+                    order_stand_alone = tsla.buy(order_class='bracket', order_type='market',
+                                                 qty=1, tif='gtc',
+                                                 profit=profit,
+                                                 stop_limit_price=_high - (profit / 2),
+                                                 stop_price=_high - (profit / 2.1))
+                    order_log.write(f'Order_stand_alone:\n {order_stand_alone}\n')
+            except:
+                pass
 
     # WITH A POSITION
     else:
@@ -462,59 +429,67 @@ def tesla(ws, message):
         print(f'High: {_high}')
 
 
-        if _high < 300:
+        if _high < 5000:
             if volatility_coefficient > 1:
                 log.write(
                     f'Attempting an order of {ticker} @ {_high} with volatility_coefficent of {volatility_coefficient}\n')
                 log.write('Buying Ref #1 with position\n')
-                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                order_log.write(f'{buy}\n')
-                order_log.write(f'\n{sell}\n')
-        if 300 < _high < 500:
-            if volatility_coefficient > 1:
-                log.write(
-                    f'Attempting an order of {ticker} @ {_high} with volatility_coefficent of {volatility_coefficient}\n')
-                log.write('Buying Ref #2\n')
-                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                order_log.write(f'{buy}\n')
-                order_log.write(f'\n{sell}')
 
-        if 500 <= _high < 4000:
-            if volatility_coefficient > 1:
-                print(
-                    f'Attempting an order of {ticker} @ {_high} with v_param of {volatility_coefficient}')
-                print('Buying Ref #4')
-                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                order_log.write(f'{buy}\n')
-                order_log.write(f'\n{sell}')
+                order_2 = tsla.buy(order_type='market', order_class='oto',
+                                   qty=1, tif='gtc', profit=profit)
+                order_log.write(f'Order 1: \n{order_2}\n')
 
             try:
                 if roll > .5:
                     log.write(f'Condition: Rolling_10: {roll}\n')
-                    log.write(f'Attempting Buy --(Ref #101)-- Price:{_high}, rolling_10: {rolling_10}\n')
-                    order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                    buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                    order_log.write(f'{buy}\n')
-                    order_log.write(f'\n{sell}\n')
+
+                    if SMA_HIGH_10[0] - _high >= (SMA_HIGH_10 * .025):
+                        log.write(f'STOP DROP AND ROLL CONDITION with Share\n'
+                                  f' SMA_HIGH_10: {SMA_HIGH_10}\n'
+                                  f' _high : {_high}\n')
+
+                        order_SDRws = tsla.buy(order_class='oto', order_type='market',
+                                             qty=1, tif='gtc', profit=profit)
+                        order_log.write(f'order_sdrws:\n{order_SDRws}\n')
+
+                    if (_high - SMA_HIGH_30[0]) > (_high * .0125):
+                        log.write(f'CLIMB WITH LADDER with Share\n'
+                                  f' SMA_HIGH_30: {SMA_HIGH_30}\n'
+                                  f' _high : {_high}\n')
+
+                        order_ctlws = tsla.buy(order_class='bracket', order_type='market',
+                                             qty=1, tif='gtc',
+                                             profit=profit,
+                                             stop_limit_price=_high - (profit / 2),
+                                             stop_price=_high - (profit / 2.25))
+
+                        order_log.write(f'order_ctlws:\n{order_ctlws}\n')
+            except:
+                log.write('Rolling_10 inactive\n')
+
+            try:
+                if (_high - SMA_HIGH_30[0]) > (_high*.02):
+                    log.write(f'Stand alone sudden increase in price'
+                              f'_high: {_high} Sma_high_30: {SMA_HIGH_30}\n')
+
+                    order_stand_alone = tsla.buy(order_class='bracket', order_type='market',
+                                           qty=1, tif='gtc',
+                                           profit=profit,
+                                           stop_limit_price=_high - (profit / 2),
+                                           stop_price=_high - (profit / 2.25))
+                    order_log.write(f'Order_stand_alone:\n {order_stand_alone}\n')
             except:
                 pass
-    # NOT IDEAL BUT IT MAY WORK
-        # maybe use close or low price....????
-    #  SHARE DEFICIT
 
-        try:
-            if (avg_price - _high) > 80:
-                log.write(f'Price is lower than avg share price: {avg_price - _high}\n')
-                order_buy = intiate_order(symbol=ticker, order_type='market', side='buy')
-                buy, sell = order_sequence(order_buy, current_price=_high, order_details='simple')
-                order_log.write(f'{buy}\n')
-                order_log.write(f'\n{sell}\n')
-        except:
-            log.write('No share deficit\n')
+    if volatility_coefficient > 1 and roll > .5:
+        log.write(f'Double standard SMA_1: {volatility_coefficient} roll: {roll}\n')
 
+        order_double_trouble = tsla.buy(order_class='oto',order_type='market',
+                                        qty=1, tif='gtc', profit=profit,
+                                        stop_limit_price=_high- (profit /2),
+                                        stop_price= _high - (profit/ 2.25),
+                                        )
+        order_log.write(f'order double trouble:\n{order_double_trouble}\n')
 
  # =======================================================
  #               OUTRO
