@@ -9,8 +9,6 @@ def volatility(self,variable,num,ref):
         return true
     else:
         return false
-
-
 def mod_tesla(self):
     ''' 37% return '''
     # NO POSITION
@@ -74,10 +72,6 @@ def mod_tesla(self):
         if self.sma_1[0] - self.sma_1[-1] >= 1:
             self.log(f'higher 900 -- High: {self.high[0]} sma_1: {self.sma_1[0] - self.sma_1[-1]}')
             self.order = self.buy()
-
-
-
-
 def back_logger(ticker, time_interval='minute'):
     """Retrieves historical data based on passed values of the polygon api
 
@@ -135,6 +129,4 @@ def back_logger(ticker, time_interval='minute'):
 if __name__ == '__main__':
 
     over_night = back_logger('TSLA')
-    print(len(over_night))
-    print(over_night[0])
-    print(over_night[-1])
+    print(over_night)
