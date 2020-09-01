@@ -388,7 +388,8 @@ def tesla(ws, message):
                 if roll > .5:
                     log.write(f'Condition: Rolling_10: {roll}\n')
 
-                    if SMA_HIGH_10[0] - _high >= (SMA_HIGH_10*.025):
+
+                    if SMA_HIGH_10 - _high >= (SMA_HIGH_10*.025):
                         log.write(f'STOP DROP AND ROLL CONDITION with NS\n'
                                   f' SMA_HIGH_10: {SMA_HIGH_10}\n'
                                   f' _high : {_high}\n')
@@ -396,13 +397,11 @@ def tesla(ws, message):
                         order_SDR = tsla.buy(order_class='oto',order_type='market',
                                              qty=1,tif='gtc',profit=profit)
                         order_log.write(f'order_sdr:\n{order_SDR}\n')
-
                         return
-
                     else:
                         log.write('SDR not satisfied\n')
 
-                    if (_high - SMA_HIGH_30[0]) > (_high*.0125):
+                    if (_high - SMA_HIGH_30) > (_high*.0125):
                         log.write(f'CLIMB WITH LADDER with NS\n'
                                   f' SMA_HIGH_30: {SMA_HIGH_30}\n'
                                   f' _high : {_high}\n')
@@ -424,7 +423,7 @@ def tesla(ws, message):
                 log.write('Rolling_10 inactive\n')
 
             try:
-                if (_high - SMA_HIGH_30[0]) > (_high * .02):
+                if (_high - SMA_HIGH_30) > (_high * .02):
                     log.write(f'Stand alone sudden increase in price'
                               f'_high: {_high} Sma_high_30: {SMA_HIGH_30}\n')
 
@@ -468,7 +467,7 @@ def tesla(ws, message):
                 if roll > .5:
                     log.write(f'Condition: Rolling_10: {roll}\n')
 
-                    if SMA_HIGH_10[0] - _high >= (SMA_HIGH_10 * .025):
+                    if SMA_HIGH_10 - _high >= (SMA_HIGH_10 * .025):
                         log.write(f'STOP DROP AND ROLL CONDITION with Share\n'
                                   f' SMA_HIGH_10: {SMA_HIGH_10}\n'
                                   f' _high : {_high}\n')
@@ -479,7 +478,7 @@ def tesla(ws, message):
 
                         return
 
-                    if (_high - SMA_HIGH_30[0]) > (_high * .0125):
+                    if (_high - SMA_HIGH_30) > (_high * .0125):
                         log.write(f'CLIMB WITH LADDER with Share\n'
                                   f' SMA_HIGH_30: {SMA_HIGH_30}\n'
                                   f' _high : {_high}\n')
@@ -497,7 +496,7 @@ def tesla(ws, message):
                 log.write('Rolling_10 inactive\n')
 
             try:
-                if (_high - SMA_HIGH_30[0]) > (_high*.02):
+                if (_high - SMA_HIGH_30) > (_high*.02):
                     log.write(f'Stand alone sudden increase in price'
                               f'_high: {_high} Sma_high_30: {SMA_HIGH_30}\n')
 
