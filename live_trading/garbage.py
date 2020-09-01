@@ -374,6 +374,8 @@ def tesla(ws, message):
                                    qty=1,tif='gtc',profit=profit)
                 order_log.write(f'Order 1: \n{order_1}\n')
 
+                return
+
             try:
                 if roll > .5:
                     log.write(f'Condition: Rolling_10: {roll}\n')
@@ -387,6 +389,8 @@ def tesla(ws, message):
                                              qty=1,tif='gtc',profit=profit)
                         order_log.write(f'order_sdr:\n{order_SDR}\n')
 
+                        return
+
                     if (_high - SMA_HIGH_30) > (_high*.0125):
                         log.write(f'CLIMB WITH LADDER with NS\n'
                                   f' SMA_HIGH_30: {SMA_HIGH_30}\n'
@@ -399,6 +403,8 @@ def tesla(ws, message):
                                              stop_price=_high-(profit/2.25))
 
                         order_log.write(f'order_ctl:\n{order_ctl}\n')
+
+                        return
 
             except:
                 log.write('Rolling_10 inactive\n')
@@ -414,6 +420,7 @@ def tesla(ws, message):
                                                  stop_limit_price=_high - (profit / 2),
                                                  stop_price=_high - (profit / 2.1))
                     order_log.write(f'Order_stand_alone:\n {order_stand_alone}\n')
+                    return
             except:
                 pass
 
@@ -438,6 +445,7 @@ def tesla(ws, message):
                 order_2 = tsla.buy(order_type='market', order_class='oto',
                                    qty=1, tif='gtc', profit=profit)
                 order_log.write(f'Order 1: \n{order_2}\n')
+                return
 
             try:
                 if roll > .5:
@@ -451,6 +459,7 @@ def tesla(ws, message):
                         order_SDRws = tsla.buy(order_class='oto', order_type='market',
                                              qty=1, tif='gtc', profit=profit)
                         order_log.write(f'order_sdrws:\n{order_SDRws}\n')
+                        return
 
                     if (_high - SMA_HIGH_30) > (_high * .0125):
                         log.write(f'CLIMB WITH LADDER with Share\n'
@@ -464,6 +473,7 @@ def tesla(ws, message):
                                              stop_price=_high - (profit / 2.25))
 
                         order_log.write(f'order_ctlws:\n{order_ctlws}\n')
+                        return
             except:
                 log.write('Rolling_10 inactive\n')
 
@@ -478,6 +488,7 @@ def tesla(ws, message):
                                            stop_limit_price=_high - (profit / 2),
                                            stop_price=_high - (profit / 2.25))
                     order_log.write(f'Order_stand_alone:\n {order_stand_alone}\n')
+                    return
             except:
                 pass
 
@@ -490,6 +501,7 @@ def tesla(ws, message):
                                         stop_price= _high - (profit/ 2.25),
                                         )
         order_log.write(f'order double trouble:\n{order_double_trouble}\n')
+        return
 
  # =======================================================
  #               OUTRO

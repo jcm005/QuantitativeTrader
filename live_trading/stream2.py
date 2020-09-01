@@ -302,7 +302,7 @@ def tesla(ws, message):
 
             order_back_log = tsla.buy(order_type='market',order_class='oto',
                                       qty=1, tif='gtc',profit=profit)
-            order_log.write(f'Volatility Order: \n{order_back_log}\n')
+            order_log.write(f'Time : {_time} Volatility Order: \n{order_back_log}\n')
 
             back_log_volatility = False
 
@@ -381,7 +381,7 @@ def tesla(ws, message):
 
                 order_1 = tsla.buy(order_type='market',order_class='oto',
                                    qty=1,tif='gtc',profit=profit)
-                order_log.write(f'Order 1: \n{order_1}\n')
+                order_log.write(f'Time: {_time} Order 1: \n{order_1}\n')
 
                 return
             try:
@@ -396,7 +396,7 @@ def tesla(ws, message):
 
                         order_SDR = tsla.buy(order_class='oto',order_type='market',
                                              qty=1,tif='gtc',profit=profit)
-                        order_log.write(f'order_sdr:\n{order_SDR}\n')
+                        order_log.write(f'Time: {_time} order_sdr:\n{order_SDR}\n')
                         return
                     else:
                         log.write('SDR not satisfied\n')
@@ -412,7 +412,7 @@ def tesla(ws, message):
                                              stop_limit_price=_high - (profit/2),
                                              stop_price=_high-(profit/2.25))
 
-                        order_log.write(f'order_ctl:\n{order_ctl}\n')
+                        order_log.write(f'Time: {_time} order_ctl:\n{order_ctl}\n')
 
                         return
 
@@ -432,7 +432,7 @@ def tesla(ws, message):
                                                  profit=profit,
                                                  stop_limit_price=_high - (profit / 2),
                                                  stop_price=_high - (profit / 2.1))
-                    order_log.write(f'Order_stand_alone:\n {order_stand_alone}\n')
+                    order_log.write(f'Time: {_time} Order_stand_alone:\n {order_stand_alone}\n')
 
                     return
 
@@ -445,6 +445,9 @@ def tesla(ws, message):
         qty_pos = position['qty']
         cost_basis = position['cost_basis']
         avg_price = position['avg_entry_price']
+
+        # INSERT HERE CODE FOR NO BUY BELOW AVERAGE PRICE
+
 
         log.write(f'{qty_pos} Shares of {ticker.upper()} @ avg_cost: {avg_price}\n')
         print(f'{qty_pos} Shares of {ticker.upper()} @ {avg_price}')
@@ -459,7 +462,7 @@ def tesla(ws, message):
 
                 order_2 = tsla.buy(order_type='market', order_class='oto',
                                    qty=1, tif='gtc', profit=profit)
-                order_log.write(f'Order 1: \n{order_2}\n')
+                order_log.write(f'Time: {_time} Order 1: \n{order_2}\n')
 
                 return
 
@@ -474,7 +477,7 @@ def tesla(ws, message):
 
                         order_SDRws = tsla.buy(order_class='oto', order_type='market',
                                              qty=1, tif='gtc', profit=profit)
-                        order_log.write(f'order_sdrws:\n{order_SDRws}\n')
+                        order_log.write(f'Time: {_time} order_sdrws:\n{order_SDRws}\n')
 
                         return
 
@@ -489,7 +492,7 @@ def tesla(ws, message):
                                              stop_limit_price=_high - (profit / 2),
                                              stop_price=_high - (profit / 2.25))
 
-                        order_log.write(f'order_ctlws:\n{order_ctlws}\n')
+                        order_log.write(f'Time: {_time} order_ctlws:\n{order_ctlws}\n')
 
                         return
             except:
@@ -505,7 +508,7 @@ def tesla(ws, message):
                                            profit=profit,
                                            stop_limit_price=_high - (profit / 2),
                                            stop_price=_high - (profit / 2.25))
-                    order_log.write(f'Order_stand_alone:\n {order_stand_alone}\n')
+                    order_log.write(f'Time: {_time} Order_stand_alone:\n {order_stand_alone}\n')
 
                     return
             except:
@@ -519,7 +522,7 @@ def tesla(ws, message):
                                         stop_limit_price=_high- (profit /2),
                                         stop_price= _high - (profit/ 2.25),
                                         )
-        order_log.write(f'order double trouble:\n{order_double_trouble}\n')
+        order_log.write(f'Time: {_time} order double trouble:\n{order_double_trouble}\n')
 
         return
 

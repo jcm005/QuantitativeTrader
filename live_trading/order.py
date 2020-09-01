@@ -159,6 +159,8 @@ class Order():
         except:
             pass
 
+        # INSERT HERE CODE FOR NO BUY BELOW AVERAGE PRICE
+
         self.qty = qty
         self.profit = profit
         order = {
