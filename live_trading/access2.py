@@ -92,4 +92,5 @@ if __name__ == '__main__':
 
 
     account = get_account()
-    print(account)
+    tsla = get_position_for('TSLA')
+    print(tsla)

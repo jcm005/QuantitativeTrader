@@ -23,6 +23,7 @@ current_tick = None
 previous_tick = None
 in_position = False
 back_log_volatility = False
+back_log_qty = [1]
 
 candles = open('candle.txt', 'a')
 connection_log = open('log_on.txt', 'a')
@@ -142,20 +143,26 @@ def onn_open(ws):
 
     print("\nConnecting --> ")
 
-    try:
-        back_logger('TSLA')
-        over_night = back_logger('TSLA')
-        print(len(over_night))
 
-        if len(over_night) > 2:
-            last_night = (over_night[0])
-            this_morn = (over_night[-1])
-            log.write(f'Back logging successful\n Last_night: {last_night}\n this morn: {this_morn}\n')
-            if int(this_morn['high'].split('.')[0]) - int(last_night['high'].split('.')[0]) >= 25:
-                back_log_volatility = True
-                log.write('Volatile pre-markets initiating order --> buy')
-            else:
-                pass
+    try:
+        if len(back_log_qty) == 1:
+            back_logger('TSLA')
+            over_night = back_logger('TSLA')
+
+            if len(over_night) > 2:
+
+                back_log_qty.pop() # SO THIS ONLY runs one time
+                last_night = (over_night[0])
+                this_morn = (over_night[-1])
+                log.write(f'Back logging successful\n Last_night: {last_night}\n this morn: {this_morn}\n')
+                if int(this_morn['high'].split('.')[0]) - int(last_night['high'].split('.')[0]) >= 25:
+                    back_log_volatility = True
+                    log.write('Volatile pre-markets initiating order --> buy')
+
+                else:
+                    pass
+        else:
+            pass
 
     except:
         log.write('Back Logging Function Failed\n')
@@ -252,11 +259,11 @@ def tesla(ws, message):
     if 3000 > _high >= 1000:
         profit = 100
     elif 1000 > _high > 850:
-        profit = 100
+        profit = 90
     elif 850 >= _high > 600:
-        profit = 75
+        profit = 70
     elif 600 >= _high > 400:
-        profit = 50
+        profit = 40
     elif 400 >= _high:
         profit = 30
 
@@ -280,6 +287,8 @@ def tesla(ws, message):
     account = a.get_account()
 
     buying_power = account['buying_power'].split('.')[0]
+    equity = account['equity'].split('.')[0]
+    print(buying_power,equity)
 
 # =======================================================
 #               Back log volatility buy
@@ -349,13 +358,13 @@ def tesla(ws, message):
             SMA_HIGH_10 = sum(simple_moving_average_10[-10:])/10
             log.write(f'SMA_HIGH_10: {SMA_HIGH_10}\n')
     except:
-        log.write('Simple moving 10 high failed')
+        log.write('Simple moving 10 high failed\n')
     try:
         if len(simple_moving_average_30) > 30:
-            SMA_HIGH_30 = sum(simple_moving_average_30[-30])/30
+            SMA_HIGH_30 = sum(simple_moving_average_30[-30:])/30
             log.write(f'SMA_HIGH_30: {SMA_HIGH_30}\n')
     except:
-        log.write('Simple moving 30 high fail')
+        log.write('Simple moving 30 high fail\n')
 
 # =======================================================
 #               LOGIC
@@ -374,6 +383,7 @@ def tesla(ws, message):
                                    qty=1,tif='gtc',profit=profit)
                 order_log.write(f'Order 1: \n{order_1}\n')
 
+                return
             try:
                 if roll > .5:
                     log.write(f'Condition: Rolling_10: {roll}\n')
@@ -387,6 +397,11 @@ def tesla(ws, message):
                                              qty=1,tif='gtc',profit=profit)
                         order_log.write(f'order_sdr:\n{order_SDR}\n')
 
+                        return
+
+                    else:
+                        log.write('SDR not satisfied\n')
+
                     if (_high - SMA_HIGH_30[0]) > (_high*.0125):
                         log.write(f'CLIMB WITH LADDER with NS\n'
                                   f' SMA_HIGH_30: {SMA_HIGH_30}\n'
@@ -399,6 +414,11 @@ def tesla(ws, message):
                                              stop_price=_high-(profit/2.25))
 
                         order_log.write(f'order_ctl:\n{order_ctl}\n')
+
+                        return
+
+                    else:
+                        log.write('CTL not satisfied \n')
 
             except:
                 log.write('Rolling_10 inactive\n')
@@ -414,6 +434,9 @@ def tesla(ws, message):
                                                  stop_limit_price=_high - (profit / 2),
                                                  stop_price=_high - (profit / 2.1))
                     order_log.write(f'Order_stand_alone:\n {order_stand_alone}\n')
+
+                    return
+
             except:
                 pass
 
@@ -439,6 +462,8 @@ def tesla(ws, message):
                                    qty=1, tif='gtc', profit=profit)
                 order_log.write(f'Order 1: \n{order_2}\n')
 
+                return
+
             try:
                 if roll > .5:
                     log.write(f'Condition: Rolling_10: {roll}\n')
@@ -452,6 +477,8 @@ def tesla(ws, message):
                                              qty=1, tif='gtc', profit=profit)
                         order_log.write(f'order_sdrws:\n{order_SDRws}\n')
 
+                        return
+
                     if (_high - SMA_HIGH_30[0]) > (_high * .0125):
                         log.write(f'CLIMB WITH LADDER with Share\n'
                                   f' SMA_HIGH_30: {SMA_HIGH_30}\n'
@@ -464,6 +491,8 @@ def tesla(ws, message):
                                              stop_price=_high - (profit / 2.25))
 
                         order_log.write(f'order_ctlws:\n{order_ctlws}\n')
+
+                        return
             except:
                 log.write('Rolling_10 inactive\n')
 
@@ -478,6 +507,8 @@ def tesla(ws, message):
                                            stop_limit_price=_high - (profit / 2),
                                            stop_price=_high - (profit / 2.25))
                     order_log.write(f'Order_stand_alone:\n {order_stand_alone}\n')
+
+                    return
             except:
                 pass
 
@@ -490,6 +521,8 @@ def tesla(ws, message):
                                         stop_price= _high - (profit/ 2.25),
                                         )
         order_log.write(f'order double trouble:\n{order_double_trouble}\n')
+
+        return
 
  # =======================================================
  #               OUTRO

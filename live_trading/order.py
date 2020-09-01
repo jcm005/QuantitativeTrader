@@ -148,7 +148,16 @@ class Order():
         # CHECK TIME FIRST
         extended_hours = self.check_time()
         print(extended_hours)
-        #________________
+
+        #  CHECK WHETHER OR NOT WE HAVE ENOUGH MONEY
+        account = a.get_account()
+        buying_power = account['buying_power'].split('.')[0]
+        equity = account['equity'].split('.')[0]
+        try:
+            if buying_power < equity:
+                return 'Buying Power is less then equity will not buy for conservative reasons\n'
+        except:
+            pass
 
         self.qty = qty
         self.profit = profit

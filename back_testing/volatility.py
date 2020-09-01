@@ -16,13 +16,15 @@ import plotly
 #import format must be in the order of time, ohlc, volume
 
 df= None
+rolling_10 = []
+rolling_30 = []
 
 #========================================
 #========================================
 
 asset = ['TSLA']
 time_interval = 'minute'
-start_date = '2020-08-28'
+start_date = '2020-08-31'
 time_delt = 1
 time_period = 1
 
@@ -122,8 +124,9 @@ def volatility(df,symbol):
 #================================
     rolling_mean_10 = df.vola_coeff.rolling(window=10).mean()
     rolling_mean_20 = df.vola_coeff.rolling(window=10).mean()
-    #rolling_mean_10 = rolling_mean_10.fillna(rolling_mean_10[9])
-    #rolling_mean_20 = rolling_mean_20.fillna(rolling_mean_20[19])
+
+    rolling_10 = rolling_mean_10.fillna(rolling_mean_10[9])
+    rolling_30 = rolling_mean_20.fillna(rolling_mean_20[19])
 # ================================
 
     return df

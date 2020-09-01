@@ -92,4 +92,7 @@ if __name__ == '__main__':
 
 
     account = get_account()
-    print(account)
+    tsla = get_position_for('TSLA')
+    equity = account['equity']
+    equity = account['equity'].split('.')[0]
+    print(equity)

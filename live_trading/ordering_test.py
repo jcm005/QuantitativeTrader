@@ -21,6 +21,6 @@ if __name__ == '__main__':
                          stop_limit_price=_high- (profit /2),
                          stop_price= _high - (profit/ 2.25))
 
-print(order_ctl)
+    print(order_ctl)
 
 

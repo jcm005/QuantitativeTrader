@@ -6,7 +6,7 @@ import backtrader.feeds as btfeeds
 from data_grabber import *
 
 asset = ['TSLA']
-start_date = '2019-11-15'  # ticker symbols to be tested
+start_date = '2020-08-31'  # ticker symbols to be tested
 time_interval = 'minute'  # collect data per each ---
 time_delt = 1
 time_period = 1

@@ -24,10 +24,10 @@ previous_tick = None
 in_position = False
 back_log_volatility = False
 
-candles = open('candle.txt', 'a')
-connection_log = open('log_on.txt', 'a')
-log = open('action.txt', 'a')
-order_log = open('order.txt','a')
+candles = open('candle2.txt', 'a')
+connection_log = open('log_on2.txt', 'a')
+log = open('action2.txt', 'a')
+order_log = open('order2.txt','a')
 
 candles.truncate(0)
 log.truncate(50)
@@ -95,7 +95,7 @@ def time_converter(some_time):
     return newtimes
 
 def check_time():
-    connection_log = _reopen('log_on.txt')
+    connection_log = _reopen('log_on2.txt')
     print('Checking Time')
     connection_log.write('Checking Time\n')
 
@@ -137,8 +137,8 @@ def check_time():
 # ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
 def onn_open(ws):
     global over_night, back_log_volatility
-    connection_log = _reopen('log_on.txt')
-    log = _reopen('action.txt')
+    connection_log = _reopen('log_on2.txt')
+    log = _reopen('action2.txt')
 
     print("\nConnecting --> ")
 
@@ -197,9 +197,9 @@ def on_close(ws):
 # -----------------------------
 def tesla(ws, message):
 
-    candles = _reopen('candle.txt')
-    log = _reopen('action.txt')
-    order_log = _reopen('order.txt')
+    candles = _reopen('candle2.txt')
+    log = _reopen('action2.txt')
+    order_log = _reopen('order2.txt')
 
     global current_tick, previous_tick, rolling_ten, back_log_volatility, simple_moving_average_10, simple_moving_average_30
     previous_tick = current_tick
@@ -252,11 +252,11 @@ def tesla(ws, message):
     if 3000 > _high >= 1000:
         profit = 100
     elif 1000 > _high > 850:
-        profit = 100
+        profit = 80
     elif 850 >= _high > 600:
-        profit = 75
+        profit = 65
     elif 600 >= _high > 400:
-        profit = 50
+        profit = 40
     elif 400 >= _high:
         profit = 30
 
@@ -352,7 +352,7 @@ def tesla(ws, message):
         log.write('Simple moving 10 high failed')
     try:
         if len(simple_moving_average_30) > 30:
-            SMA_HIGH_30 = sum(simple_moving_average_30[-30])/30
+            SMA_HIGH_30 = sum(simple_moving_average_30[-30:])/30
             log.write(f'SMA_HIGH_30: {SMA_HIGH_30}\n')
     except:
         log.write('Simple moving 30 high fail')

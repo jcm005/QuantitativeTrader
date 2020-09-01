@@ -148,6 +148,8 @@ class Order():
         # CHECK TIME FIRST
         extended_hours = self.check_time()
         print(extended_hours)
+
+
         #________________
 
         self.qty = qty
