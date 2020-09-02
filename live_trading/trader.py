@@ -2,11 +2,14 @@ from order2 import Order
 
 class QuantTrader():
 
-    def __init__(self,ticker,price,log_file=None):
+    def __init__(self,ticker,price,profit,log_file=None):
         '''price has to be an iterable type'''
         self.price = price
         self.ticker = ticker
         self.log = log_file
+        self.over_night =[]
+        self.profit = profit
+
 
     def Back_logger(self):
         '''
@@ -61,6 +64,20 @@ class QuantTrader():
 
         return self.over_night
 
+    def Back_log_volatility(self,data):
+        if len(data) > 2:
+            last_night = (over_night[0])
+            this_morn = (over_night[-1])
+            print(last_night)
+            print(this_morn)
+            if int(this_morn['high'].split('.')[0]) - int(last_night['high'].split('.')[0]) >= 25:
+                symbol = Order(self.ticker,self.price[-1])
+                order_back_log = symbol.buy(order_type='market',order_class='oto',
+                                      qty=1, tif='gtc',profit=self.profit)
+                return order_back_log
+            else:
+                return False
+
     def Sma(self,data,int=10):
         '''
         Creates simple moving average
@@ -77,7 +94,7 @@ class QuantTrader():
         except:
             return f'SMA_{int} -- Check input data is iterable --'
 
-    def Climb_the_ladder(self,profit,qty=1):
+    def Climb_the_ladder(self,qty=1):
         '''
         When the simple moving average of
         30 is a percentage over the high price
@@ -87,50 +104,49 @@ class QuantTrader():
         if (self.price[-1] - self.sma_30) > (self.price[-1]*0.0125):
             order_ctl = symbol.buy(order_class='bracket',order_type='market',
                                              qty=qty,tif='gtc',
-                                             profit=profit,
-                                             stop_limit_price=self.price[-1] - (profit/2),
-                                             stop_price=self.price[-1] - (profit/2.25))
+                                             profit=self.profit,
+                                             stop_limit_price=self.price[-1] - (self.profit/2),
+                                             stop_price=self.price[-1] - (self.profit/2.25))
             return order_ctl
         else:
-            return 'CTL Not Satisfied'
+            return False
 
-    def Stop_drop_and_roll(self,profit,qty=1):
+    def Stop_drop_and_roll(self,qty=1):
         symbol = Order(self.ticker,self.price[-1])
         self.sma_10 = self.Sma(self.price,int=10)
         if (self.sma_10 - self.price[-1]) > (self.sma_10*.025):
             order_SDR = symbol.buy(order_class='oto', order_type='market',
-                                 qty=qty, tif='gtc', profit=profit)
+                                 qty=qty, tif='gtc', profit=self.profit)
             return order_SDR
         else:
-            return 'SDR Not Satisfied'
+            return False
 
-    def Volatility(self,volatility,profit,qty=1,parameter=1):
+    def Volatility(self,volatility,qty=1,parameter=1):
         if volatility > parameter:
             symbol = Order(self.ticker,self.price[-1])
             order_1 = symbol.buy(order_type='market', order_class='oto',
-                               qty=qty, tif='gtc', profit=profit)
+                               qty=qty, tif='gtc', profit=self.profit)
             return order_1
         else:
-            pass
+            return False
 
-    def Price_jump(self,profit,qty=1):
+    def Price_jump(self,qty=1):
         symbol = Order(self.ticker,self.price[-1])
         self.sma_30 = self.Sma(self.price,int=30)
         if (self.price[-1] - self.sma_30) > (self.price[-1]*.02):
             order_stand_alone = symbol.buy(order_class='bracket', order_type='market',
                                          qty=qty, tif='gtc',
-                                         profit=profit,
-                                         stop_limit_price=self.price[-1] - (profit / 2),
-                                         stop_price=self.price[-1] - (profit / 2.1))
+                                         profit=self.profit,
+                                         stop_limit_price=self.price[-1] - (self.profit / 2),
+                                         stop_price=self.price[-1] - (self.profit / 2.1))
             return order_stand_alone
         else:
             pass
 
-    def order(self,
+    def buy_order(self,
               order_type,
               qty,
               tif,
-              profit=None,
               order_class=None,
               stop_price=None,
               limit_price=None,
@@ -141,7 +157,7 @@ class QuantTrader():
                            order_class=order_class,
                            qty=qty,
                            tif=tif,
-                           profit=profit,
+                           profit=self.profit,
                            limit_price=limit_price,
                            stop_price=stop_price,
                            stop_limit_price=stop_limit_price)
@@ -149,4 +165,22 @@ class QuantTrader():
 
 
 if __name__ == '__main__':
-    pass
+
+    price = []
+    for i in range(0,475):
+        price.append(i)
+
+    if 3000 > price[-1] >= 1000:
+        profit = 100
+    elif 1000 > price[-1] > 850:
+        profit = 80
+    elif 850 >= price[-1] > 600:
+        profit = 65
+    elif 600 >= price[-1] > 400:
+        profit = 40
+    elif 400 >= price[-1]:
+        profit = 30
+    tesla = QuantTrader('TSLA',price,profit)
+    over_night = tesla.Back_logger()
+    back_log = tesla.Back_log_volatility(over_night)
+    print(back_log)

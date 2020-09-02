@@ -1,0 +1,1 @@
+{'symbol': 'TSLA', 'time': '2020-09-01, Tue, 16:44', 'open': 478.98, 'high': 479.25, 'low': 478.98, 'close': 479.25, 'hlmean': 479.12, 'volatilty': 0.27, 'v_factor': 0.06}
