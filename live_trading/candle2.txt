@@ -1,1 +1,5 @@
-{'symbol': 'TSLA', 'time': '2020-09-01, Tue, 16:44', 'open': 478.98, 'high': 479.25, 'low': 478.98, 'close': 479.25, 'hlmean': 479.12, 'volatilty': 0.27, 'v_factor': 0.06}
+{'symbol': 'TSLA', 'time': '2020-09-02, Wed, 10:28', 'open': 448.89, 'high': 449.84, 'low': 446.9, 'close': 449.7238, 'hlmean': 448.37, 'volatilty': 2.94, 'v_factor': 0.66}
+{'symbol': 'TSLA', 'time': '2020-09-02, Wed, 10:29', 'open': 449.5496, 'high': 451.95, 'low': 449.43, 'close': 450.88, 'hlmean': 450.69, 'volatilty': 2.52, 'v_factor': 0.56}
+{'symbol': 'TSLA', 'time': '2020-09-02, Wed, 10:30', 'open': 450.89, 'high': 451.9, 'low': 450.3177, 'close': 451.29, 'hlmean': 451.11, 'volatilty': 1.58, 'v_factor': 0.35}
+{'symbol': 'TSLA', 'time': '2020-09-02, Wed, 10:31', 'open': 451.165, 'high': 451.25, 'low': 448.7, 'close': 449.84, 'hlmean': 449.98, 'volatilty': 2.55, 'v_factor': 0.57}
+{'symbol': 'TSLA', 'time': '2020-09-02, Wed, 10:32', 'open': 450.28, 'high': 451.5, 'low': 449.71, 'close': 450.804, 'hlmean': 450.61, 'volatilty': 1.79, 'v_factor': 0.4}

@@ -22,7 +22,8 @@ simple_moving_average_30 = []
 current_tick = None
 previous_tick = None
 in_position = False
-back_log_volatility = True
+back_log = None
+
 
 candles = open('candle2.txt', 'a')
 connection_log = open('log_on2.txt', 'a')
@@ -42,7 +43,6 @@ def _reopen(file):
 def time_converter(some_time):
 
     newtime = datetime.fromtimestamp(some_time / 1000)
-
     newtimes = newtime.strftime('%Y-%m-%d, %a, %H:%M')
     return newtimes
 
@@ -88,10 +88,15 @@ def check_time():
         connection_log.write('The day has ended\n')
 # ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
 def onn_open(ws):
-    global over_night, back_log_volatility
+    global over_night, back_log
     connection_log = _reopen('log_on2.txt')
-    log = _reopen('action2.txt')
     print("\nConnecting --> ")
+
+    try:
+        BackLog = QuantTrader('TSLA',price=0,profit=0)
+        back_log = BackLog.Back_logger()
+    except:
+        print('back log fail')
 
     auth_data = {
         "action": "auth",
@@ -105,10 +110,6 @@ def onn_open(ws):
     ws.send(json.dumps(channel_data))
     print("Connected <--")
     connection_log.write(f'Logged In @ {datetime.now()}\n')
-
-    #there will be a back log failure on mondays
-
-
     connection_log.close()
 
 def on_error(ws, error):
@@ -129,23 +130,18 @@ def on_close(ws):
 # -----------------------------
 def tesla(ws, message):
 
+    global current_tick, previous_tick, rolling_ten, back_log
     candles = _reopen('candle2.txt')
     log = _reopen('action2.txt')
     order_log = _reopen('order2.txt')
 
-    global current_tick, previous_tick, rolling_ten, back_log_volatility, simple_moving_average_10, simple_moving_average_30
+
     previous_tick = current_tick
     message = a.clean_and_load(message)
-
-# ====================================
-
     current_tick = json.loads(message)
-
 # ===================================
-
     times = current_tick['e']  # DATA TYPE IS INT
     times = time_converter(times)  # CONVERTS TYPE INT INTO DATETIME OBJECT THEN A STRING
-
 # ===================================
 
     ticker = current_tick['sym']
@@ -158,8 +154,6 @@ def tesla(ws, message):
     v_factor = (volatility / hlmean) * 100
 
 # ===================================
-
-    # ADDS NEW CANDLESTICK AS TIME PROGRESSES
     minute_candlestick.append({
         'symbol': ticker,
         'time': times,
@@ -173,14 +167,12 @@ def tesla(ws, message):
     })
 
     latest_candle = minute_candlestick[-1]
-
     candles.write(f'{latest_candle}\n')
-
     print(f'{latest_candle}\n')
 # ====================================================
-    _high = minute_candlestick['high']
-    _time = minute_candlestick[-1]['time']
 
+    _high = [i['high'] for i in minute_candlestick]
+    _time = minute_candlestick[-1]['time']
 
 # --- PROFIT TREE ---
     if 3000 > _high[-1] >= 1000:
@@ -195,15 +187,11 @@ def tesla(ws, message):
         profit = 30
 # --- PROFIT TREE ---
 
-    # ---- DIFFERENCE BETWEEN PRICES ----
 
+# ---- MINUTE VARIANCE ----
     _volatility_coeff = minute_candlestick[-1]['volatilty']
-
-# ---- DIFFERENCE IN THE VOLATILITY COEFFICIENTS ----
-
     v_param = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
-
-    log.write(f'Time: {_time}, High: {_high}, V_param: {v_param}\n')
+    log.write(f'Time: {_time}, High: {_high[-1]}, V_param: {v_param}\n')
 
 # ======================================================
 #       ^^^^ GENERIC STRATEGY INFORMATION ^^^^^^
@@ -211,7 +199,6 @@ def tesla(ws, message):
 #                   START STRATEGY HERE
 # =======================================================
     Tesla = QuantTrader('TSLA',_high,profit=profit)
-
     position = a.get_position_for(ticker)
     account = a.get_account()
     buying_power = account['buying_power'].split('.')[0]
@@ -219,35 +206,25 @@ def tesla(ws, message):
 # =======================================================
 #               Back log volatility buy
 # =======================================================
-    try:
-#if statement here with boolean to make sure this runs once
-        if back_log_volatility:
-            back_log = Tesla.Back_log_volatility(Tesla.Back_logger())
-            if back_log:
-                back_log_volatility = False
-        else:
-            log.write(f'Backlog conditions not satisifed')
-    except:
-            log.write('Back Logging Function Failed\n')
-            print('Back Logging Function Failed')
+    if back_log:
+        back_log_order = Tesla.Back_log_volatility(back_log)
+        print(back_log_order)
+        back_log = None
 
 # =======================================================
 #               STrategy
 # =======================================================
 
+
     if len(minute_candlestick) > 1:
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
         try:
             rolling_ten.append(minute_candlestick[-1]['v_factor'])
-            simple_moving_average_10.append(minute_candlestick[-1]['high'])
-            simple_moving_average_30.append(minute_candlestick[-1]['high'])
         except:
-            log.write('Rolling_ten and SMA_HIGH appending failure\n')
+            log.write('Rolling_ten appending failure\n')
         print('-- Active --')
         log.write('-- Strategy Activated --\n')
-    else:
-        print('Pending Action\n')
-        return
+
 
 # BIG DROP
     try:
@@ -289,6 +266,9 @@ def tesla(ws, message):
                 log.write(f'Buy Condition high Sma_1: {volatility_coefficient}')
                 order_sma_1 = Tesla.buy_order(order_type='market', order_class='oto', qty=1, tif='gtc')
                 order.log(f'Time: {_time} order sma 1: \n{order_sma_1}\n')
+                candles.close()
+                log.close()
+                order_log.close()
                 return
             try:
                 if roll > .5:
@@ -299,9 +279,15 @@ def tesla(ws, message):
 
                     if order_sdr:
                         order.log(f'Time: {_time} order_sdr:\n{order_sdr}\n')
+                        candles.close()
+                        log.close()
+                        order_log.close()
                         return
                     elif order_ctl:
                         order.log(f'Time: {_time} order_ctl:\n{order_ctl}\n')
+                        candles.close()
+                        log.close()
+                        order_log.close()
                         return
                     else:
                         pass
@@ -312,6 +298,10 @@ def tesla(ws, message):
             if order_price_Jump:
                 log.write(f'Price Jump')
                 order_log.write(f'Time: {_time}, order price jump:\n{order_price_Jump}\n')
+                candles.close()
+                log.close()
+                order_log.close()
+                return
             else:
                 pass
 
@@ -324,7 +314,6 @@ def tesla(ws, message):
 
         log.write(f'{qty_pos} Shares of {ticker.upper()} @ avg_cost: {avg_price}\n')
         print(f'{qty_pos} Shares of {ticker.upper()} @ {avg_price}')
-        print(f'High: {_high}')
 
 
         if _high < 5000:
@@ -336,6 +325,9 @@ def tesla(ws, message):
                 order_2 = tsla.buy(order_type='market', order_class='oto',
                                    qty=1, tif='gtc', profit=profit)
                 order_log.write(f'Order 1: \n{order_2}\n')
+                candles.close()
+                log.close()
+                order_log.close()
                 return
 
             try:
@@ -350,6 +342,9 @@ def tesla(ws, message):
                         order_SDRws = tsla.buy(order_class='oto', order_type='market',
                                              qty=1, tif='gtc', profit=profit)
                         order_log.write(f'order_sdrws:\n{order_SDRws}\n')
+                        candles.close()
+                        log.close()
+                        order_log.close()
                         return
 
                     if (_high - SMA_HIGH_30) > (_high * .0125):
@@ -364,6 +359,9 @@ def tesla(ws, message):
                                              stop_price=_high - (profit / 2.25))
 
                         order_log.write(f'order_ctlws:\n{order_ctlws}\n')
+                        candles.close()
+                        log.close()
+                        order_log.close()
                         return
             except:
                 log.write('Rolling_10 inactive\n')
@@ -379,6 +377,9 @@ def tesla(ws, message):
                                            stop_limit_price=_high - (profit / 2),
                                            stop_price=_high - (profit / 2.25))
                     order_log.write(f'Order_stand_alone:\n {order_stand_alone}\n')
+                    candles.close()
+                    log.close()
+                    order_log.close()
                     return
             except:
                 pass
@@ -392,6 +393,9 @@ def tesla(ws, message):
                                         stop_price= _high - (profit/ 2.25),
                                         )
         order_log.write(f'order double trouble:\n{order_double_trouble}\n')
+        candles.close()
+        log.close()
+        order_log.close()
         return
 
  # =======================================================

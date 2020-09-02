@@ -33,7 +33,6 @@ class QuantTrader():
         api = tradeapi.REST(API__KEY, SECRET_KEY, api_version='v2')
         # for manually grabbing data and doing an analysis by hand or ipython file
         data = api.polygon.historic_agg_v2(self.ticker, 1, time_interval, start, final)
-
         for bar in data:
 
             # catenuated the last few items from the time stamp
@@ -61,15 +60,12 @@ class QuantTrader():
                         'time': time2,
                         'high': _high,
                     })
-
         return self.over_night
 
     def Back_log_volatility(self,data):
         if len(data) > 2:
-            last_night = (over_night[0])
-            this_morn = (over_night[-1])
-            print(last_night)
-            print(this_morn)
+            last_night = (data[0])
+            this_morn = (data[-1])
             if int(this_morn['high'].split('.')[0]) - int(last_night['high'].split('.')[0]) >= 25:
                 symbol = Order(self.ticker,self.price[-1])
                 order_back_log = symbol.buy(order_type='market',order_class='oto',
