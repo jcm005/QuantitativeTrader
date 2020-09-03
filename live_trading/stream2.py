@@ -377,7 +377,7 @@ def tesla(ws, message):
         if _high < 5000:
             if volatility_coefficient > 1:
                 log.write(f'Condition: Volatility Coeff: {volatility_coefficient}\n')
-                log.write(f'Attempting Buy --(Ref NP Volatility)-- Price:{_high}, Volatility_Coeff: {volatility_coefficient}\n')
+                log.write(f'Attempting Buy --(Ref NP Volatility)-- High:{_high}, low: {minute_candlestick[-1]["low"]} Volatility_Coeff: {volatility_coefficient}\n')
 
                 order_1 = tsla.buy(order_type='market',order_class='oto',
                                    qty=1,tif='gtc',profit=profit)

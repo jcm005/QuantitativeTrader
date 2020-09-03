@@ -1,9 +1,15 @@
-from trader import QuantTrader
-#price = [i for i in range(0,475)]
-price = 10
-profit = 10
+from unittest import TestCase
+#import a function you wanna test
+class functionTestCase(TestCase):
+    '''Test for any function'''
 
-Tesla = QuantTrader('TSLA',price=price,profit=profit)
+    def first_test(self):
+        '''one of many test'''
+        # execut function you wanna test
+        variable = 'the return of the function you wanna test'
+        self.assertEqual(variable,'put what the answer should be')
 
-back_log = Tesla.Back_logger()
-print(back_log)
+    def setUp(self) -> None:
+        ''' the init of testing
+        it creates a survey instance and it creates a list of responses'''
+    unittest.main()

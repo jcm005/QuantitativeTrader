@@ -10,7 +10,6 @@ class QuantTrader():
         self.over_night =[]
         self.profit = profit
 
-
     def Back_logger(self):
         '''
         gains insight to market after hours and the result can be manipulated to have market opening orders ready
@@ -88,7 +87,7 @@ class QuantTrader():
             else:
                 pass
         except:
-            return f'SMA_{int} -- Check input data is iterable --'
+            return False
 
     def Climb_the_ladder(self,qty=1):
         '''
@@ -138,6 +137,12 @@ class QuantTrader():
             return order_stand_alone
         else:
             pass
+
+    def double_trouble(self,vola_data,qty=1,parameter=1):
+        self.vola = vola_data
+        self.Sma(self.vola_data,int=10)
+        pass
+
 
     def buy_order(self,
               order_type,

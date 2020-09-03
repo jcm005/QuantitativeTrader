@@ -22,7 +22,7 @@ class Order():
         decoded = need_decoded.content.decode('utf-8')
         dumper = json.loads(decoded)
         return dumper
-#maybe make thid a subclass
+
     def log(self,file,log_info):
         file.write(log_info)
 
@@ -130,7 +130,7 @@ class Order():
         status = self.order_details(order_sent,'simple')
         self.log(self.candle,f'Order Status is: {status}\n')
         return status
-#  NEWLY ORDERS OTO BRACKET LIMIT MARKET
+
     def buy(self,
             order_type,
             qty,

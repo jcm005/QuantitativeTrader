@@ -172,6 +172,7 @@ def tesla(ws, message):
 # ====================================================
 
     _high = [i['high'] for i in minute_candlestick]
+    _v_factor = [i['v_factor'] for i in minute_candlestick]
     _time = minute_candlestick[-1]['time']
 
 # --- PROFIT TREE ---
@@ -215,16 +216,8 @@ def tesla(ws, message):
 #               STrategy
 # =======================================================
 
-
     if len(minute_candlestick) > 1:
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
-        try:
-            rolling_ten.append(minute_candlestick[-1]['v_factor'])
-        except:
-            log.write('Rolling_ten appending failure\n')
-        print('-- Active --')
-        log.write('-- Strategy Activated --\n')
-
 
 # BIG DROP
     try:
@@ -244,16 +237,6 @@ def tesla(ws, message):
 #               INDICATORS
 # =======================================================
 
-    try:
-        if len(rolling_ten) > 10:
-            rolling_10 = rolling_ten[-10:]
-            summed_up = sum(rolling_10)
-            roll = summed_up/10
-            log.write(f'Rolling_10: {roll}\n')
-    except:
-        log.write('Rolling_10 Failure\n')
-
-
 # =======================================================
 #               LOGIC
 # =======================================================
@@ -262,48 +245,39 @@ def tesla(ws, message):
     if not position:
         log.write(f'There is no shares for {ticker}\n')
         if _high < 5000:
-            if volatility_coefficient > 1:
-                log.write(f'Buy Condition high Sma_1: {volatility_coefficient}')
-                order_sma_1 = Tesla.buy_order(order_type='market', order_class='oto', qty=1, tif='gtc')
-                order.log(f'Time: {_time} order sma 1: \n{order_sma_1}\n')
-                candles.close()
-                log.close()
-                order_log.close()
+
+            order_sma_1 = Tesla.Volatility(volatility_coefficient,parameter=1)
+            if order_sma_1 != False:
+                log.write(f'Ordered: order_sma_1')
+                order_log.write(f'Time: {_time} Ordered Order_sma_1:\n{order_sma_1}\n')
                 return
-            try:
-                if roll > .5:
-                    log.write(f'Condition: Rolling_10: {roll}\n')
 
-                    order_sdr = Tesla.Stop_Drop_and_Roll()
-                    order_ctl = Tesla.Climb_the_ladder()
 
-                    if order_sdr:
-                        order.log(f'Time: {_time} order_sdr:\n{order_sdr}\n')
-                        candles.close()
-                        log.close()
-                        order_log.close()
-                        return
-                    elif order_ctl:
-                        order.log(f'Time: {_time} order_ctl:\n{order_ctl}\n')
-                        candles.close()
-                        log.close()
-                        order_log.close()
-                        return
-                    else:
-                        pass
-            except:
-                log.write('Rolling_10 inactive\n')
+            rolling_v_10 = Tesla.Sma(_v_factor,int=10)
+            log.write(f'rolling_v_10: {rolling_v_10}')
+            if rolling_v_10 > .5 and rolling_v_10 != False:
+
+                order_ctl = Tesla.Climb_the_ladder()
+                order_sdr = Tesla.Stop_Drop_and_Roll()
+
+                if order_ctl != False:
+                    log.write(f'Ordered: order_ctl')
+                    order_log.write(f'Time: {_time} Ordered Order_ctl:\n{order_ctl}\n')
+                    return
+
+                if order_sdr != False:
+                    log.write(f'Ordered: order_sdr')
+                    order_log.write(f'Time: {_time} Ordered Order_sdr:\n{order_sdr}\n')
+                    return
 
             order_price_Jump = Tesla.Price_jump()
-            if order_price_Jump:
-                log.write(f'Price Jump')
-                order_log.write(f'Time: {_time}, order price jump:\n{order_price_Jump}\n')
-                candles.close()
-                log.close()
-                order_log.close()
+            if order_price_Jump != False:
+                log.write(f'Ordered: order_price_jump')
+                order_log.write(f'Time: {_time}, Order Price Jump:\n{order_price_Jump}\n')
                 return
-            else:
-                pass
+
+
+
 
     # WITH A POSITION
     else:
@@ -317,74 +291,37 @@ def tesla(ws, message):
 
 
         if _high < 5000:
-            if volatility_coefficient > 1:
-                log.write(
-                    f'Attempting an order of {ticker} @ {_high} with volatility_coefficent of {volatility_coefficient}\n')
-                log.write('Buying Ref #1 with position\n')
 
-                order_2 = tsla.buy(order_type='market', order_class='oto',
-                                   qty=1, tif='gtc', profit=profit)
-                order_log.write(f'Order 1: \n{order_2}\n')
-                candles.close()
-                log.close()
-                order_log.close()
+            order_sma_1 = Tesla.Volatility(volatility_coefficient, parameter=1)
+            if order_sma_1 != False:
+                log.write(f'Ordered: order_sma_1')
+                order_log.write(f'Time: {_time} Ordered Order_sma_1:\n{order_sma_1}\n')
                 return
 
-            try:
-                if roll > .5:
-                    log.write(f'Condition: Rolling_10: {roll}\n')
+            rolling_v_10 = Tesla.Sma(_v_factor, int=10)
+            log.write(f'rolling_v_10: {rolling_v_10}')
+            if rolling_v_10 > .5 and rolling_v_10 != False:
 
-                    if SMA_HIGH_10 - _high >= (SMA_HIGH_10 * .025):
-                        log.write(f'STOP DROP AND ROLL CONDITION with Share\n'
-                                  f' SMA_HIGH_10: {SMA_HIGH_10}\n'
-                                  f' _high : {_high}\n')
+                order_ctl = Tesla.Climb_the_ladder()
+                order_sdr = Tesla.Stop_Drop_and_Roll()
 
-                        order_SDRws = tsla.buy(order_class='oto', order_type='market',
-                                             qty=1, tif='gtc', profit=profit)
-                        order_log.write(f'order_sdrws:\n{order_SDRws}\n')
-                        candles.close()
-                        log.close()
-                        order_log.close()
-                        return
-
-                    if (_high - SMA_HIGH_30) > (_high * .0125):
-                        log.write(f'CLIMB WITH LADDER with Share\n'
-                                  f' SMA_HIGH_30: {SMA_HIGH_30}\n'
-                                  f' _high : {_high}\n')
-
-                        order_ctlws = tsla.buy(order_class='bracket', order_type='market',
-                                             qty=1, tif='gtc',
-                                             profit=profit,
-                                             stop_limit_price=_high - (profit / 2),
-                                             stop_price=_high - (profit / 2.25))
-
-                        order_log.write(f'order_ctlws:\n{order_ctlws}\n')
-                        candles.close()
-                        log.close()
-                        order_log.close()
-                        return
-            except:
-                log.write('Rolling_10 inactive\n')
-
-            try:
-                if (_high - SMA_HIGH_30) > (_high*.02):
-                    log.write(f'Stand alone sudden increase in price'
-                              f'_high: {_high} Sma_high_30: {SMA_HIGH_30}\n')
-
-                    order_stand_alone = tsla.buy(order_class='bracket', order_type='market',
-                                           qty=1, tif='gtc',
-                                           profit=profit,
-                                           stop_limit_price=_high - (profit / 2),
-                                           stop_price=_high - (profit / 2.25))
-                    order_log.write(f'Order_stand_alone:\n {order_stand_alone}\n')
-                    candles.close()
-                    log.close()
-                    order_log.close()
+                if order_ctl != False:
+                    log.write(f'Ordered: order_ctl')
+                    order_log.write(f'Time: {_time} Ordered Order_ctl:\n{order_ctl}\n')
                     return
-            except:
-                pass
 
-    if volatility_coefficient > 1 and roll > .5:
+                if order_sdr != False:
+                    log.write(f'Ordered: order_sdr')
+                    order_log.write(f'Time: {_time} Ordered Order_sdr:\n{order_sdr}\n')
+                    return
+
+            order_price_Jump = Tesla.Price_jump()
+            if order_price_Jump != False:
+                log.write(f'Ordered: order_price_jump')
+                order_log.write(f'Time: {_time}, Order Price Jump:\n{order_price_Jump}\n')
+                return
+
+    if volatility_coefficient > 1 and rolling_v_10 > .5:
         log.write(f'Double standard SMA_1: {volatility_coefficient} roll: {roll}\n')
 
         order_double_trouble = tsla.buy(order_class='oto',order_type='market',
