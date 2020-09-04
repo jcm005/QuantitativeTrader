@@ -9,94 +9,61 @@ import pytz
 from pytz import timezone
 from keys import *
 from order2 import Order
-from trader import QuantTrader
+from trader import QuantTrader, StreamTrader
 
+st = StreamTrader()
+class WebSocketStreaming():
 
-est = pytz.timezone('US/Eastern')
-minutes_processed = {}
-minute_candlestick = []
-rolling_ten = []
-over_night = []
-simple_moving_average_10 = []
-simple_moving_average_30 = []
-current_tick = None
-previous_tick = None
-in_position = False
-back_log = None
-
-
-candles = open('candle2.txt', 'a')
-connection_log = open('log_on2.txt', 'a')
-log = open('action2.txt', 'a')
-order_log = open('order2.txt','a')
-
-candles.truncate(0)
-log.truncate(50)
-order_log.truncate(0)
+    def __init__(self):
+        self.st = StreamTrader()
 
 
 
-def _reopen(file):
-    file_to_repoen = open(file, 'a')
-    return file_to_repoen
+def web_socket_sign_on(self):
 
-def time_converter(some_time):
-
-    newtime = datetime.fromtimestamp(some_time / 1000)
-    newtimes = newtime.strftime('%Y-%m-%d, %a, %H:%M')
-    return newtimes
+    socket = "wss://alpaca.socket.polygon.io/stocks"
+    ws = websocket.WebSocketApp(socket,
+                                on_open=onn_open,
+                                on_message=tesla,
+                                on_error=on_error,
+                                on_close=on_close
+                                )
+    ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
 
 def check_time():
-    connection_log = _reopen('log_on2.txt')
-    print('Checking Time')
-    connection_log.write('Checking Time\n')
+    global st
+    st.connection_log('Checking time')
+    right_now = st.localize_time()
+    st.connection_log('Right Now %s' %  (right_now[:2]))
 
-    tiz = timezone('US/Eastern')
-    right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tiz)
-    right_now = datetime.strftime(right_now, '%H:%M:%S')
-    print((right_now[:2]))
-    connection_log.write(f'{right_now[:2]}\n')
     if 6  < int(right_now[:2]) < 23:
-        print('Good... reconnecting')
-        connection_log.write(f'Good..Reconnecting, the time is :{right_now}\n')
+        st.connection_log('Time is good. The current time is %s' % (right_now))
+
         try:
-            socket = "wss://alpaca.socket.polygon.io/stocks"
-            ws = websocket.WebSocketApp(socket,
-                                        on_open=onn_open,
-                                        on_message=tesla,
-                                        on_error=on_error,
-                                        on_close=on_close
-                                        )
-            ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
+            st.connection_log('Trying to sign on attempt  1')
+            web_socket_sign_on()
         except:
-            print('Connection Failed')
-            connection_log.write('Connection Failed')
 
             try:
-                socket = "wss://alpaca.socket.polygon.io/stocks"
-                ws = websocket.WebSocketApp(socket,
-                                            on_open=onn_open,
-                                            on_message=tesla,
-                                            on_error=on_error,
-                                            on_close=on_close
-                                            )
-                ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
+                st.connection_log('Trying to sign on attempt  2')
+                web_socket_sign_on()
             except:
                 print('Connection Failed')
     else:
-        print('The Day Has Ended')
-        connection_log.write('The day has ended\n')
-# ----------------------------WEB-SOCKET FUNCTIONS BELOW ------------------
-def onn_open(ws):
-    global over_night, back_log
-    connection_log = _reopen('log_on2.txt')
-    print("\nConnecting --> ")
+        st.connection_log('The day has ended')
 
+# -----------------------------------
+#  --- WEB-SOCKET FUNCTIONS BELOW ---
+#  ----------------------------------
+def onn_open(ws):
+    global st
+
+    print('connecting')
     try:
         BackLog = QuantTrader('TSLA',price=0,profit=0)
         back_log = BackLog.Back_logger()
     except:
-        print('back log fail')
+        st.log('Back log failed')
 
     auth_data = {
         "action": "auth",
@@ -109,84 +76,41 @@ def onn_open(ws):
     }
     ws.send(json.dumps(channel_data))
     print("Connected <--")
-    connection_log.write(f'Logged In @ {datetime.now()}\n')
-    connection_log.close()
+    st.connection_log('Connected at %s' % (st.localize_time()))
 
 def on_error(ws, error):
-    print(error)
+    global st
+    st.connection_log(error)
 
 def on_close(ws):
-    global connection_log
-    tiz = timezone('US/Eastern')
-    right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tiz)
-    right_now = datetime.strftime(right_now, '%H:%M:%S')
-    log = _reopen('action.txt')
-    connection_log = _reopen('log_on.txt')
-    log.write('Lost Connection See Log_on.txt\n')
-    connection_log.write(f'Connection Closed {right_now} \nWorking on Re-establishing Connection...@{datetime.now()}\n')
+    global st
+
+    now  = st.localize_time()
+    st.log('lost connection')
+    st.connection_log('Connection Closed at %s' % (now))
+    st.connection_log('Trying to Reconnect')
     check_time()
-    connection_log.close()
-    log.close()
+
 # -----------------------------
 def tesla(ws, message):
 
-    global current_tick, previous_tick, rolling_ten, back_log
-    candles = _reopen('candle2.txt')
-    log = _reopen('action2.txt')
-    order_log = _reopen('order2.txt')
+    tsla = StreamTrader()
+    tsla.previous_tick = tsla.current_tick
 
-
-    previous_tick = current_tick
     message = a.clean_and_load(message)
-    current_tick = json.loads(message)
-# ===================================
-    times = current_tick['e']  # DATA TYPE IS INT
-    times = time_converter(times)  # CONVERTS TYPE INT INTO DATETIME OBJECT THEN A STRING
-# ===================================
+    tsla.current_tick = json.loads(message)
 
-    ticker = current_tick['sym']
-    open = current_tick['o']
-    high = current_tick['h']
-    low = current_tick['l']
-    close = current_tick['c']
-    volatility = current_tick['h'] - current_tick['l']
-    hlmean = (current_tick['h'] + current_tick['l']) / 2
-    v_factor = (volatility / hlmean) * 100
-
-# ===================================
-    minute_candlestick.append({
-        'symbol': ticker,
-        'time': times,
-        'open': open,
-        'high': high,
-        'low': low,
-        'close': close,
-        'hlmean': round(hlmean, ndigits=2),
-        'volatilty': round(volatility, ndigits=2),
-        'v_factor': round(v_factor, ndigits=2),
-    })
-
-    latest_candle = minute_candlestick[-1]
-    candles.write(f'{latest_candle}\n')
+    latest_candle = tsla.candle_builder()
+    tsla.candle_log(latest_candle)
     print(f'{latest_candle}\n')
+
 # ====================================================
 
     _high = [i['high'] for i in minute_candlestick]
     _v_factor = [i['v_factor'] for i in minute_candlestick]
     _time = minute_candlestick[-1]['time']
 
-# --- PROFIT TREE ---
-    if 3000 > _high[-1] >= 1000:
-        profit = 100
-    elif 1000 > _high[-1] > 850:
-        profit = 80
-    elif 850 >= _high[-1] > 600:
-        profit = 65
-    elif 600 >= _high[-1] > 400:
-        profit = 40
-    elif 400 >= _high[-1]:
-        profit = 30
-# --- PROFIT TREE ---
+    profit = tsla.profit_tree(self._high[-1])
 
 
 # ---- MINUTE VARIANCE ----
@@ -209,8 +133,9 @@ def tesla(ws, message):
 # =======================================================
     if back_log:
         back_log_order = Tesla.Back_log_volatility(back_log)
-        print(back_log_order)
+        print(f'Back log is :{back_log_order}')
         back_log = None
+        pass
 
 # =======================================================
 #               STrategy
@@ -218,108 +143,88 @@ def tesla(ws, message):
 
     if len(minute_candlestick) > 1:
         volatility_coefficient = (minute_candlestick[-1]['v_factor'] - minute_candlestick[-2]['v_factor'])
-
-# BIG DROP
-    try:
-        if len(minute_candlestick) > 2:
-            big_drop_2 = (minute_candlestick[-3]['high'] - minute_candlestick[-1]['low'])
-            if big_drop_2 > 50:
-                log.write(f'Big drop 2 -- Active -- :{big_drop_2}\n')
-
-        if len(minute_candlestick) > 4:
-            big_drop_4 = (minute_candlestick[-5]['high'] - minute_candlestick[-1]['low'])
-            if big_drop_4 > 50:
-                log.write(f'Big drop 4 -- Active -- :{big_drop_4}\n')
-    except:
-        log.write('Big Drop Inactive\n')
+        pass
 
 # =======================================================
 #               INDICATORS
 # =======================================================
 
+    rolling_v_10 = Tesla.Sma(_v_factor, int=10)
+
 # =======================================================
 #               LOGIC
 # =======================================================
 
-    # WITH NO POSITION HERE
     if not position:
+
         log.write(f'There is no shares for {ticker}\n')
-        if _high < 5000:
+        log.write(f'rolling_v_10: {rolling_v_10}')
 
-            order_sma_1 = Tesla.Volatility(volatility_coefficient,parameter=1)
-            if order_sma_1 != False:
-                log.write(f'Ordered: order_sma_1')
-                order_log.write(f'Time: {_time} Ordered Order_sma_1:\n{order_sma_1}\n')
+        if Tesla.Volatility(volatility_coefficient,parameter=1) != False:
+            order = Tesal.buy_order(ref='sma1')
+            log.write(f'Ordered: order_sma_1')
+            order_log.write(f'Time: {_time} Ordered Order_sma_1:\n{order}\n')
+            return
+
+        if rolling_v_10 > .5:
+
+            if Tesla.Climb_the_ladder() != False:
+                order = Tesla.buy_order(ref='ctl')
+                log.write(f'Ordered: order_ctl')
+                order_log.write(f'Time: {_time} Ordered Order_ctl:\n{order}\n')
                 return
 
-
-            rolling_v_10 = Tesla.Sma(_v_factor,int=10)
-            log.write(f'rolling_v_10: {rolling_v_10}')
-            if rolling_v_10 > .5 and rolling_v_10 != False:
-
-                order_ctl = Tesla.Climb_the_ladder()
-                order_sdr = Tesla.Stop_Drop_and_Roll()
-
-                if order_ctl != False:
-                    log.write(f'Ordered: order_ctl')
-                    order_log.write(f'Time: {_time} Ordered Order_ctl:\n{order_ctl}\n')
-                    return
-
-                if order_sdr != False:
-                    log.write(f'Ordered: order_sdr')
-                    order_log.write(f'Time: {_time} Ordered Order_sdr:\n{order_sdr}\n')
-                    return
-
-            order_price_Jump = Tesla.Price_jump()
-            if order_price_Jump != False:
-                log.write(f'Ordered: order_price_jump')
-                order_log.write(f'Time: {_time}, Order Price Jump:\n{order_price_Jump}\n')
+            if Tesla.Stop_Drop_and_Roll() != False:
+                order = Tesla.buy_order(ref='sdr')
+                log.write(f'Ordered: order_sdr')
+                order_log.write(f'Time: {_time} Ordered Order_sdr:\n{order}\n')
                 return
+            pass
 
-
-
+        if Tesla.Price_jump() != False:
+            order = Tesla.buy_order(ref='pj')
+            log.write(f'Ordered: order_price_jump')
+            order_log.write(f'Time: {_time}, Order Price Jump:\n{order}\n')
+            return
 
     # WITH A POSITION
     else:
 
         qty_pos = position['qty']
         cost_basis = position['cost_basis']
-        avg_price = position['avg_entry_price']
+        avg_price = position['avg_entry_price'].split('.')[0]
 
         log.write(f'{qty_pos} Shares of {ticker.upper()} @ avg_cost: {avg_price}\n')
         print(f'{qty_pos} Shares of {ticker.upper()} @ {avg_price}')
 
+        if Tesla.Volatility(volatility_coefficient, parameter=1) != False:
+            order = Tesal.buy_order(ref='sma1ws')
+            log.write(f'Ordered: order_sma_1 ws')
+            order_log.write(f'Time: {_time} Ordered Order_sma_1 ws:\n{order}\n')
+            return
 
-        if _high < 5000:
+        if rolling_v_10 > .5:
 
-            order_sma_1 = Tesla.Volatility(volatility_coefficient, parameter=1)
-            if order_sma_1 != False:
-                log.write(f'Ordered: order_sma_1')
-                order_log.write(f'Time: {_time} Ordered Order_sma_1:\n{order_sma_1}\n')
+            if Tesla.Climb_the_ladder() != False:
+                order = Tesla.buy_order(ref='ctlws')
+                log.write(f'Ordered: order_ctl ws')
+                order_log.write(f'Time: {_time} Ordered Order_ctl ws:\n{order}\n')
                 return
 
-            rolling_v_10 = Tesla.Sma(_v_factor, int=10)
-            log.write(f'rolling_v_10: {rolling_v_10}')
-            if rolling_v_10 > .5 and rolling_v_10 != False:
-
-                order_ctl = Tesla.Climb_the_ladder()
-                order_sdr = Tesla.Stop_Drop_and_Roll()
-
-                if order_ctl != False:
-                    log.write(f'Ordered: order_ctl')
-                    order_log.write(f'Time: {_time} Ordered Order_ctl:\n{order_ctl}\n')
-                    return
-
-                if order_sdr != False:
-                    log.write(f'Ordered: order_sdr')
-                    order_log.write(f'Time: {_time} Ordered Order_sdr:\n{order_sdr}\n')
-                    return
-
-            order_price_Jump = Tesla.Price_jump()
-            if order_price_Jump != False:
-                log.write(f'Ordered: order_price_jump')
-                order_log.write(f'Time: {_time}, Order Price Jump:\n{order_price_Jump}\n')
+            if Tesla.Stop_Drop_and_Roll() != False:
+                order = Tesla.buy_order(ref='sdrws')
+                log.write(f'Ordered: order_sdr ws')
+                order_log.write(f'Time: {_time} Ordered Order_sdr ws:\n{order}\n')
                 return
+            pass
+
+        if Tesla.Price_jump() != False:
+            order = Tesla.buy_order(ref='pjws')
+            log.write(f'Ordered: order_price_jump ws')
+            order_log.write(f'Time: {_time}, Order Price Jump ws:\n{order}\n')
+            return
+
+# THis works for both
 
     if volatility_coefficient > 1 and rolling_v_10 > .5:
         log.write(f'Double standard SMA_1: {volatility_coefficient} roll: {roll}\n')
@@ -354,6 +259,8 @@ def tesla(ws, message):
     order_log.close()
 
 if __name__ == '__main__':
+
+
     socket = "wss://alpaca.socket.polygon.io/stocks"
     ws = websocket.WebSocketApp(socket,
                                 on_open=onn_open,

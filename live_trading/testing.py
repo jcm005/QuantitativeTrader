@@ -1,4 +1,5 @@
 from unittest import TestCase
+from garbage import StreamTrader
 #import a function you wanna test
 class functionTestCase(TestCase):
     '''Test for any function'''
@@ -13,3 +14,4 @@ class functionTestCase(TestCase):
         ''' the init of testing
         it creates a survey instance and it creates a list of responses'''
     unittest.main()
+

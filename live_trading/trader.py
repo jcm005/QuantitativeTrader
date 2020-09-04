@@ -1,4 +1,7 @@
 from order2 import Order
+from pytz import timezone
+import pytz
+from datetime import datetime
 
 class QuantTrader():
 
@@ -9,6 +12,26 @@ class QuantTrader():
         self.log = log_file
         self.over_night =[]
         self.profit = profit
+
+    def buy_order(self,
+                  order_type,
+                  qty,
+                  tif,
+                  order_class=None,
+                  stop_price=None,
+                  limit_price=None,
+                  stop_limit_price=None):
+
+        symbol = Order(self.ticker, self.price[-1])
+        order = symbol.buy(order_type=order_type,
+                           order_class=order_class,
+                           qty=qty,
+                           tif=tif,
+                           profit=self.profit,
+                           limit_price=limit_price,
+                           stop_price=stop_price,
+                           stop_limit_price=stop_limit_price)
+        return order
 
     def Back_logger(self):
         '''
@@ -84,6 +107,7 @@ class QuantTrader():
             if len(data) >= int:
                 self.sma = sum(data[-int:])/int
                 return self.sma
+                print(f'Rolling_{int} = {self.sma}')
             else:
                 pass
         except:
@@ -97,12 +121,7 @@ class QuantTrader():
         symbol = Order(self.ticker,self.price[-1])
         self.sma_30 = self.Sma(self.price,int=30)
         if (self.price[-1] - self.sma_30) > (self.price[-1]*0.0125):
-            order_ctl = symbol.buy(order_class='bracket',order_type='market',
-                                             qty=qty,tif='gtc',
-                                             profit=self.profit,
-                                             stop_limit_price=self.price[-1] - (self.profit/2),
-                                             stop_price=self.price[-1] - (self.profit/2.25))
-            return order_ctl
+            return True
         else:
             return False
 
@@ -118,10 +137,7 @@ class QuantTrader():
 
     def Volatility(self,volatility,qty=1,parameter=1):
         if volatility > parameter:
-            symbol = Order(self.ticker,self.price[-1])
-            order_1 = symbol.buy(order_type='market', order_class='oto',
-                               qty=qty, tif='gtc', profit=self.profit)
-            return order_1
+            return True
         else:
             return False
 
@@ -144,44 +160,170 @@ class QuantTrader():
         pass
 
 
-    def buy_order(self,
-              order_type,
-              qty,
-              tif,
-              order_class=None,
-              stop_price=None,
-              limit_price=None,
-              stop_limit_price=None):
+    def buy_order(self,ref):
 
         symbol = Order(self.ticker, self.price[-1])
-        order = symbol.buy(order_type=order_type,
-                           order_class=order_class,
-                           qty=qty,
-                           tif=tif,
-                           profit=self.profit,
-                           limit_price=limit_price,
-                           stop_price=stop_price,
-                           stop_limit_price=stop_limit_price)
-        return order
+
+        # turn this into a dictionary eventually
+
+        if ref == 'sma1':
+            order = symbol.buy(order_type='market', order_class='oto',
+                               qty=qty, tif='gtc', profit=self.profit)
+            return order
+        elif ref == 'ctl':
+            order = symbol.buy(order_class='bracket',order_type='market',
+                             qty=qty,tif='gtc',
+                             profit=self.profit,
+                             stop_limit_price=self.price[-1] - (self.profit/2),
+                             stop_price=self.price[-1] - (self.profit/2.25)
+                               )
+            return order
+        elif ref == 'sdr':
+            order = symbol.buy(order_class='oto', order_type='market',
+                                 qty=qty, tif='gtc', profit=self.profit)
+            return order
+        elif ref == 'pj':
+            order = 'PJ Not supported yet'
+            return order
+        elif ref == 'dt':
+            order = symbol.buy(order_class='oto',order_type='market',
+                                        qty=1, tif='gtc', profit=profit,
+                                        stop_limit_price=_high- (profit /2),
+                                        stop_price= _high - (profit/ 2.25))
+            return order
+        elif ref == 'sma1ws':
+            order = symbol.buy(order_type='market', order_class='oto',
+                               qty=qty, tif='gtc', profit=self.profit)
+            return order
+        elif ref == 'ctlws':
+            order = symbol.buy(order_class='bracket', order_type='market',
+                               qty=qty, tif='gtc',
+                               profit=self.profit,
+                               stop_limit_price=self.price[-1] - (self.profit / 2),
+                               stop_price=self.price[-1] - (self.profit / 2.25)
+                               )
+            return order
+        elif ref == 'sdrws':
+            order = symbol.buy(order_class='oto', order_type='market',
+                               qty=qty, tif='gtc', profit=self.profit)
+            return order
+        elif ref == 'pjws':
+            order = 'PJ Not supported yet'
+            return order
+        elif ref == 'dtws':
+            order = symbol.buy(order_class='oto', order_type='market',
+                               qty=1, tif='gtc', profit=profit,
+                               stop_limit_price=_high - (profit / 2),
+                               stop_price=_high - (profit / 2.25))
+            return order
+
+
+class StreamTrader():
+    def __init__(self):
+        '''
+        '''
+        self.minutes_processed = {}
+        self.minute_candlestick = []
+        self.current_tick = None
+        self.previous_tick = None
+        self.in_position = False
+        self.back_log = None
+        self.est = timezone('US/Eastern')
+
+        self.action = open('action2.txt','a')
+        self.candles = open('candle2.txt','a')
+        self.log_on = open('log_on2.txt','a')
+        self.order = open('order2.txt','a')
+
+    # CLEAR OUT FILES
+
+        self.candles.truncate(0)
+        self.action.truncate(50)
+        self.order.truncate(0)
+
+    def log(self,txt):
+
+        self.action.write(f'{txt}\n')
+      #  self.action.close()
+        return
+
+    def order_log(self,txt):
+
+        self.order.write(f'{txt}\n')
+        #self.order.close()
+
+    def candle_log(self,txt):
+
+        self.candles.write(f'{txt}\n')
+        #self.candles.close()
+        return
+
+    def connection_log(self,txt):
+
+        self.log_on.write(f'{txt}\n')
+        #self.log_on.close()
+        return
+
+    def close_logs(self):
+        self.log_on.close()
+        self.candles.close()
+        self.order.close()
+        self.action.close()
+
+    def time_converter(self,some_time):
+        newtime = datetime.fromtimestamp(some_time / 1000)
+        newtimes = newtime.strftime('%Y-%m-%d, %a, %H:%M')
+        return newtimes
+
+    def localize_time(self):
+
+        self.right_now = pytz.utc.localize(datetime.utcnow()).astimezone(self.est)
+        self.right_now = datetime.strftime(self.right_now, '%H:%M:%S')
+        return self.right_now
+
+    def candle_builder(self):
+
+        self.time = self.time_converter(self.current_tick['e'])
+        self.volatility_data = self.current_tick['h'] - self.current_tick['l']
+        self.hlmean = (self.current_tick['h'] + self.current_tick['l']) / 2
+        self.v_factor = (self.volatility_data / self.hlmean) * 100
+
+        self.minute_candlestick.append({
+            'symbol':self.current_tick['sym'],
+            'time': self.current_tick['time'],
+            'open': self.current_tick['o'],
+            'high': self.current_tick['h'],
+            'low': self.current_tick['l'],
+            'close': self.current_tick['c'],
+            'hlmean': round(self.hlmean, ndigits=2),
+            'volatilty': round(self.volatility_data, ndigits=2),
+            'v_factor': round(self.v_factor, ndigits=2),
+        })
+
+        latest_candle = self.minute_candlestick[-1]
+        return latest_candle
+
+    def profit_tree(self,price):
+        if 3000 > price >= 1000:
+            profit = 100
+        elif 1000 > price > 850:
+            profit = 80
+        elif 850 >= price > 600:
+            profit = 65
+        elif 600 >= price > 400:
+            profit = 40
+        elif 400 >= price:
+            profit = 30
+
+        return profit
+
+
 
 
 if __name__ == '__main__':
 
-    price = []
-    for i in range(0,475):
-        price.append(i)
-
-    if 3000 > price[-1] >= 1000:
-        profit = 100
-    elif 1000 > price[-1] > 850:
-        profit = 80
-    elif 850 >= price[-1] > 600:
-        profit = 65
-    elif 600 >= price[-1] > 400:
-        profit = 40
-    elif 400 >= price[-1]:
-        profit = 30
-    tesla = QuantTrader('TSLA',price,profit)
-    over_night = tesla.Back_logger()
-    back_log = tesla.Back_log_volatility(over_night)
-    print(back_log)
+    test = StreamTrader()
+    right_now = test.localize_time()
+    test.connection_log('right now %s' % (right_now[:2]))
+    print(test.current_tick)
+    test.candle_builder()
