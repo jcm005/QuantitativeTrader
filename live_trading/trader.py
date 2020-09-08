@@ -3,6 +3,11 @@ from pytz import timezone
 import pytz
 from datetime import datetime
 
+
+#  QUANT TRADER WILL PROBABLY BE USING THE LOGGING FUNCTOIN FROM STREAM TRADER
+#   AS WELL AS INDICATORS MADE BY STREAM TRADER
+#    SO IN FUNCTION IN QT MAYBE MAKE AN INSTANCE -- NO THIS WONT WORK ALL INFO WILL BE SEPERATE
+# INSTEAD LETS MAKE QUNAT TRADER A CHILD CLASS WITH DECORATOR OR CLASS METHODS OR STATIC METHODS FURTHER RESEARCH NEEDED TO BE DON HERE
 class QuantTrader():
 
     def __init__(self,ticker,price,profit,log_file=None):
@@ -34,13 +39,13 @@ class QuantTrader():
         return order
 
     def Back_logger(self):
-        '''
+        """
         gains insight to market after hours and the result can be manipulated to have market opening orders ready
         over_night: returns:  list of candles from last night
 
         *** doesnt work over weekend yet ***
 
-        '''
+        """
 
         import alpaca_trade_api as tradeapi
         from keys import API__KEY,SECRET_KEY
@@ -96,7 +101,8 @@ class QuantTrader():
             else:
                 return False
 
-    def Sma(self,data,int=10):
+    @classmethod
+    def Sma(cls,data,int=10):
         '''
         Creates simple moving average
         :param data: must be an iterable
@@ -105,9 +111,9 @@ class QuantTrader():
         '''
         try:
             if len(data) >= int:
-                self.sma = sum(data[-int:])/int
-                return self.sma
-                print(f'Rolling_{int} = {self.sma}')
+                cls.sma = sum(data[-int:])/int
+                return cls.sma
+                print(f'Rolling_{int} = {cls.sma}')
             else:
                 pass
         except:
@@ -118,43 +124,56 @@ class QuantTrader():
         When the simple moving average of
         30 is a percentage over the high price
         '''
-        symbol = Order(self.ticker,self.price[-1])
+        #symbol = Order(self.ticker,self.price[-1])
+        print('climbing the ladder ')
         self.sma_30 = self.Sma(self.price,int=30)
         if (self.price[-1] - self.sma_30) > (self.price[-1]*0.0125):
             return True
         else:
+            print('ladder false')
             return False
 
+
     def Stop_drop_and_roll(self,qty=1):
+        print('stop drop and roll ')
         symbol = Order(self.ticker,self.price[-1])
         self.sma_10 = self.Sma(self.price,int=10)
         if (self.sma_10 - self.price[-1]) > (self.sma_10*.025):
-            order_SDR = symbol.buy(order_class='oto', order_type='market',
-                                 qty=qty, tif='gtc', profit=self.profit)
-            return order_SDR
+            #order_SDR = symbol.buy(order_class='oto', order_type='market',
+                   #              qty=qty, tif='gtc', profit=self.profit)
+            return True
         else:
+            print('stop false')
             return False
 
     def Volatility(self,volatility,qty=1,parameter=1):
+        print('volatility check')
         if volatility > parameter:
             return True
         else:
+            print('volatility false')
             return False
 
     def Price_jump(self,qty=1):
-        symbol = Order(self.ticker,self.price[-1])
-        self.sma_30 = self.Sma(self.price,int=30)
+        print('price jump check')
+        #symbol = Order(self.ticker,self.price[-1])
+        try:
+            self.sma_30 = self.Sma(self.price,int=30)
+        except:
+            print('broken sma in price jimp')
         if (self.price[-1] - self.sma_30) > (self.price[-1]*.02):
-            order_stand_alone = symbol.buy(order_class='bracket', order_type='market',
-                                         qty=qty, tif='gtc',
-                                         profit=self.profit,
-                                         stop_limit_price=self.price[-1] - (self.profit / 2),
-                                         stop_price=self.price[-1] - (self.profit / 2.1))
-            return order_stand_alone
+            #order_stand_alone = symbol.buy(order_class='bracket', order_type='market',
+                       #                  qty=qty, tif='gtc',
+                        #                 profit=self.profit,
+                         #                stop_limit_price=self.price[-1] - (self.profit / 2),
+                          #               stop_price=self.price[-1] - (self.profit / 2.1))
+            return True
         else:
-            pass
+            print('price check false')
+            return False
 
     def double_trouble(self,vola_data,qty=1,parameter=1):
+        print('in the double')
         self.vola = vola_data
         self.Sma(self.vola_data,int=10)
         pass
@@ -217,7 +236,6 @@ class QuantTrader():
                                stop_price=_high - (profit / 2.25))
             return order
 
-
 class StreamTrader():
     def __init__(self):
         '''
@@ -235,34 +253,38 @@ class StreamTrader():
         self.log_on = open('log_on2.txt','a')
         self.order = open('order2.txt','a')
 
-    # CLEAR OUT FILES
+# -------------  Log Functions  ----------------
+
+    def log(self,txt):
+        self.action = open('action2.txt','a')
+        self.action.write(f'{txt}\n')
+        self.action.close()
+        return
+
+    def order_log(self,txt):
+        self.order = open('order2.txt','a')
+        self.order.write(f'{txt}\n')
+        self.order.close()
+
+    def candle_log(self,txt):
+        self.candles = open('candle2.txt','a')
+        self.candles.write(f'{txt}\n')
+        self.candles.close()
+        return
+
+    def connection_log(self,txt):
+        self.log_on = open('log_on2.txt','a')
+        self.log_on.write(f'{txt}\n')
+        self.log_on.close()
+
+    def log_scrubber(self):
 
         self.candles.truncate(0)
         self.action.truncate(50)
         self.order.truncate(0)
-
-    def log(self,txt):
-
-        self.action.write(f'{txt}\n')
-      #  self.action.close()
-        return
-
-    def order_log(self,txt):
-
-        self.order.write(f'{txt}\n')
-        #self.order.close()
-
-    def candle_log(self,txt):
-
-        self.candles.write(f'{txt}\n')
-        #self.candles.close()
-        return
-
-    def connection_log(self,txt):
-
-        self.log_on.write(f'{txt}\n')
-        #self.log_on.close()
-        return
+        self.log_on.truncate(0)
+        print('Initiating Logs')
+        return self.candles
 
     def close_logs(self):
         self.log_on.close()
@@ -270,18 +292,70 @@ class StreamTrader():
         self.order.close()
         self.action.close()
 
+    def reopen(self,file):
+        if file == self.action:
+            opened_file = open('action2.txt','a')
+            return opened_file
+        elif file == self.log_on:
+            opened_file = open('log_on2.txt','a')
+            return opened_file
+
+# ---------------  Proccesing   -----------------------
     def time_converter(self,some_time):
+        '''Convert date time object to a string'''
         newtime = datetime.fromtimestamp(some_time / 1000)
         newtimes = newtime.strftime('%Y-%m-%d, %a, %H:%M')
         return newtimes
 
     def localize_time(self):
-
+        '''Default set to eastern time, when runnign on a virtual machine timezone may be off'''
         self.right_now = pytz.utc.localize(datetime.utcnow()).astimezone(self.est)
         self.right_now = datetime.strftime(self.right_now, '%H:%M:%S')
+
         return self.right_now
 
+    def run_analytics(self):
+        '''Processes candles and creates indicators and parameters'''
+        # we may  be able to avoid this with decorator
+
+        self._high = [i['high'] for i in self.minute_candlestick]
+        self._low = [i['low'] for i in self.minute_candlestick]
+        self._v_factor = [i['v_factor'] for i in self.minute_candlestick]
+        self.time = self.latest_candle['time']
+        self.profit = self.profit_tree(self._high[-1])
+
+        print(len(self.minute_candlestick))
+
+        # This is what is passed for the volatility buy
+        if len(self.minute_candlestick) > 1:
+            self.vp = self.minute_candlestick[-1]['v_factor'] - self.minute_candlestick[-2]['v_factor']
+            self.log('Time: %s, High: %s, Low: %s, v_paramerter: %s, Volatility/Avg_Price: %s \n'
+                     % (self.time, self._high[-1], self._low[-1], self.vp, self._v_factor[-1]))
+            print('Time: %s, High: %s, Low: %s, v_paramerter: %s, Volatility/Avg_Price: %s \n'
+                  % (self.time, self._high[-1], self._low[-1], self.vp, self._v_factor[-1]))
+
+        if len(self.minute_candlestick) >= 10:
+            self.rolling_v_10 = QuantTrader.Sma(self._v_factor,int=10)
+            self.rolling_high_10 = QuantTrader.Sma(self._high,int=10)
+            if self.rolling_v_10 != False or self.rolling_high_10 != None:
+                self.log('Rolling_v_10 %s' % self.rolling_v_10)
+                self.log('Rolling_high_10 %s' % self.rolling_high_10)
+        else:
+            self.rolling_v_10 = None
+
+        if len(self.minute_candlestick) >= 30:
+            self.rolling_high_30 = QuantTrader.Sma(self._high,int=30)
+            if self.rolling_high_30 != False or self.rolling_high_30 != None:
+                self.log('Rolling_high_30 %s' % self.rolling_high_30)
+        else:
+            self.rolling_high_30 = None
+
+        return
+
     def candle_builder(self):
+
+        if self.current_tick['ev'] == 'status':
+            return
 
         self.time = self.time_converter(self.current_tick['e'])
         self.volatility_data = self.current_tick['h'] - self.current_tick['l']
@@ -290,18 +364,24 @@ class StreamTrader():
 
         self.minute_candlestick.append({
             'symbol':self.current_tick['sym'],
-            'time': self.current_tick['time'],
+            'time': self.time,
             'open': self.current_tick['o'],
             'high': self.current_tick['h'],
             'low': self.current_tick['l'],
             'close': self.current_tick['c'],
             'hlmean': round(self.hlmean, ndigits=2),
+            'volume': self.current_tick['v'],
+            'today_volume': self.current_tick['av'],
             'volatilty': round(self.volatility_data, ndigits=2),
             'v_factor': round(self.v_factor, ndigits=2),
+
         })
 
-        latest_candle = self.minute_candlestick[-1]
-        return latest_candle
+        self.latest_candle = self.minute_candlestick[-1]
+        self.candle_log(self.latest_candle)
+        self.log('--- Running Analytics ---')
+        self.run_analytics()
+        return self.latest_candle
 
     def profit_tree(self,price):
         if 3000 > price >= 1000:
@@ -317,13 +397,35 @@ class StreamTrader():
 
         return profit
 
+    def metrics(self):
+        import pandas as pd
+        columns = ['symbol','date','day','time', 'open', 'high', 'low', 'close', 'hlmean', 'volume', 'today_volume','volatility', 'v_factor']
+        self.df = pd.read_csv('candle2.txt',names=columns)
 
+        for i in columns:
+            self.df[i] = self.data_frame_prep(self.df,parameter=i)
+        self.df.to_csv('metrics.txt',mode='w')
+
+        # save the data we can do correlation else where
+
+
+    def data_frame_prep(self,data,parameter='data_name'):
+        '''rewrites a dataframe to be easuly manipulatible and uploading fors sql'''
+        __slots__ = ['day','time']
+        if parameter in __slots__:
+            return [i for i in data[parameter]]
+        elif parameter == 'symbol':
+            return (data[parameter][0]).split(':')[1]
+        elif parameter == 'date':
+            return [(i.split(':')[1]) for i in data[parameter]]
+        elif parameter == 'v_factor':
+             v_factor = [i.strip('}') for i in data[parameter]]
+             return [float(i.split(':')[1]) for i in v_factor]
+        else:
+            return [float(i.split(':')[1]) for i in data[parameter]]
 
 
 if __name__ == '__main__':
 
     test = StreamTrader()
-    right_now = test.localize_time()
-    test.connection_log('right now %s' % (right_now[:2]))
-    print(test.current_tick)
-    test.candle_builder()
+    test.metrics()
