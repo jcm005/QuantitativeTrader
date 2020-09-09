@@ -18,25 +18,71 @@ class QuantTrader():
         self.over_night =[]
         self.profit = profit
 
-    def buy_order(self,
-                  order_type,
-                  qty,
-                  tif,
-                  order_class=None,
-                  stop_price=None,
-                  limit_price=None,
-                  stop_limit_price=None):
+    def __repr__(self):
+        return 'QuantTrader ticker=%s' % (self.ticker)
 
+    def buy_order(self, ref,qty):
+
+        order_log = StreamTrader.order_log
         symbol = Order(self.ticker, self.price[-1])
-        order = symbol.buy(order_type=order_type,
-                           order_class=order_class,
-                           qty=qty,
-                           tif=tif,
-                           profit=self.profit,
-                           limit_price=limit_price,
-                           stop_price=stop_price,
-                           stop_limit_price=stop_limit_price)
-        return order
+
+        if ref == 'sma1':
+            order = symbol.buy(order_type='market', order_class='oto',
+                               qty=qty, tif='gtc', profit=self.profit)
+            return order
+        elif ref == 'ctl':
+            order = symbol.buy(order_class='bracket', order_type='market',
+                               qty=qty, tif='gtc',
+                               profit=self.profit,
+                               stop_limit_price=self.price[-1] - (self.profit / 2),
+                               stop_price=self.price[-1] - (self.profit / 2.25)
+                               )
+            return order
+        elif ref == 'sdr':
+            order = symbol.buy(order_class='oto', order_type='market',
+                               qty=qty, tif='gtc', profit=self.profit)
+            return order
+        elif ref == 'pj':
+            order = 'PJ Not supported yet'
+            return order
+        elif ref == 'dt':
+            order = symbol.buy(order_class='oto', order_type='market',
+                               qty=1, tif='gtc', profit=profit,
+                               stop_limit_price=_high - (profit / 2),
+                               stop_price=_high - (profit / 2.25))
+            return order
+        elif ref == 'sma1ws':
+            order = symbol.buy(order_type='market', order_class='oto',
+                               qty=qty, tif='gtc', profit=self.profit)
+
+            order_log('Order: %s \n %s' % (ref,order))
+            return order
+        elif ref == 'ctlws':
+            order = symbol.buy(order_class='bracket', order_type='market',
+                               qty=qty, tif='gtc',
+                               profit=self.profit,
+                               stop_limit_price=self.price[-1] - (self.profit / 2),
+                               stop_price=self.price[-1] - (self.profit / 2.25)
+                               )
+
+            order_log('Order: %s \n %s' % (ref,order))
+
+            return order
+        elif ref == 'sdrws':
+            order = symbol.buy(order_class='oto', order_type='market',
+                               qty=qty, tif='gtc', profit=self.profit)
+
+            order_log('Order: %s \n %s' % (ref,order))
+            return order
+        elif ref == 'pjws':
+            order = 'PJ Not supported yet'
+            return order
+        elif ref == 'dtws':
+            order = symbol.buy(order_class='oto', order_type='market',
+                               qty=1, tif='gtc', profit=profit,
+                               stop_limit_price=_high - (profit / 2),
+                               stop_price=_high - (profit / 2.25))
+            return order
 
     def Back_logger(self):
         """
@@ -119,40 +165,54 @@ class QuantTrader():
         except:
             return False
 
-    def Climb_the_ladder(self,qty=1):
+# ----------------------------------------------------------------------
+    # Strategies
+# ----------------------------------------------------------------------
+
+    def Climb_the_ladder(self,ref,qty=1):
         '''
         When the simple moving average of
         30 is a percentage over the high price
+
+        REturns the order if needed
         '''
-        #symbol = Order(self.ticker,self.price[-1])
-        print('climbing the ladder ')
+        log = StreamTrader.log
+        order_log = StreamTrader.order_log
         self.sma_30 = self.Sma(self.price,int=30)
         if (self.price[-1] - self.sma_30) > (self.price[-1]*0.0125):
-            return True
+            log('Climbing The Ladder Satisfied')
+            order = self.buy_order(ref,qty)
+            return order
         else:
-            print('ladder false')
-            return False
+            log('CTL Not Satisfied')
+            return
 
+    def Stop_drop_and_roll(self,ref,qty=1):
 
-    def Stop_drop_and_roll(self,qty=1):
-        print('stop drop and roll ')
-        symbol = Order(self.ticker,self.price[-1])
+        log = StreamTrader.log
+
+        # maybe siphon from Stream trader
         self.sma_10 = self.Sma(self.price,int=10)
         if (self.sma_10 - self.price[-1]) > (self.sma_10*.025):
-            #order_SDR = symbol.buy(order_class='oto', order_type='market',
-                   #              qty=qty, tif='gtc', profit=self.profit)
-            return True
+            log('Stop Drop and Roll Satisfied')
+            order = self.buy_order(ref,qty)
+            return order
         else:
-            print('stop false')
-            return False
+            log('Stop Drop and Roll Not Satisfied')
+            return
 
-    def Volatility(self,volatility,qty=1,parameter=1):
-        print('volatility check')
-        if volatility > parameter:
-            return True
-        else:
-            print('volatility false')
-            return False
+    def Volatility(self,volatility,ref,qty=1,parameter=1):
+        try:
+            log = StreamTrader.log
+            if volatility > parameter:
+                log('volatility order satisfied')
+                order = self.buy_order(ref,qty)
+                return order
+            else:
+                print('volatility false')
+                return
+        except:
+            return 'Broken at volatility order'
 
     def Price_jump(self,qty=1):
         print('price jump check')
@@ -179,63 +239,6 @@ class QuantTrader():
         pass
 
 
-    def buy_order(self,ref):
-
-        symbol = Order(self.ticker, self.price[-1])
-
-        # turn this into a dictionary eventually
-
-        if ref == 'sma1':
-            order = symbol.buy(order_type='market', order_class='oto',
-                               qty=qty, tif='gtc', profit=self.profit)
-            return order
-        elif ref == 'ctl':
-            order = symbol.buy(order_class='bracket',order_type='market',
-                             qty=qty,tif='gtc',
-                             profit=self.profit,
-                             stop_limit_price=self.price[-1] - (self.profit/2),
-                             stop_price=self.price[-1] - (self.profit/2.25)
-                               )
-            return order
-        elif ref == 'sdr':
-            order = symbol.buy(order_class='oto', order_type='market',
-                                 qty=qty, tif='gtc', profit=self.profit)
-            return order
-        elif ref == 'pj':
-            order = 'PJ Not supported yet'
-            return order
-        elif ref == 'dt':
-            order = symbol.buy(order_class='oto',order_type='market',
-                                        qty=1, tif='gtc', profit=profit,
-                                        stop_limit_price=_high- (profit /2),
-                                        stop_price= _high - (profit/ 2.25))
-            return order
-        elif ref == 'sma1ws':
-            order = symbol.buy(order_type='market', order_class='oto',
-                               qty=qty, tif='gtc', profit=self.profit)
-            return order
-        elif ref == 'ctlws':
-            order = symbol.buy(order_class='bracket', order_type='market',
-                               qty=qty, tif='gtc',
-                               profit=self.profit,
-                               stop_limit_price=self.price[-1] - (self.profit / 2),
-                               stop_price=self.price[-1] - (self.profit / 2.25)
-                               )
-            return order
-        elif ref == 'sdrws':
-            order = symbol.buy(order_class='oto', order_type='market',
-                               qty=qty, tif='gtc', profit=self.profit)
-            return order
-        elif ref == 'pjws':
-            order = 'PJ Not supported yet'
-            return order
-        elif ref == 'dtws':
-            order = symbol.buy(order_class='oto', order_type='market',
-                               qty=1, tif='gtc', profit=profit,
-                               stop_limit_price=_high - (profit / 2),
-                               stop_price=_high - (profit / 2.25))
-            return order
-
 class StreamTrader():
     def __init__(self):
         '''
@@ -253,18 +256,26 @@ class StreamTrader():
         self.log_on = open('log_on2.txt','a')
         self.order = open('order2.txt','a')
 
+    def __str__(self):
+        return 'A Framework for trading with data streamed from polygon io'
+
+    def __repr__(self):
+        pass
+
 # -------------  Log Functions  ----------------
 
-    def log(self,txt):
-        self.action = open('action2.txt','a')
-        self.action.write(f'{txt}\n')
-        self.action.close()
+    @classmethod
+    def log(cls,txt):
+        cls.action = open('action2.txt','a')
+        cls.action.write(f'{txt}\n')
+        cls.action.close()
         return
 
+    @classmethod
     def order_log(self,txt):
-        self.order = open('order2.txt','a')
-        self.order.write(f'{txt}\n')
-        self.order.close()
+        cls.order = open('order2.txt','a')
+        cls.order.write(f'{txt}\n')
+        cls.order.close()
 
     def candle_log(self,txt):
         self.candles = open('candle2.txt','a')
@@ -426,5 +437,5 @@ class StreamTrader():
 
 if __name__ == '__main__':
 
-    test = StreamTrader()
-    test.metrics()
+   log =  StreamTrader.log
+   log('hello')

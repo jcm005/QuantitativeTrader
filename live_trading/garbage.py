@@ -125,6 +125,10 @@ def on_message(ws, message):
     position = a.get_position_for(qt.ticker.upper())
     account = a.get_account()
     buying_power = account['buying_power'].split('.')[0]
+    qty_pos = position['qty']
+    cost_basis = position['cost_basis']
+    avg_price = position['avg_entry_price'].split('.')[0]
+
     strm.log('Check Cleared')
 
 
@@ -139,8 +143,9 @@ def on_message(ws, message):
         print(f'Back log is :{back_log_order}')
         back_log = None
         pass
+#----------------------------------------------------------
 
-
+    strm.log('-- Running through the strategies --')
     if not position:
         print(f'stream vp : {strm.vp}')
         strm.log('There are no shares for %s' % qt.ticker)
@@ -174,41 +179,20 @@ def on_message(ws, message):
     # WITH A POSITION
     else:
 
-        qty_pos = position['qty']
-        cost_basis = position['cost_basis']
-        avg_price = position['avg_entry_price'].split('.')[0]
-
         strm.log('%s Shares of %s @ avg_cost: %s' % (qty_pos, qt.ticker.upper(),avg_price))
-        print('%s Shares of %s @ avg_cost: %s' % (qty_pos, qt.ticker.upper(),avg_price))
-
         print(f'stream vp : {strm.vp}')
-        if qt.Volatility(strm.vp, parameter=1) != False:
-            print('strm.volatility satisfied')
-            order = qt.buy_order(ref='sma1ws')
-            strm.log('volatility order ')
-            strm.order_log(f'Time: {strm.time} Ordered Order_sma_1 ws:\n{order}\n')
-            return
 
-        # this may be a redundant thing if statement
+
+        qt.Volatility(volatility=strm.vp, ref='sma1ws',parameter=1)
+
 
         if strm.rolling_v_10 != None and strm.rolling_v_10 > .5:
-            print('WS')
-            if qt.Climb_the_ladder() != False:
-                print('ws climb the ldder')
-                order = qt.buy_order(ref='ctlws')
-                strm.log(f'Ordered: order_ctl ws')
-                strm.order_log(f'Time: {strm.time} Ordered Order_ctl ws:\n{order}\n')
-                return
+            qt.Climb_the_ladder(ref='ctlws')
+            qt.Stop_Drop_and_Roll(ref='sdrws')
 
-            if qt.Stop_Drop_and_Roll() != False:
-                order = qt.buy_order(ref='sdrws')
-                strm.log(f'Ordered: order_sdr ws')
-                strm.order_log(f'Time: {strm.time} Ordered Order_sdr ws:\n{order}\n')
-                return
-        else:
-            pass
 
         if strm.rolling_high_30 != None:
+
             if qt.Price_jump() != False:
                 order = qt.buy_order(ref='pjws')
                 strm.log(f'Ordered: order_price_jump ws')
@@ -217,6 +201,7 @@ def on_message(ws, message):
 
 
 # THis works for both
+
     if strm.rolling_v_10 != None:
         if strm.vp > 1 and strm.rolling_v_10 > .5:
             strm.log(f'Double standard SMA_1: {strm.vp} roll: {strm.rolling_v_10}\n')
