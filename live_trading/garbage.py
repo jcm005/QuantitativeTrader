@@ -12,6 +12,17 @@ back_log = None
 tsla = StreamTrader()
 tsla.log_scrubber()
 
+def web_socket_sign_on(self):
+
+    socket = "wss://alpaca.socket.polygon.io/stocks"
+    ws = websocket.WebSocketApp(socket,
+                                on_open=onn_open,
+                                on_message=on_message,
+                                on_error=on_error,
+                                on_close=on_close
+                                )
+    ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
+
 def check_time():
     global tsla
 
@@ -38,16 +49,7 @@ def check_time():
 # -----------------------------------
 #  --- WEB-SOCKET FUNCTIONS BELOW ---
 #  ----------------------------------
-def web_socket_sign_on(self):
 
-    socket = "wss://alpaca.socket.polygon.io/stocks"
-    ws = websocket.WebSocketApp(socket,
-                                on_open=onn_open,
-                                on_message=on_message,
-                                on_error=on_error,
-                                on_close=on_close
-                                )
-    ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
 
 def onn_open(ws):
     global tsla,back_log
