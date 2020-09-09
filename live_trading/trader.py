@@ -282,7 +282,6 @@ class StreamTrader():
         self.candles.truncate(0)
         self.action.truncate(50)
         self.order.truncate(0)
-        self.log_on.truncate(0)
         print('Initiating Logs')
         return self.candles
 
