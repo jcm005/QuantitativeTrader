@@ -96,116 +96,95 @@ def on_close(ws):
 # -----------------------------
 def on_message(ws, message):
     global strm, back_log
-    strm.log('\n')
+
 # ======================================================
 #          GENERIC  INFORMATION
 
 # ------    DO Not edit this     ------
     strm.previous_tick = strm.current_tick
     message = a.clean_and_load(message)
-    strm.current_tick = json.loads(message)
-
-    if strm.current_tick['ev'] == 'status':
-        strm.log(strm.current_tick)
-        strm.connection_log(strm.current_tick)
-
+    strm.current_tick = json.loads(message)     # strm.current_tick is the manipulatable data
 # ---------------------------------------
-    latest_candle = strm.candle_builder()
+    latest_candle = strm.candle_builder()       # Handling of stream data --> into candles
     if latest_candle == None:
         return
-    print(latest_candle)
 
 # =======================================================
 #         START STRATEGY HERE
-    strm.log('Starting Strategy\ninitiating QuantTrader')
 
-    # we might be able to initiate this inside the init function of StreamTrader
     qt = QuantTrader('TSLA',strm._high,profit=strm.profit)
-    strm.log('Position and account check')
+
     position = a.get_position_for(qt.ticker.upper())
     account = a.get_account()
     buying_power = account['buying_power'].split('.')[0]
-    qty_pos = position['qty']
-    cost_basis = position['cost_basis']
-    avg_price = position['avg_entry_price'].split('.')[0]
-
-    strm.log('Check Cleared')
 
 
 # =======================================================
 #               Back log volatility buy
 # =======================================================
-    strm.log('Checking back log')
-    #back_log = qt.Back_logger()
-    if back_log:
+    if back_log != None:
         back_log = qt.Back_logger()
         back_log_order = qt.Back_log_volatility(back_log)
         print(f'Back log is :{back_log_order}')
         back_log = None
         pass
-#----------------------------------------------------------
+# =======================================================
 
-    strm.log('-- Running through the strategies --')
+    strm.log('-- Running Strategies --')
+    try:
+        strm.log(f'Stream VP : {round(strm.vp)}')
+    except:
+        pass
+
+# WITH NOT POSITION
     if not position:
-        print(f'stream vp : {strm.vp}')
         strm.log('There are no shares for %s' % qt.ticker)
-        if qt.Volatility(strm.vp,parameter=1) != False:
-            order = qt.buy_order(ref='sma1')
-            strm.log(f'Ordered: order_sma_1')
-            strm.order_log(f'Time: {strm.time} Ordered Order_sma_1:\n{order}\n')
-            return
 
-        if strm.rolling_v_10 > .5:
+        # Running sma1
+        qt.Volatility(volatility=strm.vp, ref='sma1', parameter=1)
 
-            if qt.Climb_the_ladder() != False:
-                order = qt.buy_order(ref='ctl')
-                strm.log(f'Ordered: order_ctl')
-                strm.order_log(f'Time: {strm.time} Ordered Order_ctl:\n{order}\n')
-                return
+        # Checking chronic volatility
+        if strm.rolling_v_10 != None and strm.rolling_v_10 > .5:
+            qt.Climb_the_ladder(ref='ctl')
+            qt.Stop_Drop_and_Roll(ref='sdr')
 
-            if qt.Stop_Drop_and_Roll() != False:
-                order = qt.buy_order(ref='sdr')
-                strm.log(f'Ordered: order_sdr')
-                strm.order_log(f'Time: {strm.time} Ordered Order_sdr:\n{order}\n')
-                return
-            pass
+        # Checking for sudden increase in price
+        if strm.rolling_high_30 != None:
+            qt.Price_jump(ref='pj')
 
-        if qt.Price_jump() != False:
-            order = qt.buy_order(ref='pj')
-            strm.log(f'Ordered: order_price_jump')
-            strm.order_loge(f'Time: {strm.time}, Order Price Jump:\n{order}\n')
-            return
-
-    # WITH A POSITION
+# WITH A POSITION
     else:
 
-        strm.log('%s Shares of %s @ avg_cost: %s' % (qty_pos, qt.ticker.upper(),avg_price))
+        # ============   Grabbing Share Information   ============
+        si = a.share_info(qt.ticker.upper())
+        # =======================================================
+
+        strm.log('%s Shares of %s @ avg_cost: %s' % (si['qty_pos'], qt.ticker.upper(),si['avg_price']))
         print(f'stream vp : {strm.vp}')
 
-
+        # Running sma1
         qt.Volatility(volatility=strm.vp, ref='sma1ws',parameter=1)
-
-
+        # Checking chronic volatility
         if strm.rolling_v_10 != None and strm.rolling_v_10 > .5:
-            qt.Climb_the_ladder(ref='ctlws')
+            strm.log('Trying SDR CTL')
+
+            # MAy need to put if statement making sure strm.rolliing_high_30 works
+
             qt.Stop_Drop_and_Roll(ref='sdrws')
+            qt.Climb_the_ladder(ref='ctlws')
 
-
+        # Checking for sudden increase in price
         if strm.rolling_high_30 != None:
-
-            if qt.Price_jump() != False:
-                order = qt.buy_order(ref='pjws')
-                strm.log(f'Ordered: order_price_jump ws')
-                strm.order_log(f'Time: {strm.time}, Order Price Jump ws:\n{order}\n')
-                return
+            strm.log('Checking PJ')
+            qt.Price_jump(ref='pjws')
 
 
 # THis works for both
 
     if strm.rolling_v_10 != None:
         if strm.vp > 1 and strm.rolling_v_10 > .5:
+            strm.log('DT')
             strm.log(f'Double standard SMA_1: {strm.vp} roll: {strm.rolling_v_10}\n')
-
             return
 
  # =======================================================
@@ -217,10 +196,12 @@ def on_message(ws, message):
 
 
     strm.log(f'Number Of Positions Held ::{len(positions)}')
-    strm.log(f'Open orders: {len(open_orders)}\n ---------------')
+    strm.log(f'Open orders: {len(open_orders)}\n  '
+             f'---------------------------------------------\n')
 
     print(f'Number Of Positions Held :: {len(positions)}')
-    print(f'Open orders: {len(open_orders)}\n ---------------\n')
+    print(f'Open orders: {len(open_orders)}\n'
+          f' ---------------------------------------------\n')
 
 
 if __name__ == '__main__':

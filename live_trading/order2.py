@@ -101,7 +101,7 @@ class Order():
         tz =timezone('US/Eastern')
         right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tz)
         right_now = datetime.strftime(right_now, '%H:%M:%S')
-        if int(right_now[0:2]) >= 16 or int(right_now[0:2]) <= 9:
+        if int(right_now[0:2]) >= 16 or int(right_now[0:2]) < 9:
             extended_hours = True
         else:
             extended_hours = False
@@ -167,8 +167,7 @@ class Order():
             order['type'] = 'limit'
             order['extended_hours'] = True
             if not limit_price:
-                order['limit_price'] = self.price + 10
-                print('need a limit price for extended hours')
+                order['limit_price'] = self.price - 10
             else:
                 order['limit_price'] = limit_price
             if order_class:

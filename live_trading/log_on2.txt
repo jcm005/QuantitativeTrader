@@ -76,3 +76,195 @@ Connected at 14:07:34
 {'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
 {'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
 {'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 08:13:46
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+{'ev': 'status', 'status': 'max_connections', 'message': 'Maximum number of connections exceeded.'}
+Connecting
+Connected at 08:17:08
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 08:19:28
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 08:22:52
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 09:00:38
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 09:35:14
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 09:36:19
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 09:54:34
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 09:58:33
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 09:58:41
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connection is already closed.
+Connection Closed at 10:03:18
+Trying to Reconnect
+Checking time
+Right Now 10
+Time is good. The current time is 10:03:18
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 10:03:19
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 10:15:13
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connection is already closed.
+Connection Closed at 11:03:55
+Trying to Reconnect
+Checking time
+Right Now 11
+Time is good. The current time is 11:03:55
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 11:03:56
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 11:19:26
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 11:28:29
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connection is already closed.
+Connection Closed at 12:04:28
+Trying to Reconnect
+Checking time
+Right Now 12
+Time is good. The current time is 12:04:28
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 12:04:29
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connection is already closed.
+Connection Closed at 13:05:08
+Trying to Reconnect
+Checking time
+Right Now 13
+Time is good. The current time is 13:05:08
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 13:05:09
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 14:00:07
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 14:01:01
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 14:04:30
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 14:10:16
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 14:17:30
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 14:29:52
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connection is already closed.
+Connection Closed at 15:05:40
+Trying to Reconnect
+Checking time
+Right Now 15
+Time is good. The current time is 15:05:40
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 15:05:41
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 15:55:46
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connection is already closed.
+Connection Closed at 16:06:19
+Trying to Reconnect
+Checking time
+Right Now 16
+Time is good. The current time is 16:06:19
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 16:06:20
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connection is already closed.
+Connection Closed at 17:06:20
+Trying to Reconnect
+Checking time
+Right Now 17
+Time is good. The current time is 17:06:20
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 17:06:21
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}

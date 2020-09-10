@@ -86,6 +86,17 @@ def order_details(raw_order,output='detailed'):
     elif output == 'detailed':
         return raw_order
 
+def share_info(ticker):
+    position = get_position_for(ticker)
+    account = get_account()
+    information = {
+        'buying power': account['buying_power'].split('.')[0],
+        'qty_pos':  position['qty'],
+        'cost_basis':  position['cost_basis'],
+        'avg_price':  position['avg_entry_price'].split('.')[0],
+        }
+    return information
+
 
 if __name__ == '__main__':
 

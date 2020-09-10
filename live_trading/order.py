@@ -6,7 +6,7 @@ import pytz
 from pytz import timezone
 
 class Order():
-# LOGGIN FUNCTION FOR OUTPUTTNIG TO LOG FILES
+    # PLEASE CHECK THE BASE URLS ARE DIRECTED TO THE RIGHT SPOT FOR PAPER OR REAL LIFE TRADING
     def __init__(self,symbol,current_price):
         self.symbol = symbol
         self.price = current_price
