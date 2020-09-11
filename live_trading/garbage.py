@@ -112,7 +112,7 @@ def on_message(ws, message):
 # =======================================================
 #         START STRATEGY HERE
 
-    qt = QuantTrader('TSLA',strm._high,profit=strm.profit)
+    qt = QuantTrader(ticker,strm._high,profit=strm.profit)
 
     position = a.get_position_for(qt.ticker.upper())
     account = a.get_account()
@@ -131,10 +131,7 @@ def on_message(ws, message):
 # =======================================================
 
     strm.log('-- Running Strategies --')
-    try:
-        strm.log(f'Stream VP : {round(strm.vp)}')
-    except:
-        pass
+    strm.log(f'Stream VP : {round(strm.vp,ndigits=3)}')
 
 # WITH NOT POSITION
     if not position:
@@ -145,12 +142,12 @@ def on_message(ws, message):
 
         # Checking chronic volatility
         if strm.rolling_v_10 != None and strm.rolling_v_10 > .5:
-            qt.Climb_the_ladder(ref='ctl')
-            qt.Stop_Drop_and_Roll(ref='sdr')
+            qt.stop_drop_and_roll(ref='sdr')
+            qt.climb_the_ladder(ref='ctl')
 
         # Checking for sudden increase in price
         if strm.rolling_high_30 != None:
-            qt.Price_jump(ref='pj')
+            qt.price_jump(ref='pj')
 
 # WITH A POSITION
     else:
@@ -162,21 +159,18 @@ def on_message(ws, message):
         strm.log('%s Shares of %s @ avg_cost: %s' % (si['qty_pos'], qt.ticker.upper(),si['avg_price']))
         print(f'stream vp : {strm.vp}')
 
-        # Running sma1
+        # Running sma1 -- PERFECT
         qt.Volatility(volatility=strm.vp, ref='sma1ws',parameter=1)
+
         # Checking chronic volatility
         if strm.rolling_v_10 != None and strm.rolling_v_10 > .5:
-            strm.log('Trying SDR CTL')
-
-            # MAy need to put if statement making sure strm.rolliing_high_30 works
-
-            qt.Stop_Drop_and_Roll(ref='sdrws')
-            qt.Climb_the_ladder(ref='ctlws')
+            strm.log('Chronic Volatility')
+            qt.stop_drop_and_roll(ref='sdrws')
+            qt.climb_the_ladder(ref='ctlws')
 
         # Checking for sudden increase in price
         if strm.rolling_high_30 != None:
-            strm.log('Checking PJ')
-            qt.Price_jump(ref='pjws')
+            qt.price_jump(ref='pjws')
 
 
 # THis works for both
@@ -191,17 +185,21 @@ def on_message(ws, message):
  #               OUTRO
  # =======================================================
 
-    positions = a.get_position()
-    open_orders = a.get_orders()
+    try:
+        positions = a.get_position()
+        open_orders = a.get_orders()
 
 
-    strm.log(f'Number Of Positions Held ::{len(positions)}')
-    strm.log(f'Open orders: {len(open_orders)}\n  '
-             f'---------------------------------------------\n')
+        strm.log(f'Number Of Positions Held ::{len(positions)}')
+        strm.log(f'Open orders: {len(open_orders)}\n  '
+                 f'---------------------------------------------\n')
 
-    print(f'Number Of Positions Held :: {len(positions)}')
-    print(f'Open orders: {len(open_orders)}\n'
-          f' ---------------------------------------------\n')
+        print(f'Number Of Positions Held :: {len(positions)}')
+        print(f'Open orders: {len(open_orders)}\n'
+              f' ---------------------------------------------\n')
+    except:
+       # loop only used for the collapsing ability
+        pass
 
 
 if __name__ == '__main__':

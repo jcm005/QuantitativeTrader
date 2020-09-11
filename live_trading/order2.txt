@@ -1,0 +1,2 @@
+Order: ctlws 
+ {'base_price': '371.275', 'code': 40010001, 'message': 'take-profit limit price must be greater than base price'}
