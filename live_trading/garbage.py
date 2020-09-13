@@ -50,7 +50,10 @@ def check_time():
 # -----------------------------------
 #  --- WEB-SOCKET FUNCTIONS BELOW ---
 #  ----------------------------------
-
+class OnOpen:
+    def __init__(self,ilogger):
+        '''sdsgdg'''
+        self.ilogger = ilogger
 
 def onn_open(ws):
     global strm,back_log,ticker
