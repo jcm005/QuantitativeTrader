@@ -8,6 +8,8 @@ from keys import *
 from order2 import Order
 from trader import QuantTrader, StreamTrader
 back_log = None
+#--------------------
+import logging as logging
 
 strm = StreamTrader()
 strm.log_scrubber()
@@ -50,10 +52,6 @@ def check_time():
 # -----------------------------------
 #  --- WEB-SOCKET FUNCTIONS BELOW ---
 #  ----------------------------------
-class OnOpen:
-    def __init__(self,ilogger):
-        '''sdsgdg'''
-        self.ilogger = ilogger
 
 def onn_open(ws):
     global strm,back_log,ticker

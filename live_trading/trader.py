@@ -24,14 +24,10 @@ class QuantTrader():
         return 'QuantTrader ticker=%s' % (self.ticker)
 
     def buy_order(self, ref, qty):
-
-
         symbol = Order(self.ticker, self.price[-1])
-
         if ref == 'sma1':
             order = symbol.buy(order_type='market', order_class='oto',
                                qty=qty, tif='gtc', profit=self.profit)
-
             self.order_log('Order: %s \n %s' % (ref, order))
             return order
         elif ref == 'ctl':
@@ -64,7 +60,6 @@ class QuantTrader():
         elif ref == 'sma1ws':
             order = symbol.buy(order_type='market', order_class='oto',
                                qty=qty, tif='gtc', profit=self.profit)
-
             self.order_log('Order: %s \n %s' % (ref, order))
             return order
         elif ref == 'ctlws':
@@ -74,7 +69,6 @@ class QuantTrader():
                                stop_limit_price=self.price[-1] - (self.profit / 2),
                                stop_price=self.price[-1] - (self.profit / 2.25)
                                )
-
             self.order_log('Order: %s \n %s' % (ref, order))
             return order
         elif ref == 'sdrws':
@@ -182,6 +176,7 @@ class QuantTrader():
     # conditions are met they will execute a buy with appropiate logging
     # ----------------------------------------------------------------------
 
+
     def climb_the_ladder(self, ref, qty=1):
 
         '''
@@ -192,33 +187,37 @@ class QuantTrader():
         :return: Order or None is not successful
         '''
 
-        threshold = (self.price[-1] * 0.0125)
         self.log('Trying ctl')
         self.sma_30 = self.Sma(self.price, int=30)
-        self.log('Threshold: %s' % (threshold) )
-
-        if self.sma_30 != False and (self.price[-1] - self.sma_30) > (threshold):
-            self.log('Climbing The Ladder Satisfied')
-            order = self.buy_order(ref, qty)
-            return order
+        if self.sma_30 != False:
+            threshold = (self.price[-1] * 0.0125)
+            self.log('Threshold: %s' % (threshold) )
+            if (self.price[-1] - self.sma_30) > (threshold):
+                self.log('Climbing The Ladder Satisfied')
+                order = self.buy_order(ref, qty)
+                return order
+            else:
+                self.log('CTL Lower than Threshold')
+                pass
         else:
-            self.log('CTL Lower than Threshold')
-            pass
+            self.log('Need more candles to work with')
 
     def stop_drop_and_roll(self, ref, qty=1):
         '''If the price is dropping quicker then rolling 10 can catch up it will buy'''
-        threshold = (self.sma_10 * 0.025)
-        self.log('Trying SDR')
-        self.sma_10 = self.Sma(self.price, int=10)
-        self.log('Threshold: %s' % (threshold) )
 
-        if self.sma_10 != False and (self.sma_10 - self.price[-1]) > (threshold):
-            self.log('Stop Drop and Roll Satisfied')
-            order = self.buy_order(ref, qty)
-            return order
+        self.sma_10 = self.Sma(self.price, int=10)
+        if self.sma_10 != False:
+            threshold = (self.sma_10 * 0.025)
+            self.log('Threshold: %s' % threshold)
+            if (self.sma_10 - self.price[-1]) > (threshold):
+                self.log('Stop Drop and Roll Satisfied')
+                order = self.buy_order(ref, qty)
+                return order
+            else:
+                self.log('SDR Lower Than Threshold')
+                pass
         else:
-            self.log('SDR Lower Than Threshold')
-            pass
+            self.log('Need more candles to work with')
 
     def Volatility(self, volatility, ref, qty=1, parameter=1):
         '''Given a parameter this function equates indicators for a volatility by
@@ -357,7 +356,7 @@ class StreamTrader:
         if len(self.minute_candlestick) > 1:
             self.vp = self.minute_candlestick[-1]['v_factor'] - self.minute_candlestick[-2]['v_factor']
             self.log('Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s '
-                     % (self.time, self._high[-1], self._low[-1], self.vp, self._v_factor[-1]))
+                     % (self.time, self._high[-1], self._low[-1], round(self.vp,ndigits=3), self._v_factor[-1]))
             print('Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s '
                   % (self.time, self._high[-1], self._low[-1], self.vp, self._v_factor[-1]))
 
