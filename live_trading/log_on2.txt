@@ -540,3 +540,89 @@ Connected at 15:18:51
 {'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
 {'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
 {'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+Connecting
+Connected at 18:14:29
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+{'ev': 'status', 'status': 'max_connections', 'message': 'Maximum number of connections exceeded.'}
+Connection Closed at 18:14:34
+Trying to Reconnect
+Checking time
+Right Now 18
+Time is good. The current time is 18:14:34
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 18:14:35
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+{'ev': 'status', 'status': 'max_connections', 'message': 'Maximum number of connections exceeded.'}
+Connection Closed at 18:14:39
+Trying to Reconnect
+Checking time
+Right Now 18
+Time is good. The current time is 18:14:39
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 18:14:40
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+{'ev': 'status', 'status': 'max_connections', 'message': 'Maximum number of connections exceeded.'}
+Connection Closed at 18:14:50
+Trying to Reconnect
+Checking time
+Right Now 18
+Time is good. The current time is 18:14:50
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 18:14:51
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+{'ev': 'status', 'status': 'max_connections', 'message': 'Maximum number of connections exceeded.'}
+Connection Closed at 18:14:57
+Trying to Reconnect
+Checking time
+Right Now 18
+Time is good. The current time is 18:14:57
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 18:14:58
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+{'ev': 'status', 'status': 'max_connections', 'message': 'Maximum number of connections exceeded.'}
+Connection Closed at 18:15:00
+Trying to Reconnect
+Checking time
+Right Now 18
+Time is good. The current time is 18:15:00
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 18:15:01
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+{'ev': 'status', 'status': 'max_connections', 'message': 'Maximum number of connections exceeded.'}
+Connection Closed at 18:15:11
+Trying to Reconnect
+Checking time
+Right Now 18
+Time is good. The current time is 18:15:11
+Trying to sign on attempt  1
+trying to sign on 
+Connecting
+Connected at 18:15:11
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+Connecting
+Connected at 18:15:14
+{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}

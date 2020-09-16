@@ -1,4 +1,4 @@
-from order import Order
+from order2 import Order
 from pytz import timezone
 import pytz
 from datetime import datetime
@@ -268,10 +268,10 @@ class StreamTrader:
         self.back_log = None
         self.est = timezone('US/Eastern')
 
-        self.action = open('action.txt', 'a')
-        self.candles = open('candle.txt', 'a')
-        self.log_on = open('log_on.txt', 'a')
-        self.order = open('order.txt', 'a')
+        self.action = open('action2.txt', 'a')
+        self.candles = open('candle2.txt', 'a')
+        self.log_on = open('log_on2.txt', 'a')
+        self.order = open('order2.txt', 'a')
 
     def __str__(self):
         return 'A Framework for trading with data streamed from polygon io'
@@ -283,25 +283,25 @@ class StreamTrader:
 
     @classmethod
     def log(cls, txt):
-        cls.action = open('action.txt', 'a')
+        cls.action = open('action2.txt', 'a')
         cls.action.write(f'{txt}\n')
         cls.action.close()
         return
 
     @classmethod
     def order_log(cls, txt):
-        cls.order = open('order.txt', 'a')
+        cls.order = open('order2.txt', 'a')
         cls.order.write(f'{txt}\n')
         cls.order.close()
 
     def candle_log(self, txt):
-        self.candles = open('candle.txt', 'a')
+        self.candles = open('candle2.txt', 'a')
         self.candles.write(f'{txt}\n')
         self.candles.close()
         return
 
     def connection_log(self, txt):
-        self.log_on = open('log_on.txt', 'a')
+        self.log_on = open('log_on2.txt', 'a')
         self.log_on.write(f'{txt}\n')
         self.log_on.close()
 
@@ -311,6 +311,7 @@ class StreamTrader:
         self.action.truncate(50)
         self.order.truncate(0)
         print('Initiating Logs')
+        return self.candles
 
     def close_logs(self):
         self.log_on.close()

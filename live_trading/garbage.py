@@ -6,7 +6,7 @@ import access2 as a
 import time
 from keys import *
 from order2 import Order
-from trader import QuantTrader, StreamTrader
+from trader2 import QuantTrader, StreamTrader
 back_log = None
 #--------------------
 import logging as logging
@@ -51,7 +51,6 @@ def check_time():
 
 # -----------------------------------
 #  --- WEB-SOCKET FUNCTIONS BELOW ---
-#  ----------------------------------
 
 def onn_open(ws):
     global strm,back_log,ticker

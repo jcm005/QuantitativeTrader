@@ -1,3 +1,5 @@
+# going to need maybe a classification algorithm
+
 class RagingBull:
     '''
     Volatile pre-market, and volatile bull market all day
@@ -15,6 +17,13 @@ class SlowBull:
 
     pass
 
- class Stagnant:
-     '''Not much movement in the stock market no relative news '''
+ class Hibernation:
+     '''
+     Not much movement in the
+     stock market no relative news
+     '''
+     def __init__(self):
+         pass
+
+ class GrizzlyBear:
      pass
