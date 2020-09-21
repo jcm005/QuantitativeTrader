@@ -1,0 +1,18 @@
+INFO:root:Connection Successful
+INFO:root:Log on Success @ 2020-09-19 07:32:01.594280
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+WARNING:root:Connection lost @ 2020-09-19 20:26:19.964929
+WARNING:root:Re-establishing connection
+INFO:root:Connection Successful
+INFO:root:Log on Success @ 2020-09-19 20:26:20.551947
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}

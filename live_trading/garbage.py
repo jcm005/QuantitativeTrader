@@ -93,11 +93,12 @@ def on_close(ws):
     strm.connection_log('Trying to Reconnect')
     check_time()
 
-# -----------------------------
+
+# ======================================================
+
 def on_message(ws, message):
     global strm, back_log
 
-# ======================================================
 #          GENERIC  INFORMATION
 
 # ------    DO Not edit this     ------
@@ -105,7 +106,11 @@ def on_message(ws, message):
     message = a.clean_and_load(message)
     strm.current_tick = json.loads(message)     # strm.current_tick is the manipulatable data
 # ---------------------------------------
-    latest_candle = strm.candle_builder()       # Handling of stream data --> into candles
+    latest_candle = strm.candle_builder()
+    # analytics
+    # market analyyzer
+    #
+    #
     if latest_candle == None:
         return
 
@@ -113,7 +118,6 @@ def on_message(ws, message):
 #         START STRATEGY HERE
 
     qt = QuantTrader(ticker,strm._high,profit=strm.profit)
-
     position = a.get_position_for(qt.ticker.upper())
     account = a.get_account()
     buying_power = account['buying_power'].split('.')[0]
