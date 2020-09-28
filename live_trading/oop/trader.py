@@ -198,9 +198,11 @@ class QuantTrader:
                 return order
             else:
                 logging.info('CTL Lower than Threshold')
-                pass
+                return False
+
         else:
             logging.info('Need more candles to work with')
+            return False
 
     def stop_drop_and_roll(self, ref, qty=1):
         '''If the price is dropping quicker then rolling 10 can catch up it will buy'''
@@ -215,9 +217,10 @@ class QuantTrader:
                 return order
             else:
                 logging.info('SDR Lower Than Threshold')
-                pass
+                return False
         else:
             logging.info('Need more candles to work with')
+            return False
 
     def Volatility(self, volatility, ref, qty=1, parameter=1):
         '''Given a parameter this function equates indicators for a volatility by
@@ -232,12 +235,15 @@ class QuantTrader:
     def price_jump(self, ref, qty=1):
         '''If the current price jumps over sma_30 threshold buy'''
         self.sma_30 = self.sma(self.price, window=30)
-        if (self.price[-1] - self.sma_30) > (self.price[-1] * .02):
-            logging.info('Price Jump Satisfied')
-            order = self.buy_order(ref, qty)
-            return order
+        if self.sma_30 != False:
+            if (self.price[-1] - self.sma_30) > (self.price[-1] * .02):
+                logging.info('Price Jump Satisfied')
+                order = self.buy_order(ref, qty)
+                return order
+            else:
+                loggging.info('Price Jump Not Satisfied')
+                return
         else:
-            loggging.info('Price Jump Not Satisfied')
             return
 
     def double_trouble(self, param1, param2, qty=1):

@@ -36,7 +36,7 @@ class Analyzer:
         :param int: desired rolling average window
         :return: will default an sma of window 10
         '''
-
+        # Does not work if data is of the nonetype
         if len(data) >= window:
             rolling = sum(data[-window:]) / window
             return rolling

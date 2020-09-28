@@ -60,14 +60,11 @@ def on_message(ws,message):
     dp.load(message)
     dp.run()
 
+    parameter = 10 # dp.market_analyzer()
+    strategy = strategy_factory.get_strategy(parameter)
+    strategy.run()
 
-    #strategy_factory.client_code(ConcreteCreator())
 
-
-
-
-  # strategy_factory.get_straegy(some_info_from_market_annalyzer)
-#   strategy.run()
 
 if __name__ == '__main__':
 

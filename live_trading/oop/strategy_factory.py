@@ -2,7 +2,7 @@ from __future__ import annotations
 from abc import ABC,abstractmethod
 
 import access as a
-import trader
+from trader import QuantTrader
 from analyzer import Analyzer
 
 # Objects returned by a factory method are often referred to as products.
@@ -22,48 +22,76 @@ class Creator(ABC):
         """
         pass
 
-    def run(self) -> str:
+    def run(self):
 
         strategy = self.factory_method()
         print('Loading Strategy')
-        return strategy.build_strategy()
 
 
 
 class ConcreteCreator(Creator):
-    # maybe Analyzer.__init__()
+
+    def __init__(self,parameter):
+        self.rolling_v_10 = parameter
+        self.high = [i for i in range(0,10)]
+        self.low = None
+        self.volume = None
+        self.vp = None
+
     def factory_method(self):
         '''TREE'''
         # need price information in here to evaluete information
         # where am i getting the price infomation from?
         # Analyzer has all the info i need
 
+        print(self.rolling_v_10)
 
-        if len('hello') == 5:
-            strategy = RagingBull()
-        return strategy.build_strategy()
+        if self.rolling_v_10 > .5 and self.high[-2] < self.high[-1]:
+            print('yeee')
+            return RagingBull()
+        else:
+            return False
 
+    def run_factory(self):
 
+        print('Factory Operating')
+        strategy = self.factory_method()
+        return strategy
 
 class Strategy(ABC):
-    '''PRiduct interface declares all the operation that all the concrete products
-    must implement'''
+    """
+    Strategy interface declares all the operation that all the concrete products
+    must implement
+    """
 
     @abstractmethod
     def build_strategy(self):
-        '''Maybe this can load the strat into on_messages'''
-        print('default operation function')
-        build_strategy()
-        pass
+        print('Enter logic for microstrategies here')
+
+    def operation(self):
+        """
+        framework functions that will always
+        run no matter what strategy is being called
+        """
+        QuantTrader('TSLA').price_jump(ref='pj')
+
+    def run(self):
+
+        self.build_strategy()
+        self.operation()
 
     def log(self):
         pass
 
 class RagingBull(Strategy):
 
+    def __str__(self):
+        return 'RagingBull'
+
     def build_strategy(self):
 
-        pass
+        print('Welcome to raging bull where we got chronic volatitlity')
+        QuantTrader('TSLA').climb_the_ladder(ref='ctlws')
 
 
 def client_code(creator: Creator) -> creator.run():
@@ -73,13 +101,22 @@ def client_code(creator: Creator) -> creator.run():
     its base interface. As long as the client keeps working with the creator via
     the base interface, you can pass it any creator's subclass.
     """
-    creator.build()
+    #creator.build()
     creator.run()
+
+
+def get_strategy(parameters):
+
+    return ConcreteCreator(parameters).run_factory()
 
 if __name__ == "__main__":
 
-    client_code(ConcreteCreator())
-    client_code(ConcreteCreator2())
+
+    strategy = get_strategy(parameters=10)
+    strategy.run()
+
+
+
 
 # -- call concrete creator --> acts as a tree to pick a strategy -->
 # -- then return a strategy --> running the buildStratefy in the selected strategy
