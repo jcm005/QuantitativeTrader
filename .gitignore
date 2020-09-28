@@ -18,3 +18,5 @@ node_modules/bootstrap/
 bin/
 .idea/
 share/
+class_attempt.py
+Analyzer.ipynb

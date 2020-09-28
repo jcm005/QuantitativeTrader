@@ -8,11 +8,11 @@ pd.set_option('max_rows', None)
 
 # make a function that automatically makes end date today
 
-start_date = '2020-01-01'
-asset = ['PCRFF']  # ticker symbols to be testedp
-time_interval = 'day'  # collect data per each ---
-time_delt = 7  # difference in days between end time and start time, lowe number is suggested so no data lost
-time_period = 38  # time_period * time_delt = number of days need for data accumualation
+start_date = '2020-09-21'
+asset = ['SPY']  # ticker symbols to be testedp
+time_interval = 'minute'  # collect data per each ---
+time_delt = 1  # difference in days between end time and start time, lowe number is suggested so no data lost
+time_period = 1  # time_period * time_delt = number of days need for data accumualation
 
 
 def grab_data(asset, train_date_s, train_date_e, time_interval='day'):

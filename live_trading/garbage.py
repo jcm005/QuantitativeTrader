@@ -33,7 +33,7 @@ def check_time():
     right_now = strm.localize_time()
     strm.connection_log('Right Now %s' %  (right_now[:2]))
 
-    if 6  < int(right_now[:2]) < 23:
+    if 6  < int(right_now[:2]) < 17:
         strm.connection_log('Time is good. The current time is %s' % (right_now))
 
         try:
