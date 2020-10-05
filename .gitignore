@@ -20,3 +20,4 @@ bin/
 share/
 class_attempt.py
 Analyzer.ipynb
+pyvenv.cfg

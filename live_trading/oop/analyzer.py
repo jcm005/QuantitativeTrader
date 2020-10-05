@@ -7,7 +7,7 @@ import json
 
 class Analyzer:
 
-    _params = {}
+
 
     def __init__(self):
         '''
@@ -44,7 +44,15 @@ class Analyzer:
             return False
 
     def load(self,message):
+
         self.current_tick = json.loads(message)[0]
+        if self.current_tick['ev'] == 'status':
+            logging.info(self.current_tick)
+            return False
+        else:
+            return True
+
+
 
     def _candle_builder(self):
 
@@ -88,6 +96,8 @@ class Analyzer:
                      % (self.time, self._high[-1], self._low[-1], round(self.vp, ndigits=3), self._v_factor[-1]))
             print('Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s '
                   % (self.time, self._high[-1], self._low[-1], self.vp, self._v_factor[-1]))
+        else:
+            self.vp = None
 
         if len(self.minute_candlestick) >= 10:
             self.rolling_v_10 = self.sma(self._v_factor, window=10)
@@ -107,13 +117,32 @@ class Analyzer:
 
         return
 
+    def _market_analyzer(self):
+
+        p = {
+
+            'high': self._high,
+            'low': self._low,
+            'rolling_v_10': self.rolling_v_10,
+            'rolling_high_10': self.rolling_high_10,
+            'rolling_high_30': self.rolling_high_30,
+            'vp': self.vp
+        }
+
+
+        return p
+
     def run(self):
 
         if self.current_tick['ev'] == 'status':
             logging.info(self.current_tick)
             return
+
         self._candle_builder()
         self._run_analytics()
+        self._market_analyzer()
+
+
 
     def metrics(self):
         '''Exporting data for offline analysis and eventually SQL dumping/warehousing'''

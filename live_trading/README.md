@@ -1,3 +1,8 @@
+# Note 
+
+This framework is under going a reconstruction, to become more SOLID principled, implementing Factory Methods and other Design patterns, The newest updated scripts can be found in the oop folder
+
+
 # Live_trading
 
 In this repo, you can code your algorithm with the same principles as back_testing to trade in real_time.

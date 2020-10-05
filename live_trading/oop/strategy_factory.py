@@ -5,6 +5,7 @@ import access as a
 from trader import QuantTrader
 from analyzer import Analyzer
 
+
 # Objects returned by a factory method are often referred to as products.
 # in this case they will return strategies
 class Creator(ABC):
@@ -32,11 +33,16 @@ class Creator(ABC):
 class ConcreteCreator(Creator):
 
     def __init__(self,parameter):
-        self.rolling_v_10 = parameter
-        self.high = [i for i in range(0,10)]
-        self.low = None
+        # dont want errors if the parameter is not yet created
+
+        self.high = parameter['high']
+        self.low = parameter['low']
         self.volume = None
         self.vp = None
+        if parameter['rolling_v_10'] != None:
+            self.rolling_v_10 = parameter['rolling_v_10']
+        else:
+            self.rolling_v_10 = False
 
     def factory_method(self):
         '''TREE'''
@@ -44,19 +50,21 @@ class ConcreteCreator(Creator):
         # where am i getting the price infomation from?
         # Analyzer has all the info i need
 
-        print(self.rolling_v_10)
-
-        if self.rolling_v_10 > .5 and self.high[-2] < self.high[-1]:
-            print('yeee')
-            return RagingBull()
+        print('Welcome to the Factory\nRunning Parameters...\n')
+        if self.rolling_v_10 != False:
+            if self.rolling_v_10 > .6:
+                return RagingBull(self.high)
+            else:
+                return RagingBull(self.high)
         else:
-            return False
+            return RagingBull(self.high)
 
     def run_factory(self):
 
-        print('Factory Operating')
+        print('Factory Live')
         strategy = self.factory_method()
         return strategy
+
 
 class Strategy(ABC):
     """
@@ -73,7 +81,8 @@ class Strategy(ABC):
         framework functions that will always
         run no matter what strategy is being called
         """
-        QuantTrader('TSLA').price_jump(ref='pj')
+        #QuantTrader('TSLA').price_jump(ref='pj')
+        print('operation firing')
 
     def run(self):
 
@@ -83,7 +92,11 @@ class Strategy(ABC):
     def log(self):
         pass
 
+
 class RagingBull(Strategy):
+
+    def __init__(self,high):
+        self.high = high
 
     def __str__(self):
         return 'RagingBull'
@@ -91,8 +104,7 @@ class RagingBull(Strategy):
     def build_strategy(self):
 
         print('Welcome to raging bull where we got chronic volatitlity')
-        QuantTrader('TSLA').climb_the_ladder(ref='ctlws')
-
+        QuantTrader(self.high,'TSLA').climb_the_ladder(ref='ctlws')
 
 def client_code(creator: Creator) -> creator.run():
 

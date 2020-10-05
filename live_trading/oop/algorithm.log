@@ -1,18 +1,19 @@
 INFO:root:Connection Successful
-INFO:root:Log on Success @ 2020-09-19 07:32:01.594280
+INFO:root:Log on Success @ 2020-10-05 16:14:36.659297
 INFO:root:-------------------
 INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
 INFO:root:-------------------
 INFO:root:{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
 INFO:root:-------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
-WARNING:root:Connection lost @ 2020-09-19 20:26:19.964929
-WARNING:root:Re-establishing connection
-INFO:root:Connection Successful
-INFO:root:Log on Success @ 2020-09-19 20:26:20.551947
 INFO:root:-------------------
-INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+INFO:root:-- Running Analytcis -- 
+INFO:root:Loading up the RagingBull Strategy
+INFO:root:Trying ctl
+INFO:root:Need more candles to work with
 INFO:root:-------------------
-INFO:root:{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
-INFO:root:-------------------
-INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+INFO:root:-- Running Analytcis -- 
+INFO:root:Time: 2020-10-05, Mon, 16:16, High: 425.25, Low: 425.25, Stream VP: -0.01, V/P Ratio: 0.0 
+INFO:root:Loading up the RagingBull Strategy
+INFO:root:Trying ctl
+INFO:root:Need more candles to work with
