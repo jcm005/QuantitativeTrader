@@ -421,11 +421,11 @@ class StreamTrader:
         elif 1000 > price > 850:
             profit = 80
         elif 850 >= price > 600:
-            profit = 40
+            profit = 35
         elif 600 >= price > 400:
-            profit = 30
+            profit = 25
         elif 400 >= price:
-            profit = 20
+            profit = 15
 
         return profit
 

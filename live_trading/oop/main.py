@@ -57,12 +57,13 @@ def on_error(ws,error):
 def on_message(ws,message):
 
     logging.info('-------------------')
-    dp.load(message)
-    dp.run()
-
-    parameter = 10 # dp.market_analyzer()
-    strategy = strategy_factory.get_strategy(parameter)
-    strategy.run()
+    while dp.load(message) == True:
+        dp.run()
+        parameter = dp._market_analyzer()
+        strategy = strategy_factory.get_strategy(parameter)
+        logging.info('Loading up the %s Strategy' % strategy)
+        strategy.run()
+        break
 
 
 

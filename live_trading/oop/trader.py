@@ -13,12 +13,12 @@ import logging
 
 class QuantTrader:
 
-    def __init__(self, ticker):
+    def __init__(self,price, ticker):
         """
         price has to be an iterable type
         """
        # Analzyer.__init__(self)
-        self.price = None
+        self.price = price
         self.ticker = ticker
         self.over_night = []
         self.sma = analyzer.Analyzer.sma
