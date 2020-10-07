@@ -8,6 +8,7 @@ from analyzer import Analyzer
 
 # Objects returned by a factory method are often referred to as products.
 # in this case they will return strategies
+
 class Creator(ABC):
     """
        The Strategy FActory class declares the factory method that is supposed to return an
@@ -34,7 +35,7 @@ class ConcreteCreator(Creator):
 
     def __init__(self,parameter):
         # dont want errors if the parameter is not yet created
-
+        self.par = parameter
         self.high = parameter['high']
         self.low = parameter['low']
         self.volume = None
@@ -46,18 +47,15 @@ class ConcreteCreator(Creator):
 
     def factory_method(self):
         '''TREE'''
-        # need price information in here to evaluete information
-        # where am i getting the price infomation from?
-        # Analyzer has all the info i need
 
         print('Welcome to the Factory\nRunning Parameters...\n')
         if self.rolling_v_10 != False:
             if self.rolling_v_10 > .6:
                 return RagingBull(self.high)
             else:
-                return RagingBull(self.high)
+                return DoNothing(self.high)
         else:
-            return RagingBull(self.high)
+            return DoNothing(self.high)
 
     def run_factory(self):
 
@@ -76,18 +74,20 @@ class Strategy(ABC):
     def build_strategy(self):
         print('Enter logic for microstrategies here')
 
-    def operation(self):
+    def operation(self,high):
         """
         framework functions that will always
         run no matter what strategy is being called
         """
-        #QuantTrader('TSLA').price_jump(ref='pj')
+
+        # cannot call any micros here maybe just logging becuase cannot access self.high information here
+        QuantTrader(high,'TSLA').price_jump(ref='pj')
         print('operation firing')
 
     def run(self):
-
+        high = self.high
         self.build_strategy()
-        self.operation()
+        self.operation(high)
 
     def log(self):
         pass
@@ -105,6 +105,18 @@ class RagingBull(Strategy):
 
         print('Welcome to raging bull where we got chronic volatitlity')
         QuantTrader(self.high,'TSLA').climb_the_ladder(ref='ctlws')
+
+class DoNothing(Strategy):
+
+    def __init__(self,high):
+        self.high = high
+
+    def __str__(self):
+        return 'DoNothing'
+
+    def build_strategy(self):
+        print('DoNothing just runs default operations')
+        return
 
 def client_code(creator: Creator) -> creator.run():
 
