@@ -35,19 +35,14 @@ def on_open(ws):
     :param ws:
     :return:
     """
-    global stream
-    print('connecting')
+    print('Connecting')
     stream = alpaca_stream.WebConnection(API_KEY)               # instantiate connection object w/apikey
-    auth_data,channel_data = stream._subscribe('AM.' + ticker)  #retrive subsciprition data to connection
-    ws.send(json.dumps(auth_data))                              # sends subscroption data
-    ws.send(json.dumps(channel_data))
+    stream._subscribe(ws,'AM.' + ticker)  #retrive subsciprition data to connection
     logging.info('Connection Successful')
-    stream.log('open')
-    print('connected')
+    print('Connected\nWaiting for incoming data from API')
 
 def on_close(ws):
-    global stream
-    stream.log('close')
+
     logging.warning('Re-establishing connection')
     web_socket_start()
 
@@ -57,11 +52,10 @@ def on_error(ws,error):
 def on_message(ws,message):
 
     logging.info('-------------------')
+
     while dp.load(message) == True:
         dp.run()
-        parameter = dp._market_analyzer()
-        strategy = strategy_factory.get_strategy(parameter)
-        logging.info('Loading up the %s Strategy' % strategy)
+        strategy = strategy_factory.get_strategy(dp._market_analyzer())
         strategy.run()
         break
 
@@ -71,10 +65,7 @@ if __name__ == '__main__':
 
     ticker = 'TSLA'
     socket = "wss://alpaca.socket.polygon.io/stocks"
-
-
     dp = analyzer.Analyzer()        # intializing for data processing
-  #  qt = trader.QuantTrader(ticker)
     web_socket_start()              # start connection
 
 

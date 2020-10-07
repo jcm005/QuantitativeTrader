@@ -6,8 +6,11 @@ import trader
 import json
 
 class Analyzer:
-
-
+    """
+    This class analyzes data in order to build candles and
+    prepare data to be analyze for influencing the strategy factory for
+    strategy decision.
+    """
 
     def __init__(self):
         '''
@@ -21,6 +24,7 @@ class Analyzer:
         self.in_position = False
         self.back_log = None
         self.est = timezone('US/Eastern')
+        self.count = 1
 
         logging.basicConfig(level=logging.DEBUG,
                             filename='algorithm.log',
@@ -46,13 +50,12 @@ class Analyzer:
     def load(self,message):
 
         self.current_tick = json.loads(message)[0]
+
         if self.current_tick['ev'] == 'status':
             logging.info(self.current_tick)
             return False
         else:
             return True
-
-
 
     def _candle_builder(self):
 
@@ -60,6 +63,7 @@ class Analyzer:
         self.volatility_data = self.current_tick['h'] - self.current_tick['l']
         self.hlmean = (self.current_tick['h'] + self.current_tick['l']) / 2
         self.v_factor = (self.volatility_data / self.hlmean) * 100
+        self.ticker = self.current_tick['sym']
 
         self.minute_candlestick.append({
             'symbol': self.current_tick['sym'],
@@ -92,7 +96,7 @@ class Analyzer:
         # This is what is passed for the volatility buy
         if len(self.minute_candlestick) > 1:
             self.vp = self.minute_candlestick[-1]['v_factor'] - self.minute_candlestick[-2]['v_factor']
-            logging.info('Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s '
+            logging.info('-- Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s --'
                      % (self.time, self._high[-1], self._low[-1], round(self.vp, ndigits=3), self._v_factor[-1]))
             print('Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s '
                   % (self.time, self._high[-1], self._low[-1], self.vp, self._v_factor[-1]))
@@ -117,6 +121,60 @@ class Analyzer:
 
         return
 
+    def _back_logger(self):
+        """
+        gains insight to market after hours and the result can be manipulated to have market opening orders ready
+        over_night: returns:  list of candles from last night
+
+        *** doesnt work over weekend yet ***
+
+        """
+
+        import alpaca_trade_api as tradeapi
+        from keys import API__KEY, SECRET_KEY
+        from datetime import datetime, timedelta
+        time_interval = 'minute'
+        self.over_night = []
+
+        raw_past = timedelta(days=1)
+        raw_now = datetime.now()
+        yesterday = raw_now - raw_past
+        start = datetime.strftime(yesterday, '%Y-%m-%d')
+        final = datetime.strftime(raw_now, '%Y-%m-%d')
+        api = tradeapi.REST(API__KEY, SECRET_KEY, api_version='v2')
+        # for manually grabbing data and doing an analysis by hand or ipython file
+        data = api.polygon.historic_agg_v2(self.ticker, 1, time_interval, start, final)
+        spy_500 = api.polygon.historic_agg_v2('SPY', 1, time_interval, start, final)
+        for bar in data:
+
+            # catenuated the last few items from the time stamp
+            # to removve errors unsure what this information provides
+            _open = str(bar.open)
+            _high = str(bar.high)
+            _low = str(bar.low)
+            _close = str(bar.close)
+            _volume = str(int(bar.volume))
+
+            x = str(bar.timestamp)
+            hour = int(x[11:13])
+            day = int(x[8:10])
+            if day == int(start[-2:]):  # Checks if it is previous day or not
+                if hour >= 16:
+                    time = x[:19]
+                    self.over_night.append({
+                        'time': time,
+                        'high': _high,
+                    })
+            else:
+                if hour <= 7:
+                    time2 = x[:19]
+                    self.over_night.append({
+                        'time': time2,
+                        'high': _high,
+                    })
+        logging.info('Overnight data --> %s' % len(self.over_night))
+        return self.over_night
+
     def _market_analyzer(self):
 
         p = {
@@ -127,21 +185,23 @@ class Analyzer:
             'rolling_high_10': self.rolling_high_10,
             'rolling_high_30': self.rolling_high_30,
             'vp': self.vp
+            'over_night' : self.over_night
         }
-
 
         return p
 
     def run(self):
 
-        if self.current_tick['ev'] == 'status':
-            logging.info(self.current_tick)
-            return
-
         self._candle_builder()
         self._run_analytics()
-        self._market_analyzer()
 
+        while self.count == 1:
+            logging.info('Running Back Logs')
+            self._back_logger()
+            self.count = 0
+            break
+
+        self._market_analyzer()
 
 
     def metrics(self):

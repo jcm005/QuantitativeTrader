@@ -1,5 +1,4 @@
 INFO:root:Connection Successful
-INFO:root:Log on Success @ 2020-10-06 15:08:24.740573
 INFO:root:-------------------
 INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
 INFO:root:-------------------
@@ -8,126 +7,34 @@ INFO:root:-------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
 INFO:root:-------------------
 INFO:root:-- Running Analytcis -- 
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.polygon.io:443
+DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/TSLA/range/1/minute/2020-10-06/2020-10-07?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/SPY/range/1/minute/2020-10-06/2020-10-07?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
+INFO:root:Overnight data --> 352
+INFO:root:-- Factory Live --
+INFO:root:-- Welcome to the Factory --> Evaluating Parameters...
+
 INFO:root:Loading up the DoNothing Strategy
+INFO:root:Building Strategy
+INFO:root:Running Default Functions
+INFO:root:-- Checking Price Jump --
 INFO:root:-------------------
 INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:10, High: 411.47, Low: 409.51, Stream VP: -0.27, V/P Ratio: 0.48 
+INFO:root:-- Time: 2020-10-07, Wed, 09:42, High: 420.295, Low: 418.88, Stream VP: -0.11, V/P Ratio: 0.34 --
+INFO:root:-- Factory Live --
+INFO:root:-- Welcome to the Factory --> Evaluating Parameters...
+
 INFO:root:Loading up the DoNothing Strategy
+INFO:root:Building Strategy
+INFO:root:Running Default Functions
+INFO:root:-- Checking Price Jump --
 INFO:root:-------------------
 INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:11, High: 413.02, Low: 410.15, Stream VP: 0.22, V/P Ratio: 0.7 
+INFO:root:-- Time: 2020-10-07, Wed, 09:43, High: 420.37, Low: 419.57, Stream VP: -0.15, V/P Ratio: 0.19 --
+INFO:root:-- Factory Live --
+INFO:root:-- Welcome to the Factory --> Evaluating Parameters...
+
 INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:12, High: 413.5, Low: 411.73, Stream VP: -0.27, V/P Ratio: 0.43 
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:13, High: 415, Low: 413, Stream VP: 0.05, V/P Ratio: 0.48 
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:14, High: 414.89, Low: 413.44, Stream VP: -0.13, V/P Ratio: 0.35 
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:15, High: 414.85, Low: 413.63, Stream VP: -0.06, V/P Ratio: 0.29 
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:16, High: 415.77, Low: 413.27, Stream VP: 0.31, V/P Ratio: 0.6 
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:17, High: 415.6399, Low: 413.79, Stream VP: -0.15, V/P Ratio: 0.45 
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:18, High: 414.725, Low: 412.8, Stream VP: 0.02, V/P Ratio: 0.47 
-INFO:root:Rolling_v_10 0.5
-INFO:root:Rolling_high_10 413.91349
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:19, High: 414, Low: 412.73, Stream VP: -0.16, V/P Ratio: 0.31 
-INFO:root:Rolling_v_10 0.45599999999999996
-INFO:root:Rolling_high_10 414.2864900000001
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:20, High: 413.78, Low: 412.3701, Stream VP: 0.03, V/P Ratio: 0.34 
-INFO:root:Rolling_v_10 0.442
-INFO:root:Rolling_high_10 414.51749
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:21, High: 413.1383, Low: 410.9101, Stream VP: 0.2, V/P Ratio: 0.54 
-INFO:root:Rolling_v_10 0.426
-INFO:root:Rolling_high_10 414.5293199999999
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:22, High: 413.233, Low: 410.9201, Stream VP: 0.02, V/P Ratio: 0.56 
-INFO:root:Rolling_v_10 0.43899999999999995
-INFO:root:Rolling_high_10 414.5026199999999
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:23, High: 413.59, Low: 412.57, Stream VP: -0.31, V/P Ratio: 0.25 
-INFO:root:Rolling_v_10 0.41600000000000004
-INFO:root:Rolling_high_10 414.36161999999996
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:24, High: 413.48, Low: 412, Stream VP: 0.11, V/P Ratio: 0.36 
-INFO:root:Rolling_v_10 0.417
-INFO:root:Rolling_high_10 414.22062000000005
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:25, High: 412.94, Low: 411.9, Stream VP: -0.11, V/P Ratio: 0.25 
-INFO:root:Rolling_v_10 0.413
-INFO:root:Rolling_high_10 414.02961999999997
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:26, High: 413.15, Low: 412.18, Stream VP: -0.01, V/P Ratio: 0.24 
-INFO:root:Rolling_v_10 0.37700000000000006
-INFO:root:Rolling_high_10 413.76761999999997
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:27, High: 413.86, Low: 412.29, Stream VP: 0.14, V/P Ratio: 0.38 
-INFO:root:Rolling_v_10 0.37
-INFO:root:Rolling_high_10 413.58963000000006
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:28, High: 414.32, Low: 412.88, Stream VP: -0.03, V/P Ratio: 0.35 
-INFO:root:Rolling_v_10 0.358
-INFO:root:Rolling_high_10 413.54913000000005
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:29, High: 414.8385, Low: 414, Stream VP: -0.15, V/P Ratio: 0.2 
-INFO:root:Rolling_v_10 0.34700000000000003
-INFO:root:Rolling_high_10 413.63298000000003
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:30, High: 415.1, Low: 414.45, Stream VP: -0.04, V/P Ratio: 0.16 
-INFO:root:Rolling_v_10 0.32900000000000007
-INFO:root:Rolling_high_10 413.76498000000004
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:31, High: 414.635, Low: 413.6116, Stream VP: 0.09, V/P Ratio: 0.25 
-INFO:root:Rolling_v_10 0.30000000000000004
-INFO:root:Rolling_high_10 413.91465
-INFO:root:Loading up the DoNothing Strategy
-INFO:root:-------------------
-INFO:root:-- Running Analytcis -- 
-INFO:root:Time: 2020-10-06, Tue, 15:32, High: 415.23, Low: 413.85, Stream VP: 0.08, V/P Ratio: 0.33 
-INFO:root:Rolling_v_10 0.277
-INFO:root:Rolling_high_10 414.11435
-INFO:root:Loading up the DoNothing Strategy
+INFO:root:Building Strategy
+INFO:root:Running Default Functions
+INFO:root:-- Checking Price Jump --

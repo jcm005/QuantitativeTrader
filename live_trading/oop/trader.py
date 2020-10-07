@@ -103,6 +103,7 @@ class QuantTrader:
         #    self.order_log('Order: %s \n %s' % (ref, order))
             return order
 
+# Back log doesnt belong here
     def back_logger(self):
         """
         gains insight to market after hours and the result can be manipulated to have market opening orders ready

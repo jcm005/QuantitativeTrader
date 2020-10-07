@@ -4,11 +4,12 @@ from abc import ABC,abstractmethod
 import access as a
 from trader import QuantTrader
 from analyzer import Analyzer
-
+import logging
 
 # Objects returned by a factory method are often referred to as products.
 # in this case they will return strategies
 
+# CREATOR CREATES NEW CONCRETES
 class Creator(ABC):
     """
        The Strategy FActory class declares the factory method that is supposed to return an
@@ -29,9 +30,9 @@ class Creator(ABC):
         strategy = self.factory_method()
         print('Loading Strategy')
 
-
-
+# STRATEGY DECISION TREE
 class ConcreteCreator(Creator):
+
 
     def __init__(self,parameter):
         # dont want errors if the parameter is not yet created
@@ -48,22 +49,24 @@ class ConcreteCreator(Creator):
     def factory_method(self):
         '''TREE'''
 
-        print('Welcome to the Factory\nRunning Parameters...\n')
-        if self.rolling_v_10 != False:
-            if self.rolling_v_10 > .6:
-                return RagingBull(self.high)
-            else:
-                return DoNothing(self.high)
+        print('-- Welcome to the Factory --> Evaluating Parameters...\n')
+        logging.info('-- Welcome to the Factory --> Evaluating Parameters...\n')
+
+        if self.rolling_v_10 != False and self.rolling_v_10 > .6:
+            return RagingBull(self.high)
         else:
             return DoNothing(self.high)
+
 
     def run_factory(self):
 
         print('Factory Live')
+        logging.info('-- Factory Live --')
         strategy = self.factory_method()
+        logging.info('Loading up the %s Strategy' % strategy)
         return strategy
 
-
+# BASIC STRATEGY FRAMEWORK
 class Strategy(ABC):
     """
     Strategy interface declares all the operation that all the concrete products
@@ -79,13 +82,14 @@ class Strategy(ABC):
         framework functions that will always
         run no matter what strategy is being called
         """
-
-        # cannot call any micros here maybe just logging becuase cannot access self.high information here
+        logging.info('-- Checking Price Jump --')
         QuantTrader(high,'TSLA').price_jump(ref='pj')
-        print('operation firing')
+
 
     def run(self):
+
         high = self.high
+        logging.info('Building Strategy')
         self.build_strategy()
         self.operation(high)
 
@@ -106,6 +110,7 @@ class RagingBull(Strategy):
         print('Welcome to raging bull where we got chronic volatitlity')
         QuantTrader(self.high,'TSLA').climb_the_ladder(ref='ctlws')
 
+
 class DoNothing(Strategy):
 
     def __init__(self,high):
@@ -115,9 +120,10 @@ class DoNothing(Strategy):
         return 'DoNothing'
 
     def build_strategy(self):
-        print('DoNothing just runs default operations')
+        logging.info('Running Default Functions')
         return
 
+# IGNORE THIS FOR NOW -- INTERESTING TAKE IN AN OBJECTS AND RUNS ITS FUNCTION
 def client_code(creator: Creator) -> creator.run():
 
     """
@@ -130,7 +136,11 @@ def client_code(creator: Creator) -> creator.run():
 
 
 def get_strategy(parameters):
+    """
 
+    :param parameters: taken in parameters as a dictionary,
+    :return: the strategy to be executed in strategy.run() in main.py
+    """
     return ConcreteCreator(parameters).run_factory()
 
 if __name__ == "__main__":
@@ -142,9 +152,3 @@ if __name__ == "__main__":
 
 
 
-# -- call concrete creator --> acts as a tree to pick a strategy -->
-# -- then return a strategy --> running the buildStratefy in the selected strategy
-# --
-
-
-   # client_code()

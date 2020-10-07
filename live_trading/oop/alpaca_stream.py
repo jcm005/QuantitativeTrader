@@ -7,20 +7,20 @@ class WebConnection:
 
     def __init__(self,api_key):
 
-
         self._api = api_key
         log.basicConfig(level=log.DEBUG,
                             filename='connect.log',
                             filemode='a')
 
-    def _subscribe(self,channel=None):
+    def _subscribe(self,ws,channel=None):
         # THIS MAY NOT BE A PRIVATE FUNCTION ASK COLE
         """
 
-        :param channel_data: Websocket prefix + . + channel name like AM.TSLA
-        'action': 'subsctibe , 'params': channel you want to subscribe to
+        :param ws: websocket object must be passed for the sending of data
+        :param channel: in the format of 'AM' + '<desired ticker>'
         :return: None
         """
+
         if channel == None:
             log.warning('Please supply a channel for more infomation please see polygon.io/websockets')
         auth_data = {
@@ -32,7 +32,9 @@ class WebConnection:
             'params': channel
         }
 
-        return auth_data,channel_data
+        ws.send(json.dumps(auth_data))
+        ws.send(json.dumps(channel_data))
+
 
     def log(self,txt):
         if txt == 'open':
