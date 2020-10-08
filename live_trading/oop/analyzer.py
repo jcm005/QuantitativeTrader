@@ -184,7 +184,7 @@ class Analyzer:
             'rolling_v_10': self.rolling_v_10,
             'rolling_high_10': self.rolling_high_10,
             'rolling_high_30': self.rolling_high_30,
-            'vp': self.vp
+            'vp': self.vp,
             'over_night' : self.over_night
         }
 

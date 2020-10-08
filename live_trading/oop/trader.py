@@ -242,7 +242,7 @@ class QuantTrader:
                 order = self.buy_order(ref, qty)
                 return order
             else:
-                loggging.info('Price Jump Not Satisfied')
+                logging.info('Price Jump Not Satisfied')
                 return
         else:
             return
