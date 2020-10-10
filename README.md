@@ -3,7 +3,7 @@
 Welcome, in this Repo, you can fabricate, test, and produce customized trading algorithms and deploy them live in AWS.
 
 
-![](readme%20photos/800.png)  ![](readme%20photos/aws.png) 
+![](readme%20photos/330.png)  ![](readme%20photos/aws.png) 
 
  
  ![](readme%20photos/Alpaca_Logo_yellow.jpg)
