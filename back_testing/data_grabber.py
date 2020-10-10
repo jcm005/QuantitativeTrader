@@ -1,6 +1,6 @@
 import alpaca_trade_api as tradeapi
 from datetime import datetime, timedelta
-from keys import *
+from streamkeys import *
 import pandas as pd
 
 # for preparing output of all contents of the dataframe recieved

@@ -38,6 +38,5 @@ TO INSTALL ALL THE NECESSARY PACKAGES USE
     pip install -r requirements.txt 
 
 
-To see more information check out the following directories.
 
-To use these repository to trade you need to make an account using the broker https://alpaca.markets
+
