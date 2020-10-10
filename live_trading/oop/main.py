@@ -52,7 +52,6 @@ def on_error(ws,error):
 def on_message(ws,message):
 
     logging.info('-------------------')
-
     while dp.load(message) == True:
         dp.run()
         strategy = strategy_factory.get_strategy(dp._market_analyzer())

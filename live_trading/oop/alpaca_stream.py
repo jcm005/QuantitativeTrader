@@ -35,7 +35,6 @@ class WebConnection:
         ws.send(json.dumps(auth_data))
         ws.send(json.dumps(channel_data))
 
-
     def log(self,txt):
         if txt == 'open':
             log.info('Log on Success @ %s' % datetime.now())

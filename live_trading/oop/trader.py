@@ -156,7 +156,7 @@ class QuantTrader:
                         'high': _high,
                     })
         return self.over_night
-
+# own module
     def Back_log_volatility(self, data):
         '''Checks if over night data is a go for a market opening buy'''
         if len(data) > 2:
@@ -176,7 +176,6 @@ class QuantTrader:
     # all these strategies just need to be called once called if the following
     # conditions are met they will execute a buy with appropiate logging
     # ----------------------------------------------------------------------
-
 
     def climb_the_ladder(self, ref, qty=1):
 
