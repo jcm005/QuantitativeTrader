@@ -3,7 +3,8 @@
 Welcome, in this Repo, you can fabricate, test, and produce customized trading algorithms and deploy them live in AWS.
 
 
-![](readme%20photos/aws.png) 
+![](readme%20photos/aws.png) ![](readme%20photos/330.png) 
+
  
  ![](readme%20photos/Alpaca_Logo_yellow.jpg)
 
@@ -25,8 +26,7 @@ If its is desired to run the program on a local host, the live graphing module c
 ![](readme%20photos/live_graphing_module.png)
 
 
-Please feel free to browse further into the repos. 
-
+To get started see GETTING_STARTED.md
 
 TO INSTALL ALL THE NECESSARY PACKAGES USE  
 
