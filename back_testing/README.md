@@ -6,16 +6,16 @@ Once that is established, you should have obtained an
     API_KEY & SECRET_KEY
     
 These keys need to be protected, for they are the access point to your money. Insert these keys 
-in a keys.py file for this repo. In the format of
+in a streamkeys.py file for this repo. In the format of
 
     API_KEY = 'Enter your key in here'
     PAPER_API = 'Enter your paper key in here'
-    SECRET_KEY = 'Enter your secret key in here'
+    SECRET__KEY = 'Enter your secret key in here'
     
 You can find the PAPER_API key by switching to the paper trading account on the left menu bar.
 
 After establishing your account and keys, you can start testing. The platform is straightforward to get started right away. By default, the algorithm currently loaded in the program is an algorithm based on a specific stock 'TSLA' and is aimed to exploit the stock volatility for about a 10% rate of return.
-The framework is currently being worked on to allow the plug and play of modules as algorthims for a simple design.
+The framework is currently being worked on to allow the plug and play of modules as algorithms for a simple design.
 
 By changing these variables,
 
@@ -36,5 +36,5 @@ At the moment, the best way to create an algorithm is by going to the next() fun
 The frameworks awaits a massive update to practice more 'SOLID' principles of programming
 
 
-The volatility.py module is design the same way as back_testing, simply change you variabels to access your desired data and a volatility analysis will be produced in a plotly styled graph
+The volatility.py module is design the same way as back_testing, simply change you variables to access your desired data and a volatility analysis will be produced in a plotly styled graph
 
