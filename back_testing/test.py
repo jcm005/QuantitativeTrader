@@ -15,6 +15,7 @@ time_period = 1
 def strat_runner(asset, strat_name, cash=10000.0, test=False):
     cerebro = bt.Cerebro()
     cerebro.addstrategy(strat_name)
+
     for symbol in asset:
         path = f'{symbol}_{time_interval}_intraday_trading.csv'
         data = btfeeds.GenericCSVData(
@@ -54,19 +55,9 @@ def strat_runner(asset, strat_name, cash=10000.0, test=False):
 
     data_flusher(asset, time_interval)
 
-
-def logger():
-    anss = input('Do you want to log this information: y/n ? \n')
-    if anss == 'y':
-        log__ = open('log.txt', 'a')
-        log__.write(
-            f'Assets: {asset},Start Date: {start_date},Time interval: {time_interval},Time Period: {time_period},Time Delt: {time_delt}\n')
-    else:
-        pass
-
-
 # ===============================
 # ===============================
+
 class SummerHaus05042020(bt.Strategy):
     params = dict(
         pfast=10,
@@ -357,8 +348,6 @@ class SummerHaus05042020(bt.Strategy):
                     self.log(f'Stand alone all the sudden increase .025 --> Rolling 3 : {self.rolling_2[0]} high: {self.high[0]}')
                     self.order = self.buy()
 
-
-
         def mod_tesla_4(self):
             '''DOUBLE STANDARD '''
             if not self.position:
@@ -373,8 +362,6 @@ class SummerHaus05042020(bt.Strategy):
                 if self.sma_1[0] > 1 and self.sma_10[0] >= .5:
                     self.log(f'Double standard   -- sma: {self.sma_1[0]} sma10: {self.sma_10[0]}')
                     self.order = self.buy()
-
-
 
         def sell_function(self):
             for i in self.bought:
@@ -468,6 +455,7 @@ class SummerHaus05042020(bt.Strategy):
 
 
 if __name__ == '__main__':
+
     data_flusher(asset, time_interval)  # here in case program fails it will not double data
     Acummator(asset, start_date, time_interval, time_delt, time_period)
     strat_runner(asset, SummerHaus05042020, 5000, test=False)
