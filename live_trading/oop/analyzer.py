@@ -87,13 +87,13 @@ class Analyzer:
 
         logging.info('-- Running Analytcis -- ')
 
-        # we may  be able to avoid this with decorator
+# maybe avoidable with decorator?
         self._high = [i['high'] for i in self.minute_candlestick]
         self._low = [i['low'] for i in self.minute_candlestick]
         self._v_factor = [i['v_factor'] for i in self.minute_candlestick]
         self._time = self.minute_candlestick[-1]['time']
 
-        # This is what is passed for the volatility buy
+# This is what is passed for the volatility buy
         if len(self.minute_candlestick) > 1:
             self.vp = self.minute_candlestick[-1]['v_factor'] - self.minute_candlestick[-2]['v_factor']
             logging.info('-- Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s --'
@@ -101,7 +101,7 @@ class Analyzer:
             print('Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s '
                   % (self.time, self._high[-1], self._low[-1], self.vp, self._v_factor[-1]))
         else:
-            self.vp = None
+            self.vp = False
 
         if len(self.minute_candlestick) >= 10:
             self.rolling_v_10 = self.sma(self._v_factor, window=10)
@@ -110,14 +110,14 @@ class Analyzer:
                 logging.info('Rolling_v_10 %s' % self.rolling_v_10)
                 logging.info('Rolling_high_10 %s' % self.rolling_high_10)
         else:
-            self.rolling_v_10, self.rolling_high_10 = None, None
+            self.rolling_v_10, self.rolling_high_10 = False, False
 
         if len(self.minute_candlestick) >= 30:
             self.rolling_high_30 = self.sma(self._high, window=30)
             if self.rolling_high_30 != False or self.rolling_high_30 != None:
                 logging.info('Rolling_high_30 %s' % self.rolling_high_30)
         else:
-            self.rolling_high_30 = None
+            self.rolling_high_30 = False
 
         return
 
@@ -176,7 +176,8 @@ class Analyzer:
         return self.over_night
 
     def _market_analyzer(self):
-
+# try to get days open infromation for the allocation deciding whether its a bull or bearish day
+# try to get SPY data
         p = {
 
             'high': self._high,

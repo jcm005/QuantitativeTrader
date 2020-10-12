@@ -7,10 +7,7 @@ from analyzer import Analyzer
 import logging
 
 
-# Objects returned by a factory method are often referred to as products.
-# in this case they will return strategies
 
-# CREATOR CREATES NEW CONCRETES
 class Creator(ABC):
     """
        The Strategy FActory class declares the factory method that is supposed to return an
@@ -31,20 +28,17 @@ class Creator(ABC):
         print('Loading Strategy')
 
 
-# STRATEGY DECISION TREE
-class ConcreteCreator(Creator):
+class StrategyFactory(Creator):
 
     def __init__(self, parameter):
-        # dont want errors if the parameter is not yet created
+
         self.par = parameter
         self.high = parameter['high']
         self.low = parameter['low']
         self.volume = None
-        self.vp = None
-        if parameter['rolling_v_10'] != None:
-            self.rolling_v_10 = parameter['rolling_v_10']
-        else:
-            self.rolling_v_10 = False
+        self.vp = parameter['vp']
+        self.rolling_v_10 =  parameter['rolling_v_10']
+
 
     def factory_method(self):
         '''TREE'''
@@ -52,10 +46,16 @@ class ConcreteCreator(Creator):
         print('-- Welcome to the Factory --> Evaluating Parameters...\n')
         logging.info('-- Welcome to the Factory --> Evaluating Parameters...\n')
 
+        # if self.open < self.now  by some threshold
+        # then we can narrow it down to ragingbull, slowbull
+
+        # if self.open > self. current by some threshold
+        # then call hibernation, grizzly, slowbear maybe some stagnant strategy can replace the current hiberantion
+
         if self.rolling_v_10 != False and self.rolling_v_10 > .6:
             return RagingBull(self.high)
         else:
-            return DoNothing(self.high)
+            return Hibernation(self.high)
 
     def run_factory(self):
 
@@ -66,7 +66,6 @@ class ConcreteCreator(Creator):
         return strategy
 
 
-# BASIC STRATEGY FRAMEWORK
 class Strategy(ABC):
     """
     Strategy interface declares all the operation that all the concrete products
@@ -75,14 +74,14 @@ class Strategy(ABC):
 
     @abstractmethod
     def build_strategy(self):
-        print('Enter logic for microstrategies here')
+        pass
 
     def operation(self, high):
         """
         framework functions that will always
         run no matter what strategy is being called
         """
-        logging.info('-- Checking Price Jump --')
+        logging.info('-- Starting Defualt Oerations -- \n-- Checking Price Jump --')
         QuantTrader(high, 'TSLA').price_jump(ref='pj')
 
     def run(self):
@@ -91,11 +90,15 @@ class Strategy(ABC):
         self.build_strategy()
         self.operation(high)
 
-    def log(self):
-        pass
-
 
 class RagingBull(Strategy):
+    """
+    Call this when there high volatility and the
+    opening price is lower then the current price
+
+    Idealistic price is moving up all day but volatility causes price to drop
+    we know its a bull day we buy on that drop call SDR
+    """
 
     def __init__(self, high):
         self.high = high
@@ -105,21 +108,70 @@ class RagingBull(Strategy):
 
     def build_strategy(self):
         print('Welcome to raging bull where we got chronic volatitlity')
-        QuantTrader(self.high, 'TSLA').climb_the_ladder(ref='ctlws')
+        QuantTrader(self.high, 'TSLA').stop_drop_and_roll(ref='sdrws')
 
 
-class DoNothing(Strategy):
+class Hibernation(Strategy):
+
+    """
+    Call this in a non volatile markey
+    """
+    def __init__(self, high):
+        self.high = high
+
+    def __str__(self):
+        return 'Hibernation'
+
+
+class SlowBull(Strategy):
+    """
+    the idea here is just to run the
+    volatility function watch for volatility spikes
+    eventaully we will get a small profit
+    """
+
+    def __init__(self, high, vp):
+        self.vp = vp
+        self.high = high
+
+    def __str__(self):
+        return 'SlowBull'
+
+    def build_strategy(self):
+
+        print('Welcome to the SlowBull, its a quiet day but we see overall growth')
+        logging.info('Welcome to the SlowBull, its a quiet day but we see overall growth')
+        QuantTrader(self.high,'TSLA').Volatility(self.vp)
+
+
+class GrizzlyBear(Strategy):
+    """
+      Call this when there high volatility and the
+      opening price is higher then the current price
+
+      Idealistic price is moving up down day but volatility causes price to raise
+      we know its a bear day we buy on that rise call ctl hoping for a turn around
+
+      should we call CTL? CTL has 30 minute overview
+      should CTL be made a defualt operations?
+      price jump would not be good here because
+      yes i think CTL is the best approach, the turning point.
+
+      i think it is important if the back logger cna preface this strategy
+      """
 
     def __init__(self, high):
         self.high = high
 
     def __str__(self):
-        return 'DoNothing'
+        return 'GrizzlyBear'
 
     def build_strategy(self):
-        logging.info('Running Default Functions')
-        return
+        print('Welcome to GrizzlyBear where we got chronic volatitlity, and falling fast')
+        QuantTrader(self.high, 'TSLA').climb_the_ladder(ref='ctlws')
 
+# -------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------
 
 # IGNORE THIS FOR NOW -- INTERESTING TAKE IN AN OBJECTS AND RUNS ITS FUNCTION
 def client_code(creator: Creator) -> creator.run():
@@ -130,7 +182,7 @@ def client_code(creator: Creator) -> creator.run():
     """
     # creator.build()
     creator.run()
-
+# IGNORE THIS FOR NOW -- INTERESTING TAKE IN AN OBJECTS AND RUNS ITS FUNCTION
 
 def get_strategy(parameters):
     """
@@ -138,9 +190,10 @@ def get_strategy(parameters):
     :param parameters: taken in parameters as a dictionary,
     :return: the strategy to be executed in strategy.run() in main.py
     """
-    return ConcreteCreator(parameters).run_factory()
+    return StrategyFactory(parameters).run_factory()
 
 
 if __name__ == "__main__":
+
     strategy = get_strategy(parameters=10)
     strategy.run()

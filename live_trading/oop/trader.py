@@ -60,9 +60,13 @@ class QuantTrader:
            # self.order_log('Order: %s \n %s' % (ref, order))
             return order
         elif ref == 'pj':
-            order = 'PJ Not supported yet'
+            order = symbol.buy(order_class='bracket', order_type='market',
+                               qty=qty, tif='day',
+                               profit=self.profit,
+                               stop_limit_price=self.price[-1] - (self.profit / 4),
+                               stop_price=self.price[-1] - (self.profit / 4.25)
+                               )
 
-          #  order_log('Order: %s \n %s' % (ref, order))
             return order
         elif ref == 'dt':
             order = symbol.buy(order_class='oto', order_type='market',
@@ -86,10 +90,13 @@ class QuantTrader:
          #   self.order_log('Order: %s \n %s' % (ref, order))
             return order
         elif ref == 'sdrws':
-            order = symbol.buy(order_class='oto', order_type='market',
-                               qty=qty, tif='gtc', profit=self.profit)
+            order = symbol.buy(order_class='bracket', order_type='market',
+                               qty=qty, tif='gtc',
+                               profit=self.profit,
+                               stop_limit_price=self.price[-1] - (self.profit / 4),
+                               stop_price=self.price[-1] - (self.profit / 4.25)
+                               )
 
-         #   order_log('Order: %s \n %s' % (ref, order))
             return order
         elif ref == 'pjws':
             order = 'PJ Not supported yet'
@@ -104,58 +111,6 @@ class QuantTrader:
             return order
 
 # Back log doesnt belong here
-    def back_logger(self):
-        """
-        gains insight to market after hours and the result can be manipulated to have market opening orders ready
-        over_night: returns:  list of candles from last night
-
-        *** doesnt work over weekend yet ***
-
-        """
-
-        import alpaca_trade_api as tradeapi
-        from keys import API__KEY, SECRET_KEY
-        from datetime import datetime, timedelta
-        time_interval = 'minute'
-
-        raw_past = timedelta(days=1)
-        raw_now = datetime.now()
-        yesterday = raw_now - raw_past
-        start = datetime.strftime(yesterday, '%Y-%m-%d')
-        final = datetime.strftime(raw_now, '%Y-%m-%d')
-        api = tradeapi.REST(API__KEY, SECRET_KEY, api_version='v2')
-        # for manually grabbing data and doing an analysis by hand or ipython file
-        data = api.polygon.historic_agg_v2(self.ticker, 1, time_interval, start, final)
-        spy_500 = api.polygon.historic_agg_v2('SPY',15,start,final,time_interval='minute')
-        print(spy_500)
-        for bar in data:
-
-            # catenuated the last few items from the time stamp
-            # to removve errors unsure what this information provides
-            _open = str(bar.open)
-            _high = str(bar.high)
-            _low = str(bar.low)
-            _close = str(bar.close)
-            _volume = str(int(bar.volume))
-
-            x = str(bar.timestamp)
-            hour = int(x[11:13])
-            day = int(x[8:10])
-            if day == int(start[-2:]):  # Checks if it is previous day or not
-                if hour >= 16:
-                    time = x[:19]
-                    self.over_night.append({
-                        'time': time,
-                        'high': _high,
-                    })
-            else:
-                if hour <= 7:
-                    time2 = x[:19]
-                    self.over_night.append({
-                        'time': time2,
-                        'high': _high,
-                    })
-        return self.over_night
 # own module
     def Back_log_volatility(self, data):
         '''Checks if over night data is a go for a market opening buy'''
