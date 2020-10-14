@@ -10,7 +10,7 @@ import analyzer
 import strategy_factory
 
 
-#fmt = '%(asctime), -- %(messge)s -- '
+#fmt = '%(level)s: -- %(message)s --'
 logging.basicConfig(level=logging.DEBUG,
                     filename='algorithm.log',
                     filemode='w',
@@ -36,26 +36,32 @@ def on_open(ws):
     :return:
     """
     print('Connecting')
-    stream = alpaca_stream.WebConnection(API_KEY)               # instantiate connection object w/apikey
-    stream._subscribe(ws,'AM.' + ticker)  #retrive subsciprition data to connection
+    stream = alpaca_stream.WebConnection(API_KEY)
+    #stream._subscribe(ws, type='AM.', channel=ticker)
+    stream._subscribe_w_spy(ws, channel=ticker)
     logging.info('Connection Successful')
     print('Connected\nWaiting for incoming data from API')
 
+    # 'Optional stream with spy 500 information ----' stream._subscribe_w_spy(ws, channel=ticker)
+
 def on_close(ws):
 
-    logging.warning('Re-establishing connection')
+    logging.warning('-- Re-establishing connection--')
+    logging.warning('-- Saving Metrics --')
+    dp.metrics()
     web_socket_start()
 
 def on_error(ws,error):
         pass
 
-def on_message(ws,message):
 
+def on_message(ws,message):
     logging.info('-------------------')
-    while dp.load(message) == True:
+    while dp.load(message, ticker) == True:
         dp.run()
         strategy = strategy_factory.get_strategy(dp._market_analyzer())
         strategy.run()
+        dp.metrics()
         break
 
 
@@ -64,8 +70,8 @@ if __name__ == '__main__':
 
     ticker = 'TSLA'
     socket = "wss://alpaca.socket.polygon.io/stocks"
-    dp = analyzer.Analyzer()        # intializing for data processing
-    web_socket_start()              # start connection
+    dp = analyzer.Analyzer()
+    web_socket_start()
 
 
 

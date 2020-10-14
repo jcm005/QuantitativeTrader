@@ -4,7 +4,9 @@ import websocket
 from datetime import datetime
 
 class WebConnection:
-
+    """
+    will insert in the future multiple channel susbription methods
+    """
     def __init__(self,api_key):
 
         self._api = api_key
@@ -12,7 +14,7 @@ class WebConnection:
                             filename='connect.log',
                             filemode='a')
 
-    def _subscribe(self,ws,channel=None):
+    def _subscribe(self, ws, type='AM.', channel=None):
         # THIS MAY NOT BE A PRIVATE FUNCTION ASK COLE
         """
 
@@ -22,25 +24,37 @@ class WebConnection:
         """
 
         if channel == None:
-            log.warning('Please supply a channel for more infomation please see polygon.io/websockets')
+            log.warning('Please supply a channel. for more information please see polygon.io/websockets')
+
         auth_data = {
             'action': 'auth',
             'params': self._api
         }
         channel_data = {
             'action': 'subscribe',
-            'params': channel
+            'params': type + channel
         }
-
         ws.send(json.dumps(auth_data))
         ws.send(json.dumps(channel_data))
 
-    def log(self,txt):
-        if txt == 'open':
-            log.info('Log on Success @ %s' % datetime.now())
-        elif txt == 'close':
-            log.warning('Connection lost @ %s' % datetime.now())
+    def _subscribe_w_spy(self, ws, channel=None):
+        """Allows for dual channel subscription for indicator comparison
+            will only support AM. type
+        """
 
+        if channel == None:
+            log.warning('Please supply a channel for more information please see polygon.io/websockets')
+
+        auth_data = {
+            'action': 'auth',
+            'params': self._api
+        }
+        channel_data = {
+            'action': 'subscribe',
+            'params':  'AM.SPY' + ',' + 'AM.' + channel,
+        }
+        ws.send(json.dumps(auth_data))
+        ws.send(json.dumps(channel_data))
 
 if __name__ == '__main__':
 

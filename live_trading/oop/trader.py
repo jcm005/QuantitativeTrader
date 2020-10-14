@@ -177,7 +177,7 @@ class QuantTrader:
             logging.info('Need more candles to work with')
             return False
 
-    def Volatility(self, volatility, ref, qty=1, parameter=1):
+    def Volatility(self, volatility, ref='sma1', qty=1, parameter=1):
         '''Given a parameter this function equates indicators for a volatility by
         influenced by the sma1 buy'''
         if volatility > parameter:

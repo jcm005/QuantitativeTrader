@@ -4,6 +4,8 @@ from datetime import datetime
 import logging
 import trader
 import json
+import spy
+import pandas as pd
 
 class Analyzer:
     """
@@ -47,15 +49,23 @@ class Analyzer:
         else:
             return False
 
-    def load(self,message):
+    def load(self,message, ticker):
 
         self.current_tick = json.loads(message)[0]
-
         if self.current_tick['ev'] == 'status':
             logging.info(self.current_tick)
             return False
         else:
-            return True
+            if self.current_tick['sym'] == ticker:
+                return True
+            elif self.current_tick['sym'] == 'SPY':
+                try:
+                    spy_500 = spy.Builder(self.current_tick)
+                    self.spy_500 = spy_500.run()
+                except:
+                    logging.warning('Insert Data Methodology for Spy_500')
+                return False
+
 
     def _candle_builder(self):
 
@@ -64,7 +74,6 @@ class Analyzer:
         self.hlmean = (self.current_tick['h'] + self.current_tick['l']) / 2
         self.v_factor = (self.volatility_data / self.hlmean) * 100
         self.ticker = self.current_tick['sym']
-
         self.minute_candlestick.append({
             'symbol': self.current_tick['sym'],
             'time': self.time,
@@ -74,26 +83,31 @@ class Analyzer:
             'close': self.current_tick['c'],
             'hlmean': round(self.hlmean, ndigits=2),
             'volume': self.current_tick['v'],
-            'today_volume': self.current_tick['av'],
-            'volatilty': round(self.volatility_data, ndigits=2),
+            'today_volume': self.current_tick['av']/1000000,
+            'volatility': round(self.volatility_data, ndigits=2),
             'v_factor': round(self.v_factor, ndigits=2),
 
         })
-       # logging.info(self.minute_candlestick[-1])
         print(self.minute_candlestick[-1])
 
     def _run_analytics(self):
         '''Processes candles and creates indicators and parameters'''
 
-        logging.info('-- Running Analytcis -- ')
-
-# maybe avoidable with decorator?
+        # ------------------------------ BASICS ----------------------------
         self._high = [i['high'] for i in self.minute_candlestick]
         self._low = [i['low'] for i in self.minute_candlestick]
         self._v_factor = [i['v_factor'] for i in self.minute_candlestick]
         self._time = self.minute_candlestick[-1]['time']
+        self._volume = self.minute_candlestick[-1]['volume']
+        self._today_volume = self.minute_candlestick[-1]['today_volume'] / 1000000
 
-# This is what is passed for the volatility buy
+        # ------------------------------ ROLLINGS ------------------------------
+        try:
+            self._market_open = self.current_tick['op']
+            logging.info('self.marketopen %s ' % self._market_open)
+        except:
+            logging.warning('Market is not open yet, market_open price is now yesterday closing price.')
+
         if len(self.minute_candlestick) > 1:
             self.vp = self.minute_candlestick[-1]['v_factor'] - self.minute_candlestick[-2]['v_factor']
             logging.info('-- Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s --'
@@ -101,7 +115,7 @@ class Analyzer:
             print('Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s '
                   % (self.time, self._high[-1], self._low[-1], self.vp, self._v_factor[-1]))
         else:
-            self.vp = False
+            self.vp = False     # vp is the volatility buying parameter
 
         if len(self.minute_candlestick) >= 10:
             self.rolling_v_10 = self.sma(self._v_factor, window=10)
@@ -118,7 +132,6 @@ class Analyzer:
                 logging.info('Rolling_high_30 %s' % self.rolling_high_30)
         else:
             self.rolling_high_30 = False
-
         return
 
     def _back_logger(self):
@@ -172,53 +185,70 @@ class Analyzer:
                         'time': time2,
                         'high': _high,
                     })
-        logging.info('Overnight data --> %s' % len(self.over_night))
+        logging.info('-- Overnight data --> %s --' % len(self.over_night))
+        self._market_open = float(self.over_night[-1]['high'])
         return self.over_night
 
+# -------------------------------------------
     def _market_analyzer(self):
-# try to get days open infromation for the allocation deciding whether its a bull or bearish day
-# try to get SPY data
-        p = {
 
+        self._percent_change = round(((self._high[-1] - self._market_open) / self._market_open) * 100, ndigits=3)
+        print('percent change %s' % self._percent_change)
+
+        p = {
             'high': self._high,
             'low': self._low,
+            'market_open': self._market_open,
             'rolling_v_10': self.rolling_v_10,
             'rolling_high_10': self.rolling_high_10,
             'rolling_high_30': self.rolling_high_30,
             'vp': self.vp,
             'over_night' : self.over_night
         }
-
+        p2 = {}
         return p
+# -------------------------------------------
 
     def run(self):
 
         self._candle_builder()
         self._run_analytics()
-
-        while self.count == 1:
-            logging.info('Running Back Logs')
+        while self.count == 1:  # Runs once
+            logging.info('-- Running Back Logs --')
             self._back_logger()
             self.count = 0
+            logging.info('-- Yesterday Closing Price: %s --' % self._market_open)
             break
-
         self._market_analyzer()
 
+
+# THIS MAY REPLACE MARKET ANALYZER
+    # WILL HAVE TO CHANGE SOME THINGS IN THE __INIT__ IN STRAT FACTORY.
 
     def metrics(self):
         '''Exporting data for offline analysis and eventually SQL dumping/warehousing'''
         import pandas as pd
-        columns = ['symbol', 'date', 'day', 'time', 'open', 'high', 'low', 'close', 'hlmean', 'volume',
+        columns = ['symbol',
+                   'date', 'day', 'time',
+                   'open',
+                   'high',
+                   'low',
+                   'close',
+                   'hlmean', 'volume',
                    'today_volume',
-                   'volatility', 'v_factor']
-        self.df = pd.read_csv('candle2.txt', names=columns)
+                   'volatility', 'v_factor',
+                   'pct_change']
 
-        for i in columns:
-            self.df[i] = self.data_frame_prep(self.df, parameter=i)
-        self.df.to_csv('metrics.txt', mode='w')
+        self.df = pd.DataFrame(self.minute_candlestick,columns=columns)
+        self.df['date'] = [i.split(',')[0] for i in self.df['time']]
+        self.df['day'] = [i.split(',')[1] for i in self.df['time']]
+        self.df['time'] = [i.split(',')[-1] for i in self.df['time']]
+        self.df['pct_change'] = self._percent_change
+        #self.df['corr_1'] = self.df.corr(self.df.volatility,self.df.volume)
+        print(self.df.head())
+        print(self.df.corr())
 
-        # save the data we can do correlation else where
-
+#obsolete i believe
     def data_frame_prep(self, data, parameter='data_name'):
         '''rewrites a dataframe to be easuly manipulatible and uploading fors sql'''
         __slots__ = ['day', 'time']

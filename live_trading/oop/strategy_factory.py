@@ -38,32 +38,51 @@ class StrategyFactory(Creator):
         self.volume = None
         self.vp = parameter['vp']
         self.rolling_v_10 =  parameter['rolling_v_10']
-
+        self.market_open = parameter['market_open']
+        self.over_night = parameter['over_night']
 
     def factory_method(self):
         '''TREE'''
 
-        print('-- Welcome to the Factory --> Evaluating Parameters...\n')
-        logging.info('-- Welcome to the Factory --> Evaluating Parameters...\n')
+        print('-- Evaluating Parameters... --')
+        logging.info('-- Evaluating Parameters... --')
 
-        # if self.open < self.now  by some threshold
-        # then we can narrow it down to ragingbull, slowbull
+        if self.market_open:
+            # -- Bull Case --
+            if (self.high[-1] - 10) > self.market_open:
 
-        # if self.open > self. current by some threshold
-        # then call hibernation, grizzly, slowbear maybe some stagnant strategy can replace the current hiberantion
+                if self.rolling_v_10 != False and self.rolling_v_10 > .5:
+                    return RagingBull(self.high)
+                else:
+                    return SlowBull(self.high,self.vp)
 
-        if self.rolling_v_10 != False and self.rolling_v_10 > .6:
-            return RagingBull(self.high)
+            # -- Bear Case --
+            elif (self.market_open - 10) > self.high[-1]:
+
+                if self.rolling_v_10 != False and self.rolling_v_10 > .5:
+                    return GrizzlyBear(self.high)
+                else:
+                    return Hibernation(self.high)
+
+            # -- Small discrepancy in price, check volatility
+            else:
+                if self.rolling_v_10 != False and self.rolling_v_10 >.5:
+                    return BuringEnds(self.high)
+                else:
+                    return Hibernation(self.high)
+
         else:
-            return Hibernation(self.high)
+            logging.warning('-- MARKET OPEN FAILURE --')
 
     def run_factory(self):
 
-        print('Factory Live')
         logging.info('-- Factory Live --')
         strategy = self.factory_method()
-        logging.info('Loading up the %s Strategy' % strategy)
-        return strategy
+        logging.info('-- Loading up the %s Strategy --' % strategy)
+        if strategy == None:
+            return Hibernation(self.high)
+        else:
+            return strategy
 
 
 class Strategy(ABC):
@@ -72,7 +91,7 @@ class Strategy(ABC):
     must implement
     """
 
-    @abstractmethod
+    @abstractmethod # has to be overwritten
     def build_strategy(self):
         pass
 
@@ -81,12 +100,13 @@ class Strategy(ABC):
         framework functions that will always
         run no matter what strategy is being called
         """
-        logging.info('-- Starting Defualt Oerations -- \n-- Checking Price Jump --')
+        logging.info('-- Starting Defualt Operations --')
+        logging.info('-- Checking Price Jump --')
         QuantTrader(high, 'TSLA').price_jump(ref='pj')
 
     def run(self):
         high = self.high
-        logging.info('Building Strategy')
+        logging.info('-- Building Strategy --')
         self.build_strategy()
         self.operation(high)
 
@@ -121,6 +141,9 @@ class Hibernation(Strategy):
 
     def __str__(self):
         return 'Hibernation'
+
+    def build_strategy(self):
+        pass
 
 
 class SlowBull(Strategy):
@@ -170,10 +193,21 @@ class GrizzlyBear(Strategy):
         print('Welcome to GrizzlyBear where we got chronic volatitlity, and falling fast')
         QuantTrader(self.high, 'TSLA').climb_the_ladder(ref='ctlws')
 
+
+class BurningEnds(Strategy):
+
+    def __init__(self, high):
+        self.high = high
+
+    def __str__(self):
+        return 'BurningEnds'
+
+    def build_strategy(self):
+        print('Welcome to BurningEnds where we got chronic volatitlity, with no significant price movement')
+
 # -------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------
 
-# IGNORE THIS FOR NOW -- INTERESTING TAKE IN AN OBJECTS AND RUNS ITS FUNCTION
 def client_code(creator: Creator) -> creator.run():
     """
     The client code workks with an instance of a concrete creator, albeit through
@@ -182,7 +216,6 @@ def client_code(creator: Creator) -> creator.run():
     """
     # creator.build()
     creator.run()
-# IGNORE THIS FOR NOW -- INTERESTING TAKE IN AN OBJECTS AND RUNS ITS FUNCTION
 
 def get_strategy(parameters):
     """

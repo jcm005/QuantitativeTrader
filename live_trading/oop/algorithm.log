@@ -4,12 +4,85 @@ INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successf
 INFO:root:-------------------
 INFO:root:{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
 INFO:root:-------------------
-INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
-WARNING:root:Re-establishing connection
-INFO:root:Connection Successful
-INFO:root:-------------------
-INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
-INFO:root:-------------------
-INFO:root:{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.SPY'}
 INFO:root:-------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Running Back Logs --
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.polygon.io:443
+DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/TSLA/range/1/minute/2020-10-13/2020-10-14?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/SPY/range/1/minute/2020-10-13/2020-10-14?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
+INFO:root:-- Overnight data --> 343 --
+INFO:root:-- Yesterday Closing Price: 448.68 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 12:34, High: 459.85, Low: 459.3605, Stream VP: -0.1, V/P Ratio: 0.11 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 12:35, High: 459.74, Low: 459.1, Stream VP: 0.03, V/P Ratio: 0.14 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:-------------------
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 12:36, High: 459.99, Low: 458.89, Stream VP: 0.1, V/P Ratio: 0.24 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 12:37, High: 460.15, Low: 459.13, Stream VP: -0.02, V/P Ratio: 0.22 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:-------------------
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 12:38, High: 459.5, Low: 458.61, Stream VP: -0.03, V/P Ratio: 0.19 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 12:39, High: 458.97, Low: 458.3, Stream VP: -0.04, V/P Ratio: 0.15 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------

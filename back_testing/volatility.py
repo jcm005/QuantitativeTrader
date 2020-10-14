@@ -24,7 +24,7 @@ rolling_30 = []
 
 asset = ['TSLA']
 time_interval = 'minute'
-start_date = '2020-08-31'
+start_date = '2020-10-12'
 time_delt = 1
 time_period = 1
 
@@ -115,6 +115,7 @@ def volatility(df,symbol):
     df['year'] = [year[:4] for year in df.timestamp]
     df['hour'] = [hour[-8:] for hour in df.timestamp]
     df['time'] = [time[:18] for time in df.timestamp]
+    df['volume'] = [x for x in df.volume]
     #df['corre'] = df.corr()['volume']['vola_coeff']
 
 
@@ -180,6 +181,14 @@ if __name__ =='__main__':
             'mode': 'lines',
             'type': 'scatter'
         }, 3, 1)
+        fig.append_trace({
+            'x': df['time'],
+            'y': df['volume'],
+            'text': df['time'],
+            'name': 'rolling_v_20',
+            'mode': 'lines',
+            'type': 'scatter'
+        }, 4, 1)
 
         #fig.append_trace({'x': df['time'],'y': df['volatility'],'name': 'High','mode': 'lines+markers','type': 'scatter'}, 4, 1)
 
