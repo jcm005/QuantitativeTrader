@@ -60,12 +60,11 @@ class Analyzer:
                 return True
             elif self.current_tick['sym'] == 'SPY':
                 try:
-                    spy_500 = spy.Builder(self.current_tick)
-                    self.spy_500 = spy_500.run()
+                    self.spy_500 = spy.Builder(self.current_tick).run()
+
                 except:
                     logging.warning('Insert Data Methodology for Spy_500')
                 return False
-
 
     def _candle_builder(self):
 
@@ -104,9 +103,10 @@ class Analyzer:
         # ------------------------------ ROLLINGS ------------------------------
         try:
             self._market_open = self.current_tick['op']
-            logging.info('self.marketopen %s ' % self._market_open)
+            logging.info('%s market open %s ' % (self.ticker, self._market_open))
         except:
             logging.warning('Market is not open yet, market_open price is now yesterday closing price.')
+            # we dont return market_open here yet because we will assign it in the back log
 
         if len(self.minute_candlestick) > 1:
             self.vp = self.minute_candlestick[-1]['v_factor'] - self.minute_candlestick[-2]['v_factor']
@@ -205,25 +205,22 @@ class Analyzer:
             'vp': self.vp,
             'over_night' : self.over_night
         }
-        p2 = {}
+        p2 = {} # soon to come
         return p
 # -------------------------------------------
 
     def run(self):
 
         self._candle_builder()
-        self._run_analytics()
+        self._run_analytics() # try market open here if none then we get it in backlog
+
         while self.count == 1:  # Runs once
             logging.info('-- Running Back Logs --')
             self._back_logger()
             self.count = 0
             logging.info('-- Yesterday Closing Price: %s --' % self._market_open)
             break
-        self._market_analyzer()
-
-
-# THIS MAY REPLACE MARKET ANALYZER
-    # WILL HAVE TO CHANGE SOME THINGS IN THE __INIT__ IN STRAT FACTORY.
+        self._market_analyzer() # will make pct_change with back log last price.
 
     def metrics(self):
         '''Exporting data for offline analysis and eventually SQL dumping/warehousing'''
@@ -244,11 +241,16 @@ class Analyzer:
         self.df['day'] = [i.split(',')[1] for i in self.df['time']]
         self.df['time'] = [i.split(',')[-1] for i in self.df['time']]
         self.df['pct_change'] = self._percent_change
-        #self.df['corr_1'] = self.df.corr(self.df.volatility,self.df.volume)
-        print(self.df.head())
-        print(self.df.corr())
+        self.df['SPY_500_PCT'] = self.spy_500['pct_change']
 
-#obsolete i believe
+        #self.df['corr_1'] = self.df.corr(self.df.volatility,self.df.volume)
+
+        # KEEP IN MIND CORRELATIONS WILL DROP AFTER 4 O CLOCK AFECTTING THE SUM
+        self.df_corr_1 = self.df[['volume','volatility']].corr()['volume']['volatility']
+        self.df_corr_2 = self.df[['pct_change','SPY_500_PCT']].corr()['pct_change']['SPY_500_PCT']
+        print(self.df_corr_1)
+        print(self.df_corr_2)
+
     def data_frame_prep(self, data, parameter='data_name'):
         '''rewrites a dataframe to be easuly manipulatible and uploading fors sql'''
         __slots__ = ['day', 'time']

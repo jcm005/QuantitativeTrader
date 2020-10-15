@@ -35,12 +35,12 @@ def on_open(ws):
     :param ws:
     :return:
     """
-    print('Connecting')
+    print('\nConnecting')
     stream = alpaca_stream.WebConnection(API_KEY)
     #stream._subscribe(ws, type='AM.', channel=ticker)
     stream._subscribe_w_spy(ws, channel=ticker)
     logging.info('Connection Successful')
-    print('Connected\nWaiting for incoming data from API')
+    print('Connected\nWaiting for incoming data from API\n')
 
     # 'Optional stream with spy 500 information ----' stream._subscribe_w_spy(ws, channel=ticker)
 
@@ -48,7 +48,7 @@ def on_close(ws):
 
     logging.warning('-- Re-establishing connection--')
     logging.warning('-- Saving Metrics --')
-    dp.metrics()
+
     web_socket_start()
 
 def on_error(ws,error):
@@ -61,10 +61,11 @@ def on_message(ws,message):
         dp.run()
         strategy = strategy_factory.get_strategy(dp._market_analyzer())
         strategy.run()
-        dp.metrics()
+        metrics = dp.metrics()
         break
 
-
+#  FRIST THING TOMORROW TRY TO TAKE OUT SELF.MARKET_ANALYZER OUT OF THE PROGRAM FROM DP.RUN() IT SHOULD RUN FLAWLESSLY
+#  THEN WORK ON METRICS
 
 if __name__ == '__main__':
 

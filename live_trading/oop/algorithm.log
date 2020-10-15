@@ -8,6 +8,8 @@ INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.SP
 INFO:root:-------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
 INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.793
+INFO:root:-------------------
 INFO:root:self.marketopen 449.78 
 INFO:root:-- Running Back Logs --
 DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.polygon.io:443
@@ -23,31 +25,10 @@ INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
 INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.807
 INFO:root:-------------------
 INFO:root:self.marketopen 449.78 
-INFO:root:-- Time: 2020-10-14, Wed, 12:34, High: 459.85, Low: 459.3605, Stream VP: -0.1, V/P Ratio: 0.11 --
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- Loading up the SlowBull Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:-------------------
-INFO:root:self.marketopen 449.78 
-INFO:root:-- Time: 2020-10-14, Wed, 12:35, High: 459.74, Low: 459.1, Stream VP: 0.03, V/P Ratio: 0.14 --
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:-------------------
-INFO:root:-------------------
-INFO:root:self.marketopen 449.78 
-INFO:root:-- Time: 2020-10-14, Wed, 12:36, High: 459.99, Low: 458.89, Stream VP: 0.1, V/P Ratio: 0.24 --
+INFO:root:-- Time: 2020-10-14, Wed, 16:41, High: 461.25, Low: 460.94, Stream VP: -0.07, V/P Ratio: 0.07 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- Loading up the SlowBull Strategy --
@@ -57,7 +38,7 @@ INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
 INFO:root:-------------------
 INFO:root:self.marketopen 449.78 
-INFO:root:-- Time: 2020-10-14, Wed, 12:37, High: 460.15, Low: 459.13, Stream VP: -0.02, V/P Ratio: 0.22 --
+INFO:root:-- Time: 2020-10-14, Wed, 16:42, High: 461, Low: 460.94, Stream VP: -0.06, V/P Ratio: 0.01 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- Loading up the SlowBull Strategy --
@@ -66,10 +47,125 @@ INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
 INFO:root:-------------------
-INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.81
 INFO:root:-------------------
 INFO:root:self.marketopen 449.78 
-INFO:root:-- Time: 2020-10-14, Wed, 12:38, High: 459.5, Low: 458.61, Stream VP: -0.03, V/P Ratio: 0.19 --
+INFO:root:-- Time: 2020-10-14, Wed, 16:43, High: 460.94, Low: 460.42, Stream VP: 0.1, V/P Ratio: 0.11 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.813
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:44, High: 460.75, Low: 460.31, Stream VP: -0.01, V/P Ratio: 0.1 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.807
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:45, High: 460.25, Low: 460.12, Stream VP: -0.07, V/P Ratio: 0.03 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.804
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:46, High: 460.13, Low: 459.9, Stream VP: 0.02, V/P Ratio: 0.05 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.81
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:47, High: 460, Low: 459.75, Stream VP: 0.0, V/P Ratio: 0.05 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.813
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:48, High: 460, Low: 460, Stream VP: -0.05, V/P Ratio: 0.0 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:49, High: 461.3, Low: 459.81, Stream VP: 0.32, V/P Ratio: 0.32 --
+INFO:root:Rolling_v_10 0.08800000000000001
+INFO:root:Rolling_high_10 460.692
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.787
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.798
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:50, High: 459.85, Low: 459.85, Stream VP: -0.32, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.074
+INFO:root:Rolling_high_10 460.547
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.804
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:51, High: 459.75, Low: 459.73, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.06699999999999999
+INFO:root:Rolling_high_10 460.39700000000005
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.81
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:52, High: 459.75, Low: 459.25, Stream VP: 0.11, V/P Ratio: 0.11 --
+INFO:root:Rolling_v_10 0.077
+INFO:root:Rolling_high_10 460.27200000000005
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- Loading up the Hibernation Strategy --
@@ -78,7 +174,9 @@ INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
 INFO:root:-------------------
 INFO:root:self.marketopen 449.78 
-INFO:root:-- Time: 2020-10-14, Wed, 12:39, High: 458.97, Low: 458.3, Stream VP: -0.04, V/P Ratio: 0.15 --
+INFO:root:-- Time: 2020-10-14, Wed, 16:53, High: 459.1, Low: 458.7, Stream VP: -0.02, V/P Ratio: 0.09 --
+INFO:root:Rolling_v_10 0.075
+INFO:root:Rolling_high_10 460.0880000000001
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- Loading up the Hibernation Strategy --
@@ -86,3 +184,1442 @@ INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
 INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.804
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:54, High: 458.7, Low: 458.28, Stream VP: 0.0, V/P Ratio: 0.09 --
+INFO:root:Rolling_v_10 0.074
+INFO:root:Rolling_high_10 459.883
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.804
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.795
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:55, High: 459, Low: 458.3, Stream VP: 0.06, V/P Ratio: 0.15 --
+INFO:root:Rolling_v_10 0.086
+INFO:root:Rolling_high_10 459.758
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:56, High: 459, Low: 459, Stream VP: -0.15, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.08099999999999999
+INFO:root:Rolling_high_10 459.645
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.801
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.815
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:57, High: 458.84, Low: 458.84, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.076
+INFO:root:Rolling_high_10 459.529
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.815
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:58, High: 459.49, Low: 458.9, Stream VP: 0.13, V/P Ratio: 0.13 --
+INFO:root:Rolling_v_10 0.089
+INFO:root:Rolling_high_10 459.47799999999995
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 16:59, High: 458.9, Low: 458.8998, Stream VP: -0.13, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.05700000000000001
+INFO:root:Rolling_high_10 459.23799999999994
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.813
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.81
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:00, High: 458.9, Low: 458.7, Stream VP: 0.04, V/P Ratio: 0.04 --
+INFO:root:Rolling_v_10 0.06100000000000001
+INFO:root:Rolling_high_10 459.1429999999999
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:01, High: 458.7, Low: 458.5498, Stream VP: -0.01, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.06400000000000002
+INFO:root:Rolling_high_10 459.038
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.79
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:02, High: 458.65, Low: 458.5, Stream VP: 0.0, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.055999999999999994
+INFO:root:Rolling_high_10 458.928
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.795
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.798
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:04, High: 458.51, Low: 458.25, Stream VP: 0.03, V/P Ratio: 0.06 --
+INFO:root:Rolling_v_10 0.053000000000000005
+INFO:root:Rolling_high_10 458.86899999999997
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.795
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:05, High: 458.51, Low: 458.2, Stream VP: 0.01, V/P Ratio: 0.07 --
+INFO:root:Rolling_v_10 0.051000000000000004
+INFO:root:Rolling_high_10 458.85
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.795
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:06, High: 458.7, Low: 458.53, Stream VP: -0.03, V/P Ratio: 0.04 --
+INFO:root:Rolling_v_10 0.04
+INFO:root:Rolling_high_10 458.82
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.795
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:07, High: 458.99, Low: 458.55, Stream VP: 0.06, V/P Ratio: 0.1 --
+INFO:root:Rolling_v_10 0.05
+INFO:root:Rolling_high_10 458.81899999999996
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:08, High: 458.94, Low: 458.8, Stream VP: -0.07, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.053000000000000005
+INFO:root:Rolling_high_10 458.8289999999999
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.793
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.787
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:09, High: 458.94, Low: 458.88, Stream VP: -0.02, V/P Ratio: 0.01 --
+INFO:root:Rolling_v_10 0.041
+INFO:root:Rolling_high_10 458.7739999999999
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.79
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:10, High: 458.94, Low: 458.94, Stream VP: -0.01, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.041
+INFO:root:Rolling_high_10 458.77799999999996
+INFO:root:Rolling_high_30 459.5693333333334
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:11, High: 459.27, Low: 459.27, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.037
+INFO:root:Rolling_high_10 458.81499999999994
+INFO:root:Rolling_high_30 459.5016666666668
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.804
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:12, High: 459.34, Low: 459.05, Stream VP: 0.06, V/P Ratio: 0.06 --
+INFO:root:Rolling_v_10 0.04000000000000001
+INFO:root:Rolling_high_10 458.8790000000001
+INFO:root:Rolling_high_30 459.4380000000001
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.79
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.79
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:13, High: 459.32, Low: 459.22, Stream VP: -0.04, V/P Ratio: 0.02 --
+INFO:root:Rolling_v_10 0.03900000000000001
+INFO:root:Rolling_high_10 458.946
+INFO:root:Rolling_high_30 459.3820000000001
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:14, High: 459.35, Low: 459.22, Stream VP: 0.01, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.036
+INFO:root:Rolling_high_10 459.03000000000003
+INFO:root:Rolling_high_30 459.32900000000006
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.79
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:15, High: 459.4, Low: 459.35, Stream VP: -0.02, V/P Ratio: 0.01 --
+INFO:root:Rolling_v_10 0.030000000000000006
+INFO:root:Rolling_high_10 459.119
+INFO:root:Rolling_high_30 459.28400000000005
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.787
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:16, High: 459.5, Low: 459.49, Stream VP: -0.01, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.026000000000000002
+INFO:root:Rolling_high_10 459.19899999999996
+INFO:root:Rolling_high_30 459.259
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:17, High: 459.5, Low: 459.5, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.016000000000000004
+INFO:root:Rolling_high_10 459.25
+INFO:root:Rolling_high_30 459.23800000000006
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.798
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.795
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:18, High: 459.96, Low: 459.96, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.013000000000000001
+INFO:root:Rolling_high_10 459.352
+INFO:root:Rolling_high_30 459.2366666666667
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:19, High: 459.7, Low: 459.7, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.012
+INFO:root:Rolling_high_10 459.428
+INFO:root:Rolling_high_30 459.2266666666667
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.795
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:20, High: 459.88, Low: 459.88, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.012
+INFO:root:Rolling_high_10 459.52200000000005
+INFO:root:Rolling_high_30 459.1793333333333
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.793
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:21, High: 459.85, Low: 459.85, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.012
+INFO:root:Rolling_high_10 459.58000000000004
+INFO:root:Rolling_high_30 459.1793333333333
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:22, High: 460.25, Low: 459.96, Stream VP: 0.06, V/P Ratio: 0.06 --
+INFO:root:Rolling_v_10 0.012
+INFO:root:Rolling_high_10 459.671
+INFO:root:Rolling_high_30 459.19599999999997
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:23, High: 460.2126, Low: 460.2126, Stream VP: -0.06, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.01
+INFO:root:Rolling_high_10 459.7602599999999
+INFO:root:Rolling_high_30 459.2114199999999
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:24, High: 460.12, Low: 460.12, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.006999999999999999
+INFO:root:Rolling_high_10 459.83725999999996
+INFO:root:Rolling_high_30 459.24541999999997
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.793
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:25, High: 460.23, Low: 460.1, Stream VP: 0.03, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.009
+INFO:root:Rolling_high_10 459.92026000000004
+INFO:root:Rolling_high_30 459.29641999999996
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.79
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:26, High: 460.15, Low: 459.9, Stream VP: 0.02, V/P Ratio: 0.05 --
+INFO:root:Rolling_v_10 0.014000000000000002
+INFO:root:Rolling_high_10 459.9852599999999
+INFO:root:Rolling_high_30 459.3347533333333
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+WARNING:root:-- Re-establishing connection--
+WARNING:root:-- Saving Metrics --
+INFO:root:Connection Successful
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.SPY'}
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:27, High: 459.88, Low: 459.88, Stream VP: -0.05, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.014000000000000002
+INFO:root:Rolling_high_10 460.02325999999994
+INFO:root:Rolling_high_30 459.3640866666666
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.773
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:28, High: 459.98, Low: 459.67, Stream VP: 0.07, V/P Ratio: 0.07 --
+INFO:root:Rolling_v_10 0.021
+INFO:root:Rolling_high_10 460.02526
+INFO:root:Rolling_high_30 459.4020866666666
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.784
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:29, High: 459.7, Low: 459.7, Stream VP: -0.07, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.021
+INFO:root:Rolling_high_10 460.02526000000006
+INFO:root:Rolling_high_30 459.4090866666666
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.784
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.773
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:30, High: 459.56, Low: 459.56, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.021
+INFO:root:Rolling_high_10 459.9932600000001
+INFO:root:Rolling_high_30 459.4310866666666
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:31, High: 460, Low: 460, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.021
+INFO:root:Rolling_high_10 460.00826000000006
+INFO:root:Rolling_high_30 459.4677533333333
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.778
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.813
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:32, High: 460.25, Low: 460, Stream VP: 0.05, V/P Ratio: 0.05 --
+INFO:root:Rolling_v_10 0.02
+INFO:root:Rolling_high_10 460.00825999999995
+INFO:root:Rolling_high_30 459.51941999999997
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.824
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:34, High: 460.2, Low: 460.18, Stream VP: -0.05, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.02
+INFO:root:Rolling_high_10 460.00699999999995
+INFO:root:Rolling_high_30 459.5710866666667
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:37, High: 460.19, Low: 460.05, Stream VP: 0.03, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.023
+INFO:root:Rolling_high_10 460.01399999999995
+INFO:root:Rolling_high_30 459.6270866666667
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.818
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:38, High: 460.5, Low: 460.19, Stream VP: 0.04, V/P Ratio: 0.07 --
+INFO:root:Rolling_v_10 0.027000000000000003
+INFO:root:Rolling_high_10 460.041
+INFO:root:Rolling_high_30 459.69342
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.824
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.818
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:39, High: 460.8801, Low: 460.61, Stream VP: -0.01, V/P Ratio: 0.06 --
+INFO:root:Rolling_v_10 0.028000000000000004
+INFO:root:Rolling_high_10 460.11401000000006
+INFO:root:Rolling_high_30 459.76609
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.818
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:40, High: 461.14, Low: 460.7, Stream VP: 0.04, V/P Ratio: 0.1 --
+INFO:root:Rolling_v_10 0.038
+INFO:root:Rolling_high_10 460.24001
+INFO:root:Rolling_high_30 459.8377566666667
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:41, High: 461.15, Low: 460.88, Stream VP: -0.04, V/P Ratio: 0.06 --
+INFO:root:Rolling_v_10 0.037000000000000005
+INFO:root:Rolling_high_10 460.35701
+INFO:root:Rolling_high_30 459.9114233333333
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.807
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:42, High: 461.3, Low: 461, Stream VP: 0.01, V/P Ratio: 0.07 --
+INFO:root:Rolling_v_10 0.044000000000000004
+INFO:root:Rolling_high_10 460.5170099999999
+INFO:root:Rolling_high_30 459.99008999999995
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:43, High: 461.1, Low: 460.65, Stream VP: 0.03, V/P Ratio: 0.1 --
+INFO:root:Rolling_v_10 0.054000000000000006
+INFO:root:Rolling_high_10 460.67101
+INFO:root:Rolling_high_30 460.06209000000007
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.81
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:44, High: 460.8, Low: 460.55, Stream VP: -0.05, V/P Ratio: 0.05 --
+INFO:root:Rolling_v_10 0.05900000000000001
+INFO:root:Rolling_high_10 460.75101000000006
+INFO:root:Rolling_high_30 460.11309
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.815
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.81
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:46, High: 460.75, Low: 460.75, Stream VP: -0.05, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.054000000000000006
+INFO:root:Rolling_high_10 460.80101
+INFO:root:Rolling_high_30 460.16009
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.81
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:48, High: 460.96, Low: 460.96, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.054000000000000006
+INFO:root:Rolling_high_10 460.87701000000004
+INFO:root:Rolling_high_30 460.2147566666666
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:49, High: 461.2, Low: 460.86, Stream VP: 0.07, V/P Ratio: 0.07 --
+INFO:root:Rolling_v_10 0.05800000000000001
+INFO:root:Rolling_high_10 460.97801
+INFO:root:Rolling_high_30 460.27642333333336
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.798
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:50, High: 460.8, Low: 460.75, Stream VP: -0.06, V/P Ratio: 0.01 --
+INFO:root:Rolling_v_10 0.052000000000000005
+INFO:root:Rolling_high_10 461.00801
+INFO:root:Rolling_high_30 460.32309
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:51, High: 460.75, Low: 460.75, Stream VP: -0.01, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.046
+INFO:root:Rolling_high_10 460.995
+INFO:root:Rolling_high_30 460.36475666666655
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:53, High: 460.82, Low: 460.8, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.036000000000000004
+INFO:root:Rolling_high_10 460.963
+INFO:root:Rolling_high_30 460.40875666666653
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.798
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:54, High: 461, Low: 460.9, Stream VP: 0.02, V/P Ratio: 0.02 --
+INFO:root:Rolling_v_10 0.03200000000000001
+INFO:root:Rolling_high_10 460.948
+INFO:root:Rolling_high_30 460.4434233333332
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.798
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:55, High: 460.91, Low: 460.9, Stream VP: -0.02, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.025000000000000005
+INFO:root:Rolling_high_10 460.909
+INFO:root:Rolling_high_30 460.4837566666666
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:56, High: 461.19, Low: 461.05, Stream VP: 0.03, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.018
+INFO:root:Rolling_high_10 460.918
+INFO:root:Rolling_high_30 460.5274233333333
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.798
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:57, High: 461.19, Low: 461.05, Stream VP: 0.0, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.016
+INFO:root:Rolling_high_10 460.957
+INFO:root:Rolling_high_30 460.57208999999995
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.798
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:58, High: 461.1899, Low: 461, Stream VP: 0.01, V/P Ratio: 0.04 --
+INFO:root:Rolling_v_10 0.02
+INFO:root:Rolling_high_10 461.00099
+INFO:root:Rolling_high_30 460.60341999999997
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.81
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 17:59, High: 461.19, Low: 461.02, Stream VP: 0.0, V/P Ratio: 0.04 --
+INFO:root:Rolling_v_10 0.024
+INFO:root:Rolling_high_10 461.02398999999997
+INFO:root:Rolling_high_30 460.636
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:00, High: 461, Low: 460.99, Stream VP: -0.04, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.017
+INFO:root:Rolling_high_10 461.00399
+INFO:root:Rolling_high_30 460.6653333333333
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.798
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.767
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:02, High: 461.04, Low: 461, Stream VP: 0.01, V/P Ratio: 0.01 --
+INFO:root:Rolling_v_10 0.017
+INFO:root:Rolling_high_10 461.02799000000005
+INFO:root:Rolling_high_30 460.6923333333334
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.73
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:03, High: 461.51, Low: 461, Stream VP: 0.1, V/P Ratio: 0.11 --
+INFO:root:Rolling_v_10 0.028000000000000004
+INFO:root:Rolling_high_10 461.10399000000007
+INFO:root:Rolling_high_30 460.73766666666677
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.733
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.713
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:04, High: 461.66, Low: 461.53, Stream VP: -0.08, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.031000000000000007
+INFO:root:Rolling_high_10 461.18799
+INFO:root:Rolling_high_30 460.7970000000001
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:05, High: 461.94, Low: 461.75, Stream VP: 0.01, V/P Ratio: 0.04 --
+INFO:root:Rolling_v_10 0.033
+INFO:root:Rolling_high_10 461.28198999999995
+INFO:root:Rolling_high_30 460.8623333333334
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.727
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:06, High: 461.7, Low: 461.5, Stream VP: 0.0, V/P Ratio: 0.04 --
+INFO:root:Rolling_v_10 0.037
+INFO:root:Rolling_high_10 461.36098999999996
+INFO:root:Rolling_high_30 460.9290000000001
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.71
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:07, High: 461.69, Low: 461.69, Stream VP: -0.04, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.033999999999999996
+INFO:root:Rolling_high_10 461.41098999999997
+INFO:root:Rolling_high_30 461.0000000000001
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:08, High: 461.65, Low: 461.55, Stream VP: 0.02, V/P Ratio: 0.02 --
+INFO:root:Rolling_v_10 0.033
+INFO:root:Rolling_high_10 461.45698999999996
+INFO:root:Rolling_high_30 461.0550000000001
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.727
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.733
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:10, High: 461.5, Low: 461.49, Stream VP: -0.02, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.029000000000000005
+INFO:root:Rolling_high_10 461.488
+INFO:root:Rolling_high_30 461.09666666666675
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.733
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:11, High: 461.7, Low: 461.5, Stream VP: 0.04, V/P Ratio: 0.04 --
+INFO:root:Rolling_v_10 0.028999999999999998
+INFO:root:Rolling_high_10 461.53900000000004
+INFO:root:Rolling_high_30 461.14666666666676
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.67
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:12, High: 461.7, Low: 461.6, Stream VP: -0.02, V/P Ratio: 0.02 --
+INFO:root:Rolling_v_10 0.031
+INFO:root:Rolling_high_10 461.60900000000004
+INFO:root:Rolling_high_30 461.1970000000001
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.644
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:13, High: 461.6, Low: 461.5, Stream VP: 0.0, V/P Ratio: 0.02 --
+INFO:root:Rolling_v_10 0.03200000000000001
+INFO:root:Rolling_high_10 461.6650000000001
+INFO:root:Rolling_high_30 461.2336666666668
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.627
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:14, High: 461.78, Low: 461.05, Stream VP: 0.14, V/P Ratio: 0.16 --
+INFO:root:Rolling_v_10 0.037
+INFO:root:Rolling_high_10 461.6919999999999
+INFO:root:Rolling_high_30 461.2636633333334
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.63
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.647
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:16, High: 461.23, Low: 461.21, Stream VP: -0.16, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.033999999999999996
+INFO:root:Rolling_high_10 461.649
+INFO:root:Rolling_high_30 461.26666333333344
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.641
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:17, High: 461.5, Low: 461.21, Stream VP: 0.06, V/P Ratio: 0.06 --
+INFO:root:Rolling_v_10 0.036000000000000004
+INFO:root:Rolling_high_10 461.6049999999999
+INFO:root:Rolling_high_30 461.27833000000004
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.653
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.644
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:19, High: 461.5, Low: 461.5, Stream VP: -0.06, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.032
+INFO:root:Rolling_high_10 461.58500000000004
+INFO:root:Rolling_high_30 461.2849966666668
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.644
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.644
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:20, High: 461.29, Low: 461.19, Stream VP: 0.02, V/P Ratio: 0.02 --
+INFO:root:Rolling_v_10 0.034
+INFO:root:Rolling_high_10 461.54499999999996
+INFO:root:Rolling_high_30 461.29133000000013
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:21, High: 461.21, Low: 461.07, Stream VP: 0.01, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.034999999999999996
+INFO:root:Rolling_high_10 461.50100000000003
+INFO:root:Rolling_high_30 461.30499666666674
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.633
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:22, High: 461.07, Low: 461.05, Stream VP: -0.03, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.034999999999999996
+INFO:root:Rolling_high_10 461.45799999999997
+INFO:root:Rolling_high_30 461.31566333333336
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.636
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:23, High: 461.49, Low: 461.3, Stream VP: 0.04, V/P Ratio: 0.04 --
+INFO:root:Rolling_v_10 0.035
+INFO:root:Rolling_high_10 461.437
+INFO:root:Rolling_high_30 461.33333000000005
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:24, High: 461.39, Low: 461.3, Stream VP: -0.02, V/P Ratio: 0.02 --
+INFO:root:Rolling_v_10 0.035
+INFO:root:Rolling_high_10 461.40600000000006
+INFO:root:Rolling_high_30 461.3396633333333
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:25, High: 461.36, Low: 461.23, Stream VP: 0.01, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.036
+INFO:root:Rolling_high_10 461.38200000000006
+INFO:root:Rolling_high_30 461.35833
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.667
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:26, High: 461.3, Low: 461.2, Stream VP: -0.01, V/P Ratio: 0.02 --
+INFO:root:Rolling_v_10 0.022
+INFO:root:Rolling_high_10 461.334
+INFO:root:Rolling_high_30 461.3766633333333
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.67
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:27, High: 461.3, Low: 461, Stream VP: 0.05, V/P Ratio: 0.07 --
+INFO:root:Rolling_v_10 0.028999999999999998
+INFO:root:Rolling_high_10 461.34100000000007
+INFO:root:Rolling_high_30 461.3926633333332
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.67
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:28, High: 461, Low: 460.94, Stream VP: -0.06, V/P Ratio: 0.01 --
+INFO:root:Rolling_v_10 0.024
+INFO:root:Rolling_high_10 461.291
+INFO:root:Rolling_high_30 461.3926633333332
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.661
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:29, High: 461.1, Low: 460.9, Stream VP: 0.03, V/P Ratio: 0.04 --
+INFO:root:Rolling_v_10 0.028000000000000004
+INFO:root:Rolling_high_10 461.25100000000003
+INFO:root:Rolling_high_30 461.39899666666656
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.63
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:31, High: 461.05, Low: 461.05, Stream VP: -0.04, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.026000000000000002
+INFO:root:Rolling_high_10 461.22700000000003
+INFO:root:Rolling_high_30 461.3943299999999
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.67
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:32, High: 461.16, Low: 461.16, Stream VP: 0.0, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.023
+INFO:root:Rolling_high_10 461.22200000000004
+INFO:root:Rolling_high_30 461.3933299999999
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.667
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:34, High: 461.1, Low: 460.8, Stream VP: 0.07, V/P Ratio: 0.07 --
+INFO:root:Rolling_v_10 0.030000000000000006
+INFO:root:Rolling_high_10 461.2250000000001
+INFO:root:Rolling_high_30 461.3903333333332
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.679
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:35, High: 461.08, Low: 460.5, Stream VP: 0.06, V/P Ratio: 0.13 --
+INFO:root:Rolling_v_10 0.039
+INFO:root:Rolling_high_10 461.184
+INFO:root:Rolling_high_30 461.3866666666666
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.716
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:36, High: 460.55, Low: 460.05, Stream VP: -0.02, V/P Ratio: 0.11 --
+INFO:root:Rolling_v_10 0.048
+INFO:root:Rolling_high_10 461.1
+INFO:root:Rolling_high_30 461.3716666666666
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.727
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.784
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:37, High: 460.3, Low: 460.3, Stream VP: -0.11, V/P Ratio: 0.0 --
+INFO:root:Rolling_v_10 0.045
+INFO:root:Rolling_high_10 460.99399999999997
+INFO:root:Rolling_high_30 461.34699999999987
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.813
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:38, High: 460.3, Low: 460.1, Stream VP: 0.04, V/P Ratio: 0.04 --
+INFO:root:Rolling_v_10 0.047
+INFO:root:Rolling_high_10 460.89400000000006
+INFO:root:Rolling_high_30 461.3066666666665
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:self.marketopen 449.78 
+INFO:root:-- Time: 2020-10-14, Wed, 18:39, High: 460.5, Low: 460.38, Stream VP: -0.01, V/P Ratio: 0.03 --
+INFO:root:Rolling_v_10 0.043
+INFO:root:Rolling_high_10 460.814
+INFO:root:Rolling_high_30 461.26799999999986
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.807
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.758
+WARNING:root:-- Re-establishing connection--
+WARNING:root:-- Saving Metrics --
+INFO:root:Connection Successful
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.SPY'}
+INFO:root:-------------------
+INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}

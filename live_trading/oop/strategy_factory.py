@@ -74,12 +74,14 @@ class StrategyFactory(Creator):
         else:
             logging.warning('-- MARKET OPEN FAILURE --')
 
-    def run_factory(self):
+    def load_factory(self):
 
         logging.info('-- Factory Live --')
         strategy = self.factory_method()
         logging.info('-- Loading up the %s Strategy --' % strategy)
+
         if strategy == None:
+            logging.warning('-- Strategy is of NoneType --')
             return Hibernation(self.high)
         else:
             return strategy
@@ -223,7 +225,7 @@ def get_strategy(parameters):
     :param parameters: taken in parameters as a dictionary,
     :return: the strategy to be executed in strategy.run() in main.py
     """
-    return StrategyFactory(parameters).run_factory()
+    return StrategyFactory(parameters).load_factory()
 
 
 if __name__ == "__main__":
