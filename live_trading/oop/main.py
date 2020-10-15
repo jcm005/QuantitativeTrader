@@ -8,6 +8,7 @@ import logging
 import json
 import analyzer
 import strategy_factory
+import notification_sys
 
 
 #fmt = '%(level)s: -- %(message)s --'
@@ -42,6 +43,7 @@ def on_open(ws):
     logging.info('Connection Successful')
     print('Connected\nWaiting for incoming data from API\n')
 
+
     # 'Optional stream with spy 500 information ----' stream._subscribe_w_spy(ws, channel=ticker)
 
 def on_close(ws):
@@ -52,20 +54,20 @@ def on_close(ws):
     web_socket_start()
 
 def on_error(ws,error):
-        pass
+
+    notification_sys.create_message(error)
 
 
 def on_message(ws,message):
     logging.info('-------------------')
     while dp.load(message, ticker) == True:
+
         dp.run()
         strategy = strategy_factory.get_strategy(dp._market_analyzer())
         strategy.run()
         metrics = dp.metrics()
         break
 
-#  FRIST THING TOMORROW TRY TO TAKE OUT SELF.MARKET_ANALYZER OUT OF THE PROGRAM FROM DP.RUN() IT SHOULD RUN FLAWLESSLY
-#  THEN WORK ON METRICS
 
 if __name__ == '__main__':
 

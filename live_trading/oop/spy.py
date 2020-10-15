@@ -12,7 +12,6 @@ class Builder:
 
         try:
             self._market_open = self.current_tick['op']
-            logging.info('Spy Market_open %s ' % self._market_open)
         except:
             self._market_open = False
 
@@ -25,10 +24,10 @@ class Builder:
             'close': self.current_tick['c'],
             'market_open':self._market_open
         })
+        print(self.candles[-1])
+
 
     def run(self):
-
-       # unpacking the candle/json style dictionary
 
         self._high = [i['high'] for i in self.candles]
         self._low = [i['low'] for i in self.candles]
@@ -39,7 +38,8 @@ class Builder:
             logging.info('SPY_500: PCT_CHANGE: %s' % self.percent_change)
             print('SPY_500: PCT_CHANGE %s' % self.percent_change)
         else:
-            print('Market Open missing')
+            self.percent_change = False
+            print('Market Is Not Open Yet')
 
         p = {
             'Time': self.time,
@@ -47,8 +47,8 @@ class Builder:
             'low':self._low,
             'market_open':self._market_open,
             'pct_change': self.percent_change,
-
         }
+
         return p
 
 

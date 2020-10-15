@@ -63,7 +63,8 @@ class Analyzer:
                     self.spy_500 = spy.Builder(self.current_tick).run()
 
                 except:
-                    logging.warning('Insert Data Methodology for Spy_500')
+                    print(self.spy_500)
+                    logging.warning('Spy Builder Failure/Insert Methodology for SPY_500')
                 return False
 
     def _candle_builder(self):
@@ -103,7 +104,6 @@ class Analyzer:
         # ------------------------------ ROLLINGS ------------------------------
         try:
             self._market_open = self.current_tick['op']
-            logging.info('%s market open %s ' % (self.ticker, self._market_open))
         except:
             logging.warning('Market is not open yet, market_open price is now yesterday closing price.')
             # we dont return market_open here yet because we will assign it in the back log
@@ -219,8 +219,9 @@ class Analyzer:
             self._back_logger()
             self.count = 0
             logging.info('-- Yesterday Closing Price: %s --' % self._market_open)
+            logging.info('%s market open %s ' % (self.ticker, self._market_open))
             break
-        self._market_analyzer() # will make pct_change with back log last price.
+       # self._market_analyzer() # will make pct_change with back log last price.
 
     def metrics(self):
         '''Exporting data for offline analysis and eventually SQL dumping/warehousing'''
@@ -241,15 +242,22 @@ class Analyzer:
         self.df['day'] = [i.split(',')[1] for i in self.df['time']]
         self.df['time'] = [i.split(',')[-1] for i in self.df['time']]
         self.df['pct_change'] = self._percent_change
-        self.df['SPY_500_PCT'] = self.spy_500['pct_change']
+
+        try:
+            print('ticker: ',self._percent_change, 'spy_500: ', self.spy_500['pct_change'])
+            self.df['SPY_500_PCT'] = self.spy_500['pct_change']
+            self.df_corr_2 = self.df[['pct_change', 'SPY_500_PCT']].corr()['pct_change']['SPY_500_PCT']
+
+
+
+        except:
+            print('Waiting for SPY_500 market open data')
 
         #self.df['corr_1'] = self.df.corr(self.df.volatility,self.df.volume)
 
         # KEEP IN MIND CORRELATIONS WILL DROP AFTER 4 O CLOCK AFECTTING THE SUM
         self.df_corr_1 = self.df[['volume','volatility']].corr()['volume']['volatility']
-        self.df_corr_2 = self.df[['pct_change','SPY_500_PCT']].corr()['pct_change']['SPY_500_PCT']
-        print(self.df_corr_1)
-        print(self.df_corr_2)
+        print('Volume:Volatility Correlation: %s' % self.df_corr_1)
 
     def data_frame_prep(self, data, parameter='data_name'):
         '''rewrites a dataframe to be easuly manipulatible and uploading fors sql'''

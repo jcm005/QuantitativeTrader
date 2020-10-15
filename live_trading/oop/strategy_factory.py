@@ -5,6 +5,7 @@ import access as a
 from trader import QuantTrader
 from analyzer import Analyzer
 import logging
+import notification_sys
 
 
 
@@ -44,22 +45,26 @@ class StrategyFactory(Creator):
     def factory_method(self):
         '''TREE'''
 
-        print('-- Evaluating Parameters... --')
+        print('-- In Factory Method... --')
         logging.info('-- Evaluating Parameters... --')
 
         if self.market_open:
             # -- Bull Case --
-            if (self.high[-1] - 10) > self.market_open:
-
+            if (self.high[-1] - 5) > self.market_open:
+                logging.info('-- The Market is Bull --')
                 if self.rolling_v_10 != False and self.rolling_v_10 > .5:
+                    notification_sys.create_message('The Market Is Bullish,volatile; Rolling_v_10: %s' % self.rolling_v_10)
+                    notification_sys.create_message('OpenPrice: %s, CurrentPrice: %s' % (self.market_open, self.high[-1]))
                     return RagingBull(self.high)
                 else:
                     return SlowBull(self.high,self.vp)
 
             # -- Bear Case --
-            elif (self.market_open - 10) > self.high[-1]:
-
+            elif (self.market_open - 5) > self.high[-1]:
+                logging.info('-- The market is Bear --')
                 if self.rolling_v_10 != False and self.rolling_v_10 > .5:
+                    notification_sys.create_message('The Market Is Bearish,volatile; Rolling_v_10: %s' % self.rolling_v_10)
+                    notification_sys.create_message('OpenPrice: %s, CurrentPrice: %s' % (self.market_open, self.high[-1]))
                     return GrizzlyBear(self.high)
                 else:
                     return Hibernation(self.high)

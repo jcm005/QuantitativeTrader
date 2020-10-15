@@ -4,6 +4,7 @@ import pytz
 from datetime import datetime
 import analyzer
 import logging
+import notification_sys
 
 #  QUANT TRADER WILL PROBABLY BE USING THE LOGGING FUNCTOIN FROM STREAM TRADER
 #   AS WELL AS INDICATORS MADE BY STREAM TRADER
@@ -150,6 +151,8 @@ class QuantTrader:
             if (self.price[-1] - self.sma_30) > (threshold):
                 logging.info('Climbing The Ladder Satisfied')
                 order = self.buy_order(ref, qty)
+                notification_sys.create_message('Sending Order %s' % order)
+
                 return order
             else:
                 logging.info('CTL Lower than Threshold')
@@ -169,6 +172,8 @@ class QuantTrader:
             if (self.sma_10 - self.price[-1]) > (threshold):
                 logging.info('Stop Drop and Roll Satisfied')
                 order = self.buy_order(ref, qty)
+
+                notification_sys.create_message('Sending Order %s' % order)
                 return order
             else:
                 logging.info('SDR Lower Than Threshold')
@@ -183,6 +188,8 @@ class QuantTrader:
         if volatility > parameter:
             logging.info('Volatility Order Satisfied')
             order = self.buy_order(ref, qty)
+            notification_sys.create_message('Sending Order %s' % order)
+
             return order
         else:
             pass
@@ -194,6 +201,8 @@ class QuantTrader:
             if (self.price[-1] - self.sma_30) > (self.price[-1] * .02):
                 logging.info('Price Jump Satisfied')
                 order = self.buy_order(ref, qty)
+
+                notification_sys.create_message('Sending Order %s' % order)
                 return order
             else:
                 logging.info('Price Jump Not Satisfied')
