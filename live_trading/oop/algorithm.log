@@ -57,3 +57,14 @@ INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
 INFO:root:-------------------
 INFO:root:SPY_500: PCT_CHANGE: -0.719
+INFO:root:-------------------
+INFO:root:-- Time: 2020-10-16, Fri, 16:46, High: 440, Low: 439.81, Stream VP: 0.01, V/P Ratio: 0.04 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- The market is Bear --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:-------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.714
