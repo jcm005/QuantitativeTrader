@@ -28,6 +28,10 @@ class Analyzer:
         self.est = timezone('US/Eastern')
         self.count = 1
 
+        self.spy_percent_change_history = []
+        self.ticker_percent_change_history = []
+
+
         logging.basicConfig(level=logging.DEBUG,
                             filename='algorithm.log',
                             filemode='w',
@@ -50,8 +54,20 @@ class Analyzer:
             return False
 
     def load(self,message, ticker):
+        """
+        This method checks what type of
+        incoming message is recieved then redirects it in teh right direction
+
+
+
+        :param message:
+        :param ticker:
+        :return:
+        """
 
         self.current_tick = json.loads(message)[0]
+
+        # Checks status message is it a data point or a message and whichs stock is it for.
         if self.current_tick['ev'] == 'status':
             logging.info(self.current_tick)
             return False
@@ -59,9 +75,11 @@ class Analyzer:
             if self.current_tick['sym'] == ticker:
                 return True
             elif self.current_tick['sym'] == 'SPY':
+
+
                 try:
                     self.spy_500 = spy.Builder(self.current_tick).run()
-
+                    self.spy_percent_change_history.append(self.spy_500['pct_change'])
                 except:
                     print(self.spy_500)
                     logging.warning('Spy Builder Failure/Insert Methodology for SPY_500')
@@ -88,7 +106,7 @@ class Analyzer:
             'v_factor': round(self.v_factor, ndigits=2),
 
         })
-        print(self.minute_candlestick[-1])
+      # print(self.minute_candlestick[-1])
 
     def _run_analytics(self):
         '''Processes candles and creates indicators and parameters'''
@@ -104,8 +122,12 @@ class Analyzer:
         # ------------------------------ ROLLINGS ------------------------------
         try:
             self._market_open = self.current_tick['op']
+            self._percent_change = round(((self._high[-1] - self._market_open) / self._market_open) * 100, ndigits=3)
+            self.ticker_percent_change_history.append(self._percent_change)
         except:
+            self._market_open = False
             logging.warning('Market is not open yet, market_open price is now yesterday closing price.')
+            # trying to remove dependency of back log
             # we dont return market_open here yet because we will assign it in the back log
 
         if len(self.minute_candlestick) > 1:
@@ -115,7 +137,7 @@ class Analyzer:
             print('Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s '
                   % (self.time, self._high[-1], self._low[-1], self.vp, self._v_factor[-1]))
         else:
-            self.vp = False     # vp is the volatility buying parameter
+            self.vp = False
 
         if len(self.minute_candlestick) >= 10:
             self.rolling_v_10 = self.sma(self._v_factor, window=10)
@@ -148,6 +170,8 @@ class Analyzer:
         from datetime import datetime, timedelta
         time_interval = 'minute'
         self.over_night = []
+
+        logging.info('-- Back Logging --')
 
         raw_past = timedelta(days=1)
         raw_now = datetime.now()
@@ -186,14 +210,11 @@ class Analyzer:
                         'high': _high,
                     })
         logging.info('-- Overnight data --> %s --' % len(self.over_night))
-        self._market_open = float(self.over_night[-1]['high'])
+        #self._market_open = float(self.over_night[-1]['high'])
         return self.over_night
 
 # -------------------------------------------
     def _market_analyzer(self):
-
-        self._percent_change = round(((self._high[-1] - self._market_open) / self._market_open) * 100, ndigits=3)
-        print('percent change %s' % self._percent_change)
 
         p = {
             'high': self._high,
@@ -203,24 +224,33 @@ class Analyzer:
             'rolling_high_10': self.rolling_high_10,
             'rolling_high_30': self.rolling_high_30,
             'vp': self.vp,
-            'over_night' : self.over_night
+            'over_night' : self.over_night,
+            'ticker_pct_change': self.ticker_percent_change_history,
         }
-        p2 = {} # soon to come
+
+        try:
+            self.spy_pct =  self.spy_percent_change_history
+            p['spy_market_pct_change'] = self.spy_pct
+        except:
+            pass
+
+
         return p
 # -------------------------------------------
 
     def run(self):
 
+        # if this runs first expect a missing SPY data not ready yet message.
         self._candle_builder()
         self._run_analytics() # try market open here if none then we get it in backlog
 
         while self.count == 1:  # Runs once
-            logging.info('-- Running Back Logs --')
             self._back_logger()
             self.count = 0
             logging.info('-- Yesterday Closing Price: %s --' % self._market_open)
             logging.info('%s market open %s ' % (self.ticker, self._market_open))
             break
+
        # self._market_analyzer() # will make pct_change with back log last price.
 
     def metrics(self):
@@ -235,29 +265,37 @@ class Analyzer:
                    'hlmean', 'volume',
                    'today_volume',
                    'volatility', 'v_factor',
-                   'pct_change']
+                   'pct_change',
+                   ]
 
         self.df = pd.DataFrame(self.minute_candlestick,columns=columns)
         self.df['date'] = [i.split(',')[0] for i in self.df['time']]
         self.df['day'] = [i.split(',')[1] for i in self.df['time']]
         self.df['time'] = [i.split(',')[-1] for i in self.df['time']]
-        self.df['pct_change'] = self._percent_change
+        self.df['pct_change'] = [i for i in self.ticker_percent_change_history]
 
-        try:
-            print('ticker: ',self._percent_change, 'spy_500: ', self.spy_500['pct_change'])
-            self.df['SPY_500_PCT'] = self.spy_500['pct_change']
-            self.df_corr_2 = self.df[['pct_change', 'SPY_500_PCT']].corr()['pct_change']['SPY_500_PCT']
+        tpl = len(self.ticker_percent_change_history)
+        spl = len(self.spy_percent_change_history)
 
+        if tpl > 1 and spl > 1:
+            print('-- Ticker: ',self.ticker_percent_change_history[-1], ' Spy_500: ', self.spy_percent_change_history[-1])
+            print(len(self.ticker_percent_change_history), len(self.spy_percent_change_history))
+            self.df_corr_1 = self.df[['volume', 'volatility']].corr()['volume']['volatility']
+            self.df['volume:volatility'] = self.df_corr_1
+            print('-- (Volume :: Volatility) --> Correlation: %s' % self.df_corr_1)
+        else:
+            print('-- Ticker: ', self.ticker_percent_change_history[-1])
+            pass
+        if spl == tpl and spl > 1:
 
+            self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
+            self.df_corr_2 = self.df[['pct_change', 'spy_pct_change']].corr()['pct_change']['spy_pct_change']
+            print('pct_correlation',self.df_corr_2)
+            self.df['pct_corr'] = self.df_corr_2
 
-        except:
-            print('Waiting for SPY_500 market open data')
+            print(self.df.head(10))
 
-        #self.df['corr_1'] = self.df.corr(self.df.volatility,self.df.volume)
-
-        # KEEP IN MIND CORRELATIONS WILL DROP AFTER 4 O CLOCK AFECTTING THE SUM
-        self.df_corr_1 = self.df[['volume','volatility']].corr()['volume']['volatility']
-        print('Volume:Volatility Correlation: %s' % self.df_corr_1)
+        return self.df
 
     def data_frame_prep(self, data, parameter='data_name'):
         '''rewrites a dataframe to be easuly manipulatible and uploading fors sql'''

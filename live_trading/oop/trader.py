@@ -5,6 +5,7 @@ from datetime import datetime
 import analyzer
 import logging
 import notification_sys
+import pandas as pd
 
 #  QUANT TRADER WILL PROBABLY BE USING THE LOGGING FUNCTOIN FROM STREAM TRADER
 #   AS WELL AS INDICATORS MADE BY STREAM TRADER
@@ -156,6 +157,7 @@ class QuantTrader:
                 return order
             else:
                 logging.info('CTL Lower than Threshold')
+
                 return False
 
         else:
@@ -253,9 +255,18 @@ class StreamTools:
 
         return right_now
 
+    @classmethod
+    def export_pd(cls, data=pd.DataFrame()):
+
+        date = cls.localize_time(StreamTools())
+        data.to_csv(path='metrics.txt' + date )
+
 
 if __name__ == '__main__':
 
 
-    qt = QuantTrader('TSLA')
-    qt.back_logger()
+    #qt = QuantTrader('TSLA')
+    #qt.back_logger()
+
+    data = pd.DataFrame()
+    StreamTools.export_pd(data)

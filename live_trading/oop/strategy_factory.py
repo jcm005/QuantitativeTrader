@@ -45,7 +45,7 @@ class StrategyFactory(Creator):
     def factory_method(self):
         '''TREE'''
 
-        print('-- In Factory Method... --')
+       # print('-- In Factory Method... --')
         logging.info('-- Evaluating Parameters... --')
 
         if self.market_open:

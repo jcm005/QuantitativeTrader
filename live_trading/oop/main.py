@@ -9,6 +9,8 @@ import json
 import analyzer
 import strategy_factory
 import notification_sys
+import pandas as pd
+
 
 
 #fmt = '%(level)s: -- %(message)s --'
@@ -50,22 +52,29 @@ def on_close(ws):
 
     logging.warning('-- Re-establishing connection--')
     logging.warning('-- Saving Metrics --')
+    notification_sys.create_message('System disconnected Reconnecting')
+    try:
+        metrics = dp.metrics()
+        metrics.to_csv('metrics.txt', mode='w')
+    except:
+        logging.info('Metrics lost')
+        notification_sys.create_message('Metrics lost')
 
     web_socket_start()
 
 def on_error(ws,error):
-
-    notification_sys.create_message(error)
-
+    pass
 
 def on_message(ws,message):
     logging.info('-------------------')
+    print('-------------------')
     while dp.load(message, ticker) == True:
 
         dp.run()
         strategy = strategy_factory.get_strategy(dp._market_analyzer())
         strategy.run()
         metrics = dp.metrics()
+
         break
 
 

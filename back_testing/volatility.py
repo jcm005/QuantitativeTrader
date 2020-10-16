@@ -24,7 +24,7 @@ rolling_30 = []
 
 asset = ['TSLA']
 time_interval = 'minute'
-start_date = '2020-10-12'
+start_date = '2020-10-15'
 time_delt = 1
 time_period = 1
 
@@ -116,6 +116,7 @@ def volatility(df,symbol):
     df['hour'] = [hour[-8:] for hour in df.timestamp]
     df['time'] = [time[:18] for time in df.timestamp]
     df['volume'] = [x for x in df.volume]
+
     #df['corre'] = df.corr()['volume']['vola_coeff']
 
 
