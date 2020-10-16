@@ -22,4 +22,5 @@ class_attempt.py
 Analyzer.ipynb
 pyvenv.cfg
 Data/
-liv_trading/oop/twilio_key.py
+live_trading/oop/twilio_key.py
+live_trading/old/streamkeys2.py
