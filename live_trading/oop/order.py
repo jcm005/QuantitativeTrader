@@ -4,19 +4,23 @@ import access as a
 from datetime import datetime
 import pytz
 from pytz import timezone
+import stream_tools
 
 class Order:
     # PLEASE CHECK THE BASE URLS ARE DIRECTED TO THE RIGHT SPOT FOR PAPER OR REAL LIFE TRADING
     def __init__(self,symbol,current_price,paper=False):
+
         self.symbol = symbol
         self.price = current_price
+        self.paper = paper
         # --------------------------
-        if paper == False:
+        if self.paper == False:
             self.BASE_URL =  "https://api.alpaca.markets"
-            self.ORDER_URL = f'{self.BASE_URL}/v2/orders'
         else:
             self.BASE_URL = "https://paper-api.alpaca.markets"
-            self.ORDER_URL = f'{self.BASE_URL}/v2/orders'
+        print(self.BASE_URL)
+        self.ORDER_URL = f'{self.BASE_URL}/v2/orders'
+
         # --------------------------
 
     def byte_decoder(self,need_decoded):
@@ -24,6 +28,7 @@ class Order:
         DECODES THE OUTPUT OF A REQUEST.GET()
          FUNCTION RETURNING A DICTIONARY
          """
+
         decoded = need_decoded.content.decode('utf-8')
         dumper = json.loads(decoded)
         return dumper
@@ -34,13 +39,14 @@ class Order:
         :param output:
         :return:
         """
+
         orders_list = []
         try:
             if raw_order['code']:
                 return raw_order
         except:
             pass
-        print(raw_order)
+
         if raw_order['legs'] != None:
             limit_order = raw_order['legs'][0]
             try:
@@ -48,6 +54,7 @@ class Order:
                 print(stop_order)
             except:
                 pass
+
         try:
             if output == 'simple':
                 simple = {
@@ -99,18 +106,6 @@ class Order:
         except KeyError:
             return 'Order Failed'
 
-# maybe replace this with streamtools
-    def check_time(self):
-        tz =timezone('US/Eastern')
-        right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tz)
-        right_now = datetime.strftime(right_now, '%H:%M:%S')
-        if int(right_now[0:2]) >= 16 or int(right_now[0:2]) <= 9:
-            extended_hours = True
-        else:
-            extended_hours = False
-        print(f'Extended hours are: {extended_hours}')
-        return extended_hours
-
     def place_order(self,order):
         '''
         SENDS ORDER TO ALPACA FOR PROCESSING
@@ -118,7 +113,14 @@ class Order:
         :return: DICTIONARY THAT WAS OUTPUTTED FROM BYTE DECODED,
         ALONG WITH A BOOLEAN BASED ON SUCCESSION STATUS
         '''
-        HEADERS = {'APCA-API-KEY-ID': API_KEY, 'APCA-API-SECRET-KEY': SECRET__KEY}
+        if self.paper == False:
+            HEADERS = {'APCA-API-KEY-ID': API_KEY, 'APCA-API-SECRET-KEY': SECRET__KEY}
+        else:
+            HEADERS = {'APCA-API-KEY-ID': PAPER_KEY, 'APCA-API-SECRET-KEY': SECRET__KEY}
+
+        print(HEADERS)
+
+
         order_sent = self.byte_decoder(
             requests.post(
                 self.ORDER_URL,
@@ -126,7 +128,6 @@ class Order:
                 headers=HEADERS
             ))
         status = self.order_details(order_sent,'simple')
-        self.log(self.candle,f'Order Status is: {status}\n')
         return status
 
     def buy(self,
@@ -134,7 +135,6 @@ class Order:
             qty,
             tif,
             profit=0,
-
             ref=None,
             order_class=None,
             stop_price=None,
@@ -142,15 +142,16 @@ class Order:
             stop_limit_price=None,
             extended_hours=None):
 
+        extended_hours = stream_tools.StreamTools.check_time()
 
-        # CHECK TIME FIRST
-        extended_hours = self.check_time()
-        print(extended_hours)
+        # replace this with share info in access.py
+        try:
+            account = a.get_account()
+            buying_power = account['buying_power'].split('.')[0]
+            equity = account['equity'].split('.')[0]
+        except KeyError as e:
+            print(e)
 
-        #  CHECK WHETHER OR NOT WE HAVE ENOUGH MONEY
-        account = a.get_account()
-        buying_power = account['buying_power'].split('.')[0]
-        equity = account['equity'].split('.')[0]
         try:
             if buying_power < equity:
                 return 'Buying Power is less then equity will not buy for conservative reasons\n'
@@ -186,7 +187,6 @@ class Order:
         # OTO IS GOOD FOR A BUY AND A TAKE PROFIT WITH NO SELLING POINT FOR SAFETY
 
         if order_class == 'oto':
-
             order['order_class'] = 'oto'
             order['take_profit'] = {
                 'limit_price': self.price + profit
@@ -206,18 +206,7 @@ class Order:
         elif order_type == 'limit':
             order['limit_price'] = limit_price
 
-
-
-        self.log(self.candle,f'Attempting To Buy With Ref Number: {ref} @ {self.price}\n')
         buy = self.place_order(order) # returns a simplified order detail status
-
-        #if self.profit != 0:
-         #   time.sleep(5)
-          #  self.log(self.candle,f'Attempting To Sell With Ref Number: {ref} @ {self.price + self.profit}\n')
-          #  sell = self.sell()
-          #  return buy,sell
-        #else:
-
         return buy
 
     def sell(self):
@@ -233,3 +222,11 @@ class Order:
         sell = self.place_order(sell_order)
         return sell
 
+
+if __name__ == '__main__':
+
+    current_price = 420
+    #o = Order('TSLA',current_price,paper=True)
+    #o.place_order()
+
+    pass

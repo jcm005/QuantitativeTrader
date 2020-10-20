@@ -1,5 +1,6 @@
 import trader
 import logging
+import stream_tools
 
 
 class Builder:
@@ -8,7 +9,11 @@ class Builder:
 
         self.current_tick = message
         self.candles = []
-        self.time = trader.StreamTools.time_converter(self.current_tick['e'])
+
+        try:
+            self.time = stream_tools.StreamTools.time_converter(self.current_tick['e'])
+        except:
+            logging.warning('StreamTool Instantiation Error, Check For Proper Import')
 
         try:
             self._market_open = self.current_tick['op']
@@ -24,7 +29,6 @@ class Builder:
             'close': self.current_tick['c'],
             'market_open':self._market_open
         })
-
 
     def run(self):
         """

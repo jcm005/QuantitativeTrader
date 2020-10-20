@@ -49,7 +49,9 @@ class StrategyFactory(Creator):
         logging.info('-- Evaluating Parameters... --')
 
         if self.market_open:
+
             # -- Bull Case --
+
             if (self.high[-1] - 5) > self.market_open:
                 logging.info('-- The Market is Bull --')
                 if self.rolling_v_10 != False and self.rolling_v_10 > .5:
@@ -60,6 +62,7 @@ class StrategyFactory(Creator):
                     return SlowBull(self.high,self.vp)
 
             # -- Bear Case --
+
             elif (self.market_open - 5) > self.high[-1]:
                 logging.info('-- The market is Bear --')
                 if self.rolling_v_10 != False and self.rolling_v_10 > .5:
@@ -70,6 +73,7 @@ class StrategyFactory(Creator):
                     return Hibernation(self.high)
 
             # -- Small discrepancy in price, check volatility
+
             else:
                 if self.rolling_v_10 != False and self.rolling_v_10 >.5:
                     return BuringEnds(self.high)
@@ -77,7 +81,7 @@ class StrategyFactory(Creator):
                     return Hibernation(self.high)
 
         else:
-            logging.warning('-- MARKET OPEN FAILURE --')
+            logging.warning('-- MARKET OPEN FAILURE StratFactory line 80 --')
 
     def load_factory(self):
 

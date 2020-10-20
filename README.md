@@ -1,6 +1,6 @@
 # Quantitative Trader
 
-Welcome, in this Repo, you can fabricate, test, and produce customized trading algorithms and deploy them live in AWS.
+Welcome, in this Repo, you can fabricate, test, and produce customized trading algorithms and deploy them live in AWS, with real time sms notifications through twilio!
 
 
 ![](readme%20photos/330.png)  ![](readme%20photos/aws.png) 
@@ -8,7 +8,7 @@ Welcome, in this Repo, you can fabricate, test, and produce customized trading a
  
  ![](readme%20photos/Alpaca_Logo_yellow.jpg)
 
-In this repo you will find a 2 main frameworks!
+Within you will find 2 main frameworks!
 
 The first framework is the back testing framework, based on backtraders' infrastructure (https://www.backtrader.com) designed to back test your algorithms.
 A critical component to any good algorithm is being able to back test but not over-fit the algorithm. This framework allows for the implementation of your algorithm within historical data based on past 
@@ -20,6 +20,11 @@ real time stock availability.
 
 The live_trading framework allows for the implementation of your developed algorithm into real-time, by leveraging alpaca.markets commission free api.
 Instantiating an AWS Ec-2, allows for the scheduling of algorithms using crontab to execute every weekday.
+
+
+![](readme%20photos/logging.png)
+
+live_trading also integrates twilio's sms notification api, and can be used to update the user with real time notifications!
 
 
 ![](readme%20photos/logging.png)

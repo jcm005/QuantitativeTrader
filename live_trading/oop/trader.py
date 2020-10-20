@@ -7,11 +7,6 @@ import logging
 import notification_sys
 import pandas as pd
 
-#  QUANT TRADER WILL PROBABLY BE USING THE LOGGING FUNCTOIN FROM STREAM TRADER
-#   AS WELL AS INDICATORS MADE BY STREAM TRADER
-#    SO IN FUNCTION IN QT MAYBE MAKE AN INSTANCE -- NO THIS WONT WORK ALL INFO WILL BE SEPERATE
-# INSTEAD LETS MAKE QUNAT TRADER A CHILD CLASS WITH DECORATOR OR CLASS
-# METHODS OR STATIC METHODS FURTHER RESEARCH NEEDED TO BE DON HERE
 
 class QuantTrader:
 
@@ -19,33 +14,39 @@ class QuantTrader:
         """
         price has to be an iterable type
         """
-       # Analzyer.__init__(self)
-        self.price = price
+
+        self.high = price[-1]      # value
+        self.price = price          # list
         self.ticker = ticker
         self.over_night = []
         self.sma = analyzer.Analyzer.sma
-        try:
-            if 3000 > self.price >= 1000:
-                self.profit = 100
-            elif 1000 > self.price > 850:
-                self.profit = 80
-            elif 850 >= self.price > 600:
-                self.profit = 40
-            elif 600 >= self.price > 400:
-                self.profit = 30
-            elif 400 >= self.price:
-                self.profit = 20
 
-        except:
-            pass
+# --------------------------------------------------
+        # OrderFactory
+        if 3000 > self.high >= 1000:
+            self.profit = 100
+        elif 1000 > self.high > 850:
+            self.profit = 80
+        elif 850 >= self.high > 600:
+            self.profit = 40
+        elif 600 >= self.high > 400:
+            self.profit = 30
+        elif 400 >= self.high:
+            self.profit = 20
+# --------------------------------------------------
 
     def buy_order(self, ref, qty):
-        symbol = Order(self.ticker, self.price[-1])
+
+        symbol = Order(self.ticker, self.high)
+
         if ref == 'sma1':
             order = symbol.buy(order_type='market', order_class='oto',
                                qty=qty, tif='gtc', profit=self.profit)
            # self.order_log('Order: %s \n %s' % (ref, order))
+
+            notification_sys.create_message(order)
             return order
+
         elif ref == 'ctl':
             order = symbol.buy(order_class='bracket', order_type='market',
                                qty=qty, tif='gtc',
@@ -55,12 +56,14 @@ class QuantTrader:
                                )
            # self.order_log('Order: %s \n %s' % (ref, order))
             return order
+
         elif ref == 'sdr':
             order = symbol.buy(order_class='oto', order_type='market',
                                qty=qty, tif='gtc', profit=self.profit)
 
            # self.order_log('Order: %s \n %s' % (ref, order))
             return order
+
         elif ref == 'pj':
             order = symbol.buy(order_class='bracket', order_type='market',
                                qty=qty, tif='day',
@@ -70,6 +73,7 @@ class QuantTrader:
                                )
 
             return order
+
         elif ref == 'dt':
             order = symbol.buy(order_class='oto', order_type='market',
                                qty=1, tif='gtc', profit=profit,
@@ -77,11 +81,13 @@ class QuantTrader:
                                stop_price=_high - (profit / 2.25))
          #   self.order_log('Order: %s \n %s' % (ref, order))
             return order
+
         elif ref == 'sma1ws':
             order = symbol.buy(order_type='market', order_class='oto',
                                qty=qty, tif='gtc', profit=self.profit)
           #  self.order_log('Order: %s \n %s' % (ref, order))
             return order
+
         elif ref == 'ctlws':
             order = symbol.buy(order_class='bracket', order_type='market',
                                qty=qty, tif='gtc',
@@ -91,6 +97,7 @@ class QuantTrader:
                                )
          #   self.order_log('Order: %s \n %s' % (ref, order))
             return order
+
         elif ref == 'sdrws':
             order = symbol.buy(order_class='bracket', order_type='market',
                                qty=qty, tif='gtc',
@@ -100,10 +107,12 @@ class QuantTrader:
                                )
 
             return order
+
         elif ref == 'pjws':
             order = 'PJ Not supported yet'
          #   self.order_log('Order: %s \n %s' % (ref, order))
             return order
+
         elif ref == 'dtws':
             order = symbol.buy(order_class='oto', order_type='market',
                                qty=1, tif='gtc', profit=profit,
@@ -112,27 +121,8 @@ class QuantTrader:
         #    self.order_log('Order: %s \n %s' % (ref, order))
             return order
 
-# Back log doesnt belong here
-# own module
-    def Back_log_volatility(self, data):
-        '''Checks if over night data is a go for a market opening buy'''
-        if len(data) > 2:
-            last_night = (data[0])
-            this_morn = (data[-1])
-            if int(this_morn['high'].split('.')[0]) - int(last_night['high'].split('.')[0]) >= 25:
-                symbol = Order(self.ticker, self.price[-1])
-                order_back_log = symbol.buy(order_type='market', order_class='oto',
-                                            qty=1, tif='gtc', profit=self.profit)
-                return order_back_log
-            else:
-                return False
 
-    # ----------------------------------------------------------------------
-    #  ___ Strategies___
-
-    # all these strategies just need to be called once called if the following
-    # conditions are met they will execute a buy with appropiate logging
-    # ----------------------------------------------------------------------
+# --------------------------------------------------
 
     def climb_the_ladder(self, ref, qty=1):
 
@@ -221,52 +211,13 @@ class QuantTrader:
             logging.info('Double Trouble Not Satisfied')
             return
 
-
-class StreamTools:
-    """
-    Tools for the stream
-    """
-
-    @classmethod
-    def time_converter(cls, some_time):
-        """
-        Convert date time object to a string
-        """
-        newtime = datetime.fromtimestamp(some_time / 1000)
-        newtimes = newtime.strftime('%Y-%m-%d, %a, %H:%M')
-        return newtimes
-
-    @classmethod
-    def check_time(cls):
-        tz =timezone('US/Eastern')
-        right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tz)
-        right_now = datetime.strftime(right_now, '%H:%M:%S')
-        if int(right_now[0:2]) >= 16 or int(right_now[0:2]) <= 9:
-            extended_hours = True
-        else:
-            extended_hours = False
-        print(f'Extended hours are: {extended_hours}')
-        return extended_hours
-
-    def localize_time(self):
-        """Default set to eastern time, when runnign on a virtual machine timezone may be off"""
-        right_now = pytz.utc.localize(datetime.utcnow()).astimezone(self.est)
-        right_now = datetime.strftime(right_now, '%H:%M:%S')
-
-        return right_now
-
-    @classmethod
-    def export_pd(cls, data=pd.DataFrame()):
-
-        date = cls.localize_time(StreamTools())
-        data.to_csv(path='metrics.txt' + date )
-
+# --------------------------------------------------
 
 if __name__ == '__main__':
 
+   # high = [i for i in range(400,440)]
+    #qt = QuantTrader(high, 'TSLA')
+    #qt.buy_order(ref='sma1',qty=1)
 
-    #qt = QuantTrader('TSLA')
-    #qt.back_logger()
+    pass
 
-    data = pd.DataFrame()
-    StreamTools.export_pd(data)

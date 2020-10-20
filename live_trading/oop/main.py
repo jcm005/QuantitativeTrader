@@ -3,7 +3,6 @@ import ssl
 import dateutil.parser
 import alpaca_stream
 from streamkeys import *
-import trader
 import logging
 import json
 import analyzer
@@ -43,19 +42,19 @@ def on_open(ws):
     #stream._subscribe(ws, type='AM.', channel=ticker)
     stream._subscribe_w_spy(ws, channel=ticker)
     logging.info('Connection Successful')
+    #notification_sys.create_message('Logging On')
     print('Connected\nWaiting for incoming data from API\n')
-
-
-    # 'Optional stream with spy 500 information ----' stream._subscribe_w_spy(ws, channel=ticker)
 
 def on_close(ws):
 
     logging.warning('-- Re-establishing connection--')
     logging.warning('-- Saving Metrics --')
     notification_sys.create_message('System disconnected Reconnecting')
+
     try:
         metrics = dp.metrics()
         metrics.to_csv('metrics.txt', mode='w')
+        notification_sys.create_message('Metrics Saved')
     except:
         logging.info('Metrics lost')
         notification_sys.create_message('Metrics lost')
@@ -66,15 +65,15 @@ def on_error(ws,error):
     pass
 
 def on_message(ws,message):
-    logging.info('-------------------')
-    print('-------------------')
-    while dp.load(message, ticker) == True:
 
+    logging.info('--------------------------------------')
+    print('-------------------')
+
+    while dp.load(message, ticker) == True:
         dp.run()
         strategy = strategy_factory.get_strategy(dp._market_analyzer())
         strategy.run()
         metrics = dp.metrics()
-
         break
 
 

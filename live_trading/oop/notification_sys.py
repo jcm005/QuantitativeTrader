@@ -1,5 +1,12 @@
+import logging
 from twilio.rest import Client
-from twilio_key import *
+
+
+try:
+    from twilio_key import *
+except:
+    logging.warning('No twilio key are found, see documentation at github')
+
 
 account_sid = ACCOUNT_SID
 auth_token = AUTH_TOKEN

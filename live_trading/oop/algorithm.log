@@ -1,20 +1,22 @@
 INFO:root:Connection Successful
-INFO:root:-------------------
+INFO:root:--------------------------------------
 INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
-INFO:root:-------------------
+INFO:root:--------------------------------------
 INFO:root:{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
-INFO:root:-------------------
+INFO:root:--------------------------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.SPY'}
-INFO:root:-------------------
+INFO:root:--------------------------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
-INFO:root:-------------------
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.0
+INFO:root:--------------------------------------
 INFO:root:-- Back Logging --
 DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.polygon.io:443
-DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/TSLA/range/1/minute/2020-10-15/2020-10-16?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
-DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/SPY/range/1/minute/2020-10-15/2020-10-16?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
-INFO:root:-- Overnight data --> 286 --
-INFO:root:-- Yesterday Closing Price: 454.48 --
-INFO:root:TSLA market open 454.48 
+DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/TSLA/range/1/minute/2020-10-19/2020-10-20?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/SPY/range/1/minute/2020-10-19/2020-10-20?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
+INFO:root:-- Overnight data --> 303 --
+INFO:root:-- Pre market Price: 434.01 --
+INFO:root:-- TSLA market open 431.75 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -22,10 +24,8 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.739
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:43, High: 439.83, Low: 439.6698, Stream VP: -0.01, V/P Ratio: 0.04 --
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:15, High: 423.37, Low: 422.73, Stream VP: 0.04, V/P Ratio: 0.15 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -33,10 +33,12 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.731
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:44, High: 439.87, Low: 439.6, Stream VP: 0.02, V/P Ratio: 0.06 --
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.009
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.048
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:16, High: 423.3, Low: 422.8, Stream VP: -0.03, V/P Ratio: 0.12 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -44,10 +46,8 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.728
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:45, High: 439.84, Low: 439.72, Stream VP: -0.03, V/P Ratio: 0.03 --
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:17, High: 423.48, Low: 423.1305, Stream VP: -0.04, V/P Ratio: 0.08 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -55,10 +55,10 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.719
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:46, High: 440, Low: 439.81, Stream VP: 0.01, V/P Ratio: 0.04 --
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.047
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:18, High: 424.15, Low: 422.64, Stream VP: 0.28, V/P Ratio: 0.36 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -66,10 +66,12 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.714
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:47, High: 440.15, Low: 439.95, Stream VP: 0.01, V/P Ratio: 0.05 --
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.055
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.029
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:19, High: 422.9353, Low: 422.2517, Stream VP: -0.2, V/P Ratio: 0.16 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -77,10 +79,10 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.716
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:48, High: 440.15, Low: 439.95, Stream VP: 0.0, V/P Ratio: 0.05 --
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.038
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:20, High: 422.75, Low: 422.25, Stream VP: -0.04, V/P Ratio: 0.12 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -88,12 +90,10 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.479
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.742
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:49, High: 440.07, Low: 439.68, Stream VP: 0.04, V/P Ratio: 0.09 --
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.031
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:21, High: 422.88, Low: 421.89, Stream VP: 0.11, V/P Ratio: 0.23 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -101,10 +101,10 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.736
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:51, High: 440, Low: 439.73, Stream VP: -0.03, V/P Ratio: 0.06 --
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.017
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:22, High: 422.52, Low: 422.0381, Stream VP: -0.12, V/P Ratio: 0.11 --
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -112,12 +112,10 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.748
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:52, High: 439.98, Low: 439.9, Stream VP: -0.04, V/P Ratio: 0.02 --
-INFO:root:Rolling_v_10 0.049
-INFO:root:Rolling_high_10 439.96400000000006
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:23, High: 422.8, Low: 422.16, Stream VP: 0.04, V/P Ratio: 0.15 --
+INFO:root:Rolling_v_10 0.159
+INFO:root:Rolling_high_10 423.12952000000007
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -125,14 +123,12 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.745
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.719
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:53, High: 439.96, Low: 439.88, Stream VP: 0.0, V/P Ratio: 0.02 --
-INFO:root:Rolling_v_10 0.046
-INFO:root:Rolling_high_10 439.985
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.023
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:24, High: 423.47, Low: 422.735, Stream VP: 0.02, V/P Ratio: 0.17 --
+INFO:root:Rolling_v_10 0.16499999999999998
+INFO:root:Rolling_high_10 423.16553000000005
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -140,10 +136,12 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:54, High: 440, Low: 439.91, Stream VP: 0.0, V/P Ratio: 0.02 --
-INFO:root:Rolling_v_10 0.044
-INFO:root:Rolling_high_10 440.00200000000007
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.06
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:25, High: 423.535, Low: 423.0801, Stream VP: -0.06, V/P Ratio: 0.11 --
+INFO:root:Rolling_v_10 0.161
+INFO:root:Rolling_high_10 423.18203000000005
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -151,12 +149,14 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.728
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:55, High: 439.98, Low: 439.67, Stream VP: 0.05, V/P Ratio: 0.07 --
-INFO:root:Rolling_v_10 0.045000000000000005
-INFO:root:Rolling_high_10 440.01300000000003
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.143
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.131
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:26, High: 423.62, Low: 423.1, Stream VP: 0.01, V/P Ratio: 0.12 --
+INFO:root:Rolling_v_10 0.16099999999999998
+INFO:root:Rolling_high_10 423.21403
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -164,12 +164,10 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.734
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:56, High: 439.93, Low: 439.87, Stream VP: -0.06, V/P Ratio: 0.01 --
-INFO:root:Rolling_v_10 0.04300000000000001
-INFO:root:Rolling_high_10 440.02200000000005
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:27, High: 423.98, Low: 423.43, Stream VP: 0.01, V/P Ratio: 0.13 --
+INFO:root:Rolling_v_10 0.16599999999999998
+INFO:root:Rolling_high_10 423.26402999999993
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -177,12 +175,32 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.734
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:57, High: 439.93, Low: 439.85, Stream VP: 0.01, V/P Ratio: 0.02 --
-INFO:root:Rolling_v_10 0.04100000000000001
-INFO:root:Rolling_high_10 440.015
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.151
+WARNING:root:-- Re-establishing connection--
+WARNING:root:-- Saving Metrics --
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/ACdc49ab2337c0f134c609be653d8cbfed/Messages.json
+INFO:twilio.http_client:PAYLOAD: {'To': '+16317043733', 'From': '+18562915621', 'Body': 'System disconnected Reconnecting'}
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.twilio.com:443
+DEBUG:urllib3.connectionpool:https://api.twilio.com:443 "POST /2010-04-01/Accounts/ACdc49ab2337c0f134c609be653d8cbfed/Messages.json HTTP/1.1" 201 834
+INFO:twilio.http_client:POST Response: 201 {"sid": "SM66d7f25a2e134aaaaff06933c745564f", "date_created": "Tue, 20 Oct 2020 15:27:07 +0000", "date_updated": "Tue, 20 Oct 2020 15:27:07 +0000", "date_sent": null, "account_sid": "ACdc49ab2337c0f134c609be653d8cbfed", "to": "+16317043733", "from": "+18562915621", "messaging_service_sid": null, "body": "Sent from your Twilio trial account - System disconnected Reconnecting", "status": "queued", "num_segments": "1", "num_media": "0", "direction": "outbound-api", "api_version": "2010-04-01", "price": null, "price_unit": "USD", "error_code": null, "error_message": null, "uri": "/2010-04-01/Accounts/ACdc49ab2337c0f134c609be653d8cbfed/Messages/SM66d7f25a2e134aaaaff06933c745564f.json", "subresource_uris": {"media": "/2010-04-01/Accounts/ACdc49ab2337c0f134c609be653d8cbfed/Messages/SM66d7f25a2e134aaaaff06933c745564f/Media.json"}}
+INFO:twilio.http_client:POST Request: https://api.twilio.com/2010-04-01/Accounts/ACdc49ab2337c0f134c609be653d8cbfed/Messages.json
+INFO:twilio.http_client:PAYLOAD: {'To': '+16317043733', 'From': '+18562915621', 'Body': 'Metrics Saved'}
+DEBUG:urllib3.connectionpool:https://api.twilio.com:443 "POST /2010-04-01/Accounts/ACdc49ab2337c0f134c609be653d8cbfed/Messages.json HTTP/1.1" 201 815
+INFO:twilio.http_client:POST Response: 201 {"sid": "SMaf3c39e417284fa7b2b637d3aecaf150", "date_created": "Tue, 20 Oct 2020 15:27:07 +0000", "date_updated": "Tue, 20 Oct 2020 15:27:07 +0000", "date_sent": null, "account_sid": "ACdc49ab2337c0f134c609be653d8cbfed", "to": "+16317043733", "from": "+18562915621", "messaging_service_sid": null, "body": "Sent from your Twilio trial account - Metrics Saved", "status": "queued", "num_segments": "1", "num_media": "0", "direction": "outbound-api", "api_version": "2010-04-01", "price": null, "price_unit": "USD", "error_code": null, "error_message": null, "uri": "/2010-04-01/Accounts/ACdc49ab2337c0f134c609be653d8cbfed/Messages/SMaf3c39e417284fa7b2b637d3aecaf150.json", "subresource_uris": {"media": "/2010-04-01/Accounts/ACdc49ab2337c0f134c609be653d8cbfed/Messages/SMaf3c39e417284fa7b2b637d3aecaf150/Media.json"}}
+INFO:root:Connection Successful
+INFO:root:--------------------------------------
+INFO:root:{'ev': 'status', 'status': 'connected', 'message': 'Connected Successfully'}
+INFO:root:--------------------------------------
+INFO:root:{'ev': 'status', 'status': 'auth_success', 'message': 'authenticated'}
+INFO:root:--------------------------------------
+INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.SPY'}
+INFO:root:--------------------------------------
+INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:28, High: 424.41, Low: 423.32, Stream VP: 0.13, V/P Ratio: 0.26 --
+INFO:root:Rolling_v_10 0.15599999999999997
+INFO:root:Rolling_high_10 423.29003
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -190,12 +208,12 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.716
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:58, High: 439.9, Low: 439.86, Stream VP: -0.01, V/P Ratio: 0.01 --
-INFO:root:Rolling_v_10 0.037000000000000005
-INFO:root:Rolling_high_10 439.98999999999995
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.131
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:29, High: 424.4022, Low: 423.8301, Stream VP: -0.13, V/P Ratio: 0.13 --
+INFO:root:Rolling_v_10 0.15300000000000002
+INFO:root:Rolling_high_10 423.43672
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -203,12 +221,14 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.728
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 16:59, High: 439.95, Low: 439.92, Stream VP: 0.0, V/P Ratio: 0.01 --
-INFO:root:Rolling_v_10 0.033
-INFO:root:Rolling_high_10 439.96999999999997
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.096
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.079
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:30, High: 424.58, Low: 423.82, Stream VP: 0.05, V/P Ratio: 0.18 --
+INFO:root:Rolling_v_10 0.159
+INFO:root:Rolling_high_10 423.61972
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -216,12 +236,10 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.731
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:00, High: 439.91, Low: 439.91, Stream VP: -0.01, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.024
-INFO:root:Rolling_high_10 439.954
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:31, High: 424.17, Low: 423.9, Stream VP: -0.12, V/P Ratio: 0.06 --
+INFO:root:Rolling_v_10 0.14200000000000002
+INFO:root:Rolling_high_10 423.74871999999993
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -229,12 +247,14 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.736
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:01, High: 439.96, Low: 439.91, Stream VP: 0.01, V/P Ratio: 0.01 --
-INFO:root:Rolling_v_10 0.019000000000000003
-INFO:root:Rolling_high_10 439.94999999999993
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.067
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.029
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:32, High: 424.3, Low: 423.98, Stream VP: 0.02, V/P Ratio: 0.08 --
+INFO:root:Rolling_v_10 0.139
+INFO:root:Rolling_high_10 423.92672000000005
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -242,12 +262,10 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.728
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:02, High: 439.97, Low: 439.96, Stream VP: -0.01, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.017000000000000005
-INFO:root:Rolling_high_10 439.94899999999996
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-20, Tue, 11:33, High: 424.2, Low: 423.68, Stream VP: 0.04, V/P Ratio: 0.12 --
+INFO:root:Rolling_v_10 0.13600000000000004
+INFO:root:Rolling_high_10 424.06672
 INFO:root:-- Factory Live --
 INFO:root:-- Evaluating Parameters... --
 INFO:root:-- The market is Bear --
@@ -255,329 +273,5 @@ INFO:root:-- Loading up the Hibernation Strategy --
 INFO:root:-- Building Strategy --
 INFO:root:-- Starting Defualt Operations --
 INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.728
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.705
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:03, High: 440.08, Low: 439.99, Stream VP: 0.02, V/P Ratio: 0.02 --
-INFO:root:Rolling_v_10 0.017
-INFO:root:Rolling_high_10 439.96099999999996
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.719
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:04, High: 440.39, Low: 440.14, Stream VP: 0.04, V/P Ratio: 0.06 --
-INFO:root:Rolling_v_10 0.020999999999999998
-INFO:root:Rolling_high_10 440.0
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:05, High: 440.2, Low: 440.15, Stream VP: -0.05, V/P Ratio: 0.01 --
-INFO:root:Rolling_v_10 0.015000000000000003
-INFO:root:Rolling_high_10 440.02200000000005
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.734
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:06, High: 440.2, Low: 440.2, Stream VP: -0.01, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.014000000000000002
-INFO:root:Rolling_high_10 440.049
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.754
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:07, High: 440.2, Low: 440.1, Stream VP: 0.02, V/P Ratio: 0.02 --
-INFO:root:Rolling_v_10 0.013999999999999999
-INFO:root:Rolling_high_10 440.0759999999999
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.748
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:08, High: 440.2, Low: 440.2, Stream VP: -0.02, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.013000000000000001
-INFO:root:Rolling_high_10 440.10599999999994
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.748
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.751
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:09, High: 440.08, Low: 440.08, Stream VP: 0.0, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.012
-INFO:root:Rolling_high_10 440.11899999999997
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.777
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:10, High: 440.19, Low: 440.19, Stream VP: 0.0, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.012
-INFO:root:Rolling_high_10 440.14699999999993
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.777
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:12, High: 440.13, Low: 440.06, Stream VP: 0.02, V/P Ratio: 0.02 --
-INFO:root:Rolling_v_10 0.013000000000000001
-INFO:root:Rolling_high_10 440.16399999999993
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.777
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:13, High: 440, Low: 439.72, Stream VP: 0.04, V/P Ratio: 0.06 --
-INFO:root:Rolling_v_10 0.019
-INFO:root:Rolling_high_10 440.16700000000003
-INFO:root:Rolling_high_30 440.0266666666667
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.754
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.479
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:14, High: 439.97, Low: 439.77, Stream VP: -0.01, V/P Ratio: 0.05 --
-INFO:root:Rolling_v_10 0.022
-INFO:root:Rolling_high_10 440.15600000000006
-INFO:root:Rolling_high_30 440.034
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.725
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:16, High: 440.15, Low: 439.83, Stream VP: 0.02, V/P Ratio: 0.07 --
-INFO:root:Rolling_v_10 0.023
-INFO:root:Rolling_high_10 440.13199999999995
-INFO:root:Rolling_high_30 440.0446666666667
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.757
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:17, High: 440.02, Low: 440, Stream VP: -0.07, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.022000000000000002
-INFO:root:Rolling_high_10 440.11400000000003
-INFO:root:Rolling_high_30 440.0496666666667
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.768
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.759
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.759
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:20, High: 440.1, Low: 439.96, Stream VP: 0.03, V/P Ratio: 0.03 --
-INFO:root:Rolling_v_10 0.025
-INFO:root:Rolling_high_10 440.1040000000001
-INFO:root:Rolling_high_30 440.0583333333334
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.762
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:21, High: 439.89, Low: 439.89, Stream VP: -0.03, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.023
-INFO:root:Rolling_high_10 440.073
-INFO:root:Rolling_high_30 440.05466666666666
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.751
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:22, High: 439.9698, Low: 439.9, Stream VP: 0.02, V/P Ratio: 0.02 --
-INFO:root:Rolling_v_10 0.025
-INFO:root:Rolling_high_10 440.04997999999995
-INFO:root:Rolling_high_30 440.04866000000004
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.751
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.762
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:24, High: 439.95, Low: 439.95, Stream VP: -0.02, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.025
-INFO:root:Rolling_high_10 440.03697999999997
-INFO:root:Rolling_high_30 440.0419933333333
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.762
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.777
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:25, High: 439.81, Low: 439.81, Stream VP: 0.0, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.025
-INFO:root:Rolling_high_10 439.99897999999996
-INFO:root:Rolling_high_30 440.03332666666665
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.788
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:27, High: 439.95, Low: 439.9499, Stream VP: 0.0, V/P Ratio: 0.0 --
-INFO:root:Rolling_v_10 0.023
-INFO:root:Rolling_high_10 439.98097999999993
-INFO:root:Rolling_high_30 440.03165999999993
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.791
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.788
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:28, High: 440, Low: 439.9499, Stream VP: 0.01, V/P Ratio: 0.01 --
-INFO:root:Rolling_v_10 0.018000000000000002
-INFO:root:Rolling_high_10 439.98097999999993
-INFO:root:Rolling_high_30 440.0323266666666
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:29, High: 439.99, Low: 439.91, Stream VP: 0.01, V/P Ratio: 0.02 --
-INFO:root:Rolling_v_10 0.015
-INFO:root:Rolling_high_10 439.98297999999994
-INFO:root:Rolling_high_30 440.03332666666665
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.791
-INFO:root:-------------------
-INFO:root:-- Time: 2020-10-16, Fri, 17:30, High: 439.95, Low: 439.9, Stream VP: -0.01, V/P Ratio: 0.01 --
-INFO:root:Rolling_v_10 0.009
-INFO:root:Rolling_high_10 439.96297999999996
-INFO:root:Rolling_high_30 440.03166
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The market is Bear --
-INFO:root:-- Loading up the Hibernation Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:Price Jump Not Satisfied
-INFO:root:-------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.791
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.038
