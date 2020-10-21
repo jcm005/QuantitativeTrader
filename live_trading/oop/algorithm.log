@@ -7,3 +7,72 @@ INFO:root:--------------------------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.SPY'}
 INFO:root:--------------------------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+INFO:root:--------------------------------------
+INFO:root:-- Back Logging --
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.polygon.io:443
+DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/TSLA/range/1/minute/2020-10-20/2020-10-21?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/SPY/range/1/minute/2020-10-20/2020-10-21?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
+INFO:root:-- Overnight data --> 319 --
+INFO:root:-- Pre market Price: 421 --
+INFO:root:-- TSLA market open 422.7 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.015
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.035
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-21, Wed, 13:09, High: 427.57, Low: 427.14, Stream VP: 0.0, V/P Ratio: 0.1 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-21, Wed, 13:10, High: 427.64, Low: 426.92, Stream VP: 0.07, V/P Ratio: 0.17 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+ERROR:websocket:error from callback <function on_message at 0x7fa890f70ee0>: Length of values does not match length of index
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.044
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.044
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-21, Wed, 13:11, High: 427.22, Low: 426.8, Stream VP: -0.07, V/P Ratio: 0.1 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-21, Wed, 13:12, High: 427.52, Low: 427.04, Stream VP: 0.01, V/P Ratio: 0.11 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+ERROR:websocket:error from callback <function on_message at 0x7fa890f70ee0>: Length of values does not match length of index
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.006
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-21, Wed, 13:13, High: 427.605, Low: 427.3, Stream VP: -0.04, V/P Ratio: 0.07 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+ERROR:websocket:error from callback <function on_message at 0x7fa890f70ee0>: Length of values does not match length of index
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.023
