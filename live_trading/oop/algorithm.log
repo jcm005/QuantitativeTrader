@@ -7,21 +7,3 @@ INFO:root:--------------------------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.SPY'}
 INFO:root:--------------------------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
-INFO:root:--------------------------------------
-INFO:root:-- Back Logging --
-DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.polygon.io:443
-DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/TSLA/range/1/minute/2020-10-20/2020-10-21?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
-DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/SPY/range/1/minute/2020-10-20/2020-10-21?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
-INFO:root:-- Overnight data --> 319 --
-INFO:root:-- Pre market Price: 421 --
-INFO:root:-- TSLA market open 422.7 --
-INFO:root:-- Factory Live --
-INFO:root:-- Evaluating Parameters... --
-INFO:root:-- The Market is Bull --
-INFO:root:-- Loading up the SlowBull Strategy --
-INFO:root:-- Building Strategy --
-INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
-INFO:root:-- Starting Defualt Operations --
-INFO:root:-- Checking Price Jump --
-INFO:root:--------------------------------------
-INFO:root:SPY_500: PCT_CHANGE: -0.108

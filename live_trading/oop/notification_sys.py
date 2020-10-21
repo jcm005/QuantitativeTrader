@@ -1,11 +1,8 @@
 import logging
 from twilio.rest import Client
+from twilio_key import *
 
-
-try:
-    from twilio_key import *
-except:
-    logging.warning('No twilio key are found, see documentation at github')
+#logging.warning('No twilio key are found, see documentation at github')
 
 
 account_sid = ACCOUNT_SID
@@ -34,4 +31,6 @@ def create_message(text):
 
 if __name__ == '__main__':
 
-    create_message('Best ive had')
+    #create_message('Best ive had')
+
+    pass
