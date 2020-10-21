@@ -76,3 +76,42 @@ INFO:root:-- Checking Price Jump --
 ERROR:websocket:error from callback <function on_message at 0x7fa890f70ee0>: Length of values does not match length of index
 INFO:root:--------------------------------------
 INFO:root:SPY_500: PCT_CHANGE: -0.023
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-21, Wed, 13:14, High: 428.09, Low: 427.68, Stream VP: 0.03, V/P Ratio: 0.1 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- The Market is Bull --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+ERROR:websocket:error from callback <function on_message at 0x7fa890f70ee0>: Length of values does not match length of index
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.004
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-21, Wed, 13:15, High: 428.34, Low: 427.82, Stream VP: 0.02, V/P Ratio: 0.12 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- The Market is Bull --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+ERROR:websocket:error from callback <function on_message at 0x7fa890f70ee0>: Length of values does not match length of index
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.006
+INFO:root:--------------------------------------
+INFO:root:-- Time: 2020-10-21, Wed, 13:16, High: 428.95, Low: 428.1501, Stream VP: 0.07, V/P Ratio: 0.19 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- The Market is Bull --
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+ERROR:websocket:error from callback <function on_message at 0x7fa890f70ee0>: Length of values does not match length of index
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.061

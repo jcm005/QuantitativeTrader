@@ -1,6 +1,6 @@
 import logging
 import alpaca_trade_api as tradeapi
-from keys import API__KEY, SECRET_KEY
+from keys import *
 from datetime import datetime, timedelta
 
 class BackLog:
