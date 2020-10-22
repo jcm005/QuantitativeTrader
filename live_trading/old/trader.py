@@ -26,8 +26,12 @@ class QuantTrader():
     def buy_order(self, ref, qty):
         symbol = Order(self.ticker, self.price[-1])
         if ref == 'sma1':
-            order = symbol.buy(order_type='market', order_class='oto',
-                               qty=qty, tif='gtc', profit=self.profit)
+            order = symbol.buy(order_class='bracket', order_type='market',
+                               qty=qty, tif='gtc',
+                               profit=self.profit,
+                               stop_limit_price=self.price[-1] - (self.profit / 2),
+                               stop_price=self.price[-1] - (self.profit / 2.25)
+                               )
             self.order_log('Order: %s \n %s' % (ref, order))
             return order
         elif ref == 'ctl':
@@ -58,8 +62,12 @@ class QuantTrader():
             self.order_log('Order: %s \n %s' % (ref, order))
             return order
         elif ref == 'sma1ws':
-            order = symbol.buy(order_type='market', order_class='oto',
-                               qty=qty, tif='gtc', profit=self.profit)
+            order = symbol.buy(order_class='bracket', order_type='market',
+                               qty=qty, tif='gtc',
+                               profit=self.profit,
+                               stop_limit_price=self.price[-1] - (self.profit / 2),
+                               stop_price=self.price[-1] - (self.profit / 2.25)
+                               )
             self.order_log('Order: %s \n %s' % (ref, order))
             return order
         elif ref == 'ctlws':

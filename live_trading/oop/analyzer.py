@@ -21,12 +21,12 @@ class Analyzer:
         self._minute_candlestick = []
         self._current_tick = None
         self._previous_tick = None
-        self.in_position = False
         self._back_log = None
         self.est = timezone('US/Eastern')
         self.count = 1
         self._market_open = False
         self.spy = False
+
 
         self.spy_percent_change_history = []
         self.ticker_percent_change_history = []
@@ -73,7 +73,7 @@ class Analyzer:
             elif self._current_tick['sym'] == 'SPY':
                 try:
                     self.spy_500 = spy.Builder(self._current_tick).run()
-                    self.spy_percent_change_history.append(self.spy_500['pct_change'])
+                    #self.spy_percent_change_history.append(self.spy_500['pct_change'])
                     self.spy = True
                 except:
                     logging.warning(self._current_tick)
@@ -118,26 +118,27 @@ class Analyzer:
 
         # ------------------------------ ROLLINGS ------------------------------
         try:
-            #commenting out the market open makes realistic like premarket enviroment
             self._market_open = self._current_tick['op']
-            self._percent_change = round(((self._high[-1] - self._market_open) / self._market_open) * 100, ndigits=3)
-            self.ticker_percent_change_history.append(self._percent_change)
-
         except:
             logging.warning('Market is not open yet, market_open price is now premarket price.')
+        try:
+            self._percent_change = round(((self._high[-1] - self._market_open) / self._market_open) * 100, ndigits=3)
+            self.ticker_percent_change_history.append(self._percent_change)
+        except:
+            logging.warning('Percent change')
+
+        try:
+            self.spy_percent_change_history.append(self.spy_500['pct_change'])
+        except:
+            logging.warning('SPY_PCT_CHANGE')
 
         if len(self._minute_candlestick) > 1:
-
             self.vp = self._minute_candlestick[-1]['v_factor'] - self._minute_candlestick[-2]['v_factor']
-
             logging.info('-- Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s --'
                      % (self.time, self._high[-1], self._low[-1], round(self.vp, ndigits=3), self._v_factor[-1]))
-
             print('Time: %s, High: %s, Low: %s, Stream VP: %s, V/P Ratio: %s '
                   % (self.time, self._high[-1], self._low[-1], self.vp, self._v_factor[-1]))
-
         else:
-
             self.vp = False
 
         if len(self._minute_candlestick) >= 10:
@@ -185,7 +186,6 @@ class Analyzer:
 
         while self.count == 1:  # Runs once
             self.over_night_params = bl.BackLog(self.ticker).run()
-
             if self._market_open == False:
                 self._market_open = float(self.over_night_params['premarket'])
                 self._percent_change = round(((self._high[-1] - self._market_open) / self._market_open) * 100,
@@ -216,37 +216,41 @@ class Analyzer:
         self.df['date'] = [i.split(',')[0] for i in self.df['time']]
         self.df['day'] = [i.split(',')[1] for i in self.df['time']]
         self.df['time'] = [i.split(',')[-1] for i in self.df['time']]
-        self.df['pct_change'] = [i for i in self.ticker_percent_change_history]
 
-        # ----------------------------------------------------------
-
-        tpl = len(self.ticker_percent_change_history)
-        spl = len(self.spy_percent_change_history)
-
-        #print('spl',spl, 'tpl', tpl)
-
+        if len(self.df.time) == len(self.ticker_percent_change_history):
+            self.df['pct_change'] = [i for i in self.ticker_percent_change_history]
 
         if self.spy:
-        # if subscribe with spy function is used
-            if tpl > 0 and spl > 0:
-                self.df_corr_1 = self.df[['volume', 'volatility']].corr()['volume']['volatility']
-                self.df['volume:volatility'] = self.df_corr_1
-                print('-- (Volume :: Volatility) --> Correlation: %s' % self.df_corr_1)
-            else:
-                pass
-
-            if spl == tpl and spl > 1:
-
+            try:
                 self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
-                self.df_corr_2 = self.df[['pct_change', 'spy_pct_change']].corr()['pct_change']['spy_pct_change']
-                print('pct_correlation',self.df_corr_2)
-                self.df['pct_corr'] = self.df_corr_2
-        # If subscribe with just ticker.
+            except ValueError:
+                self.spy_percent_change_history.append(0)
+                self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
+            except:
+                pass
         else:
-            if tpl > 0:
-                self.df_corr_1 = self.df[['volume', 'volatility']].corr()['volume']['volatility']
-                self.df['volume:volatility'] = self.df_corr_1
-                print('-- (Volume :: Volatility) --> Correlation: %s' % self.df_corr_1)
+
+            while len(self.spy_percent_change_history) < 1:
+                self.spy_percent_change_history.append(0)
+                break
+            pass
+
+        # ----------------------------------------------------------
+        tpl = len(self.ticker_percent_change_history)
+        spl = len(self.spy_percent_change_history)
+        print('spl',spl, 'tpl', tpl, 'time', len(self.df.time))
+
+        if self.spy:
+            if spl == tpl and spl > 1:
+                self.df_1 = pd.DataFrame(self.spy_percent_change_history)
+                self.df_corr_2 = self.df[['pct_change', 'spy_pct_change']].corr()['pct_change']['spy_pct_change']
+                self.df['pct_corr'] = self.df_corr_2
+                print(self.df_corr_2,'PCT_CORR')
+        if tpl > 0:
+            self.df_corr_1 = self.df[['volume', 'volatility']].corr()['volume']['volatility']
+            self.df['volume:volatility'] = self.df_corr_1
+            print(self.df_corr_1, 'Volume Corr')
+
 
         print(self.df)
         return self.df
