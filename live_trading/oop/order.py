@@ -146,7 +146,8 @@ class Order:
 
         # replace this with share info in access.py
         try:
-            account = a.get_account()
+
+            account = a.Account().get_account()
             buying_power = account['buying_power'].split('.')[0]
             equity = account['equity'].split('.')[0]
         except KeyError as e:
@@ -228,5 +229,7 @@ if __name__ == '__main__':
     current_price = 420
     #o = Order('TSLA',current_price,paper=True)
     #o.place_order()
+    aa = a.Account().get_account()
+    print(aa)
 
     pass

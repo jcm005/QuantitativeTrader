@@ -41,6 +41,8 @@ class StrategyFactory(Creator):
         self.rolling_v_10 =  parameter['rolling_v_10']
         self.market_open = parameter['market_open']
         self.over_night = parameter['over_night']
+        self.max = max(self.high)
+        self.min = min(self.low)
 
     def factory_method(self):
         '''TREE'''
@@ -51,9 +53,10 @@ class StrategyFactory(Creator):
         if self.market_open:
 
             # -- Bull Case --
-
             if (self.high[-1] - 5) > self.market_open:
                 logging.info('-- The Market is Bull --')
+                logging.info('Max price: %s  Min price: %s' % (self.max, self.min))
+
                 if self.rolling_v_10 != False and self.rolling_v_10 > .5:
                     notification_sys.create_message('The Market Is Bullish,volatile; Rolling_v_10: %s' % self.rolling_v_10)
                     notification_sys.create_message('OpenPrice: %s, CurrentPrice: %s' % (self.market_open, self.high[-1]))
@@ -62,9 +65,10 @@ class StrategyFactory(Creator):
                     return SlowBull(self.high,self.vp)
 
             # -- Bear Case --
-
             elif (self.market_open - 5) > self.high[-1]:
                 logging.info('-- The market is Bear --')
+                logging.info('Max price: %s  Min price: %s' % (self.max, self.min))
+
                 if self.rolling_v_10 != False and self.rolling_v_10 > .5:
                     notification_sys.create_message('The Market Is Bearish,volatile; Rolling_v_10: %s' % self.rolling_v_10)
                     notification_sys.create_message('OpenPrice: %s, CurrentPrice: %s' % (self.market_open, self.high[-1]))
@@ -73,7 +77,6 @@ class StrategyFactory(Creator):
                     return Hibernation(self.high)
 
             # -- Small discrepancy in price, check volatility
-
             else:
                 if self.rolling_v_10 != False and self.rolling_v_10 >.5:
                     return BuringEnds(self.high)
@@ -81,7 +84,9 @@ class StrategyFactory(Creator):
                     return Hibernation(self.high)
 
         else:
-            logging.warning('-- MARKET OPEN FAILURE StratFactory line 80 --')
+            logging.warning('-- Market Open Failure --')
+            return Hibernation(self.high
+                               )
 
     def load_factory(self):
 

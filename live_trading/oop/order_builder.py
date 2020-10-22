@@ -9,8 +9,6 @@ class Builder(ABC):
     the Product objects.
     """
 
-
-
     @abstractmethod
     def produce_part_a(self) -> None:
         pass

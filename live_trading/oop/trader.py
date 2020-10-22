@@ -33,8 +33,8 @@ class QuantTrader:
             self.profit = 30
         elif 400 >= self.high:
             self.profit = 20
-# --------------------------------------------------
 
+# --------------------------------------------------
     def buy_order(self, ref, qty):
 
         symbol = Order(self.ticker, self.high)
@@ -120,8 +120,6 @@ class QuantTrader:
                                stop_price=_high - (profit / 2.25))
         #    self.order_log('Order: %s \n %s' % (ref, order))
             return order
-
-
 # --------------------------------------------------
 
     def climb_the_ladder(self, ref, qty=1):
@@ -214,10 +212,5 @@ class QuantTrader:
 # --------------------------------------------------
 
 if __name__ == '__main__':
-
-   # high = [i for i in range(400,440)]
-    #qt = QuantTrader(high, 'TSLA')
-    #qt.buy_order(ref='sma1',qty=1)
-
     pass
 

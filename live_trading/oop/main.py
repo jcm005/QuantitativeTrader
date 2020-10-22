@@ -42,7 +42,7 @@ def on_open(ws):
     #stream._subscribe(ws, type='AM.', channel=ticker)
     stream._subscribe_w_spy(ws, channel=ticker)
     logging.info('Connection Successful')
-    #notification_sys.create_message('Logging On')
+    notification_sys.create_message('Logging On')
     print('Connected\nWaiting for incoming data from API\n')
 
 def on_close(ws):

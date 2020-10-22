@@ -65,9 +65,6 @@ class BackLog:
 
             self.premarket = self.over_night[-1]['high']
             logging.info('-- Pre market Price: %s --' % self.premarket)
-
-
-
         else:
             self.over_night = False
             self.premarket = False
@@ -88,8 +85,5 @@ class BackLog:
 
 
 if __name__ == '__main__':
-
-    #back_log = BackLog('TSLA').main()
-    #print(back_log)
     pass
 

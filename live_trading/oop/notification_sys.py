@@ -2,13 +2,8 @@ import logging
 from twilio.rest import Client
 from twilio_key import *
 
-#logging.warning('No twilio key are found, see documentation at github')
-
-
 account_sid = ACCOUNT_SID
 auth_token = AUTH_TOKEN
-
-
 client = Client(account_sid, auth_token)
 
 def format_message(text):
