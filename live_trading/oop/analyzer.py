@@ -252,7 +252,7 @@ class Analyzer:
             print(self.df_corr_1, 'Volume Corr')
 
 
-        print(self.df)
+        #print(self.df)
         return self.df
 
     def data_frame_prep(self, data, parameter='data_name'):

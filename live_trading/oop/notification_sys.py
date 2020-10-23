@@ -1,10 +1,15 @@
 import logging
 from twilio.rest import Client
-from twilio_key import *
 
-account_sid = ACCOUNT_SID
-auth_token = AUTH_TOKEN
-client = Client(account_sid, auth_token)
+try:
+    from twilio_key import *
+    account_sid = ACCOUNT_SID
+    auth_token = AUTH_TOKEN
+    client = Client(account_sid, auth_token)
+except:
+    print('Twilio_keys not found')
+
+
 
 def format_message(text):
 
