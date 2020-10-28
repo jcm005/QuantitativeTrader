@@ -42,22 +42,22 @@ def on_open(ws):
     #stream._subscribe(ws, type='AM.', channel=ticker)
     stream._subscribe_w_spy(ws, channel=ticker)
     logging.info('Connection Successful')
-    notification_sys.create_message('Logging On')
+    #notification_sys.create_message('Logging On')
     print('Connected\nWaiting for incoming data from API\n')
 
 def on_close(ws):
 
     logging.warning('-- Re-establishing connection--')
     logging.warning('-- Saving Metrics --')
-    notification_sys.create_message('System disconnected Reconnecting')
+    #notification_sys.create_message('System disconnected Reconnecting')
 
     try:
         metrics = dp.metrics()
         metrics.to_csv('metrics.txt', mode='w')
-        notification_sys.create_message('Metrics Saved')
+        #notification_sys.create_message('Metrics Saved')
     except:
         logging.info('Metrics lost')
-        notification_sys.create_message('Metrics lost')
+        #notification_sys.create_message('Metrics lost')
 
     web_socket_start()
 

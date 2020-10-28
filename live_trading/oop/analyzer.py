@@ -217,40 +217,42 @@ class Analyzer:
         self.df['day'] = [i.split(',')[1] for i in self.df['time']]
         self.df['time'] = [i.split(',')[-1] for i in self.df['time']]
 
+        tpl = len(self.ticker_percent_change_history)
+        spl = len(self.spy_percent_change_history)
+
         if len(self.df.time) == len(self.ticker_percent_change_history):
             self.df['pct_change'] = [i for i in self.ticker_percent_change_history]
 
         if self.spy:
             try:
                 self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
+                print('try loop')
             except ValueError:
                 self.spy_percent_change_history.append(0)
                 self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
+                print(self.df['spy_pct_change'])
             except:
+                print(self.df['spy_pct_change'])
                 pass
-        else:
-
-            while len(self.spy_percent_change_history) < 1:
-                self.spy_percent_change_history.append(0)
-                break
-            pass
-
-        # ----------------------------------------------------------
-        tpl = len(self.ticker_percent_change_history)
-        spl = len(self.spy_percent_change_history)
-        print('spl',spl, 'tpl', tpl, 'time', len(self.df.time))
-
-        if self.spy:
             if spl == tpl and spl > 1:
-                self.df_1 = pd.DataFrame(self.spy_percent_change_history)
                 self.df_corr_2 = self.df[['pct_change', 'spy_pct_change']].corr()['pct_change']['spy_pct_change']
                 self.df['pct_corr'] = self.df_corr_2
                 print(self.df_corr_2,'PCT_CORR')
+        else:
+            while len(self.spy_percent_change_history) < 1:
+                self.spy_percent_change_history.append(0)
+                self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
+                print('while loop')
+
+                break
+
+        # ----------------------------------------------------------
+        print('spl',spl, 'tpl', tpl, 'time', len(self.df.time))
+
         if tpl > 0:
             self.df_corr_1 = self.df[['volume', 'volatility']].corr()['volume']['volatility']
             self.df['volume:volatility'] = self.df_corr_1
             print(self.df_corr_1, 'Volume Corr')
-
 
         #print(self.df)
         return self.df

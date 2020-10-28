@@ -58,8 +58,8 @@ class StrategyFactory(Creator):
                 logging.info('Max price: %s  Min price: %s' % (self.max, self.min))
 
                 if self.rolling_v_10 != False and self.rolling_v_10 > .5:
-                    notification_sys.create_message('The Market Is Bullish,volatile; Rolling_v_10: %s' % self.rolling_v_10)
-                    notification_sys.create_message('OpenPrice: %s, CurrentPrice: %s' % (self.market_open, self.high[-1]))
+                    #notification_sys.create_message('The Market Is Bullish,volatile; Rolling_v_10: %s' % self.rolling_v_10)
+                    #notification_sys.create_message('OpenPrice: %s, CurrentPrice: %s' % (self.market_open, self.high[-1]))
                     return RagingBull(self.high)
                 else:
                     return SlowBull(self.high,self.vp)
@@ -70,8 +70,8 @@ class StrategyFactory(Creator):
                 logging.info('Max price: %s  Min price: %s' % (self.max, self.min))
 
                 if self.rolling_v_10 != False and self.rolling_v_10 > .5:
-                    notification_sys.create_message('The Market Is Bearish,volatile; Rolling_v_10: %s' % self.rolling_v_10)
-                    notification_sys.create_message('OpenPrice: %s, CurrentPrice: %s' % (self.market_open, self.high[-1]))
+                    #notification_sys.create_message('The Market Is Bearish,volatile; Rolling_v_10: %s' % self.rolling_v_10)
+                    #notification_sys.create_message('OpenPrice: %s, CurrentPrice: %s' % (self.market_open, self.high[-1]))
                     return GrizzlyBear(self.high)
                 else:
                     return Hibernation(self.high)
