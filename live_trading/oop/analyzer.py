@@ -26,6 +26,7 @@ class Analyzer:
         self.count = 1
         self._market_open = False
         self.spy = False
+        self.spy_500 = None
 
 
         self.spy_percent_change_history = []
@@ -39,12 +40,12 @@ class Analyzer:
 
     @classmethod
     def sma(cls, data, window=10):
-        '''
+        """
         Creates simple moving average
+        :param window:
         :param data: must be an iterable
-        :param int: desired rolling average window
         :return: will default an sma of window 10
-        '''
+        """
         try:
             if len(data) >= window:
                 rolling = sum(data[-window:]) / window
@@ -229,6 +230,7 @@ class Analyzer:
                 print('try loop')
             except ValueError:
                 self.spy_percent_change_history.append(0)
+
                 self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
                 print(self.df['spy_pct_change'])
             except:
@@ -238,6 +240,7 @@ class Analyzer:
                 self.df_corr_2 = self.df[['pct_change', 'spy_pct_change']].corr()['pct_change']['spy_pct_change']
                 self.df['pct_corr'] = self.df_corr_2
                 print(self.df_corr_2,'PCT_CORR')
+                logging.info('Pct_Corr: %s' % self.df_corr_2)
         else:
             while len(self.spy_percent_change_history) < 1:
                 self.spy_percent_change_history.append(0)
@@ -253,6 +256,7 @@ class Analyzer:
             self.df_corr_1 = self.df[['volume', 'volatility']].corr()['volume']['volatility']
             self.df['volume:volatility'] = self.df_corr_1
             print(self.df_corr_1, 'Volume Corr')
+            logging.info('Volume Corr: %s' % self.df_corr_1)
 
         #print(self.df)
         return self.df

@@ -1761,3 +1761,18 @@ INFO:root:-- Checking Price Jump --
 INFO:root:Price Jump Not Satisfied
 INFO:root:--------------------------------------
 INFO:root:SPY_500: PCT_CHANGE: -0.659
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-10-28, Wed, 12:02
+INFO:root:-- Time: 2020-10-28, Wed, 12:02, High: 412.078, Low: 411.63, Stream VP: -0.05, V/P Ratio: 0.11 --
+INFO:root:Rolling_v_10 0.152
+INFO:root:Rolling_high_10 412.4569399999999
+INFO:root:Rolling_high_30 412.14728666666656
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- Loading up the Hibernation Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Price Jump Not Satisfied
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.702
