@@ -7,6 +7,7 @@ from analyzer import Analyzer
 import logging
 import notification_sys
 import order
+import order_builder
 
 
 
@@ -32,8 +33,9 @@ class Creator(ABC):
 
 class OrderFactory(Creator):
 
-    def __init__(self,ref):
-        self.ref = ref
+    def __init__(self,params):
+        self.params = params
+
 
     def factory_method(self):
         """
@@ -42,30 +44,26 @@ class OrderFactory(Creator):
         :return:
         """
         if self.ref == 'sma1':
-            # builder 1
-            pass
+            return Builder1(self.params)
         elif self.ref == 'ctl':
-            # builder 2
-            pass
+            return Builder2(self.params)
         elif self.ref == 'sdr':
-            # builfer 3
-            pass
+            return Builder1(self.params)
         elif self.ref == 'pj':
-            pass
+            return Builder2(self.params)
         elif self.ref == 'dt':
-            pass
+            return Builder1(self.params)
         elif self.ref == 'sma1ws':
-            pass
+            return Builder1(self.params)
         elif self.ref == 'ctlws':
-            pass
+            return Builder2(self.params)
         elif self.ref == 'sdrws':
-            pass
+            return Builder1(self.params)
         elif self.ref == 'pjws':
-            pass
+            return Builder2(self.params)
 
 
     def load_order(self):
-
         logging.info('-- Getting Order Type --')
         order = self.factory_method()
         logging.info('-- Sending Order --')
@@ -108,8 +106,11 @@ class Product(ABC):
     Strategy interface declares all the operation that all the concrete products
     must implement
     """
+    def __init__(self):
+        self
+        pass
 
-    @abstractmethod # has to be overwritten
+    @abstractmethod
     def build_order(self):
         pass
 
@@ -124,14 +125,11 @@ class Product(ABC):
 class Builder1(Product):
 
     """Thin different builder style logic instructions"""
-    def __init__(self, profit_obj=None):
+    def __init__(self, params):
 
-        self.symbol = None
-        self.order_type = 'market'
-        self.order_class = 'oto'
-        self.qty = 2 # will use this for get profit get profit can also evaluate money we have.
-        self.tif = 'gtc'
-        self.profit = 10 #profit_obj['profit']
+        self.params = params
+        self.ticker = params.symbol
+        self.price = params.current_price
 
 
 

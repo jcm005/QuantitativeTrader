@@ -44,7 +44,7 @@ class QuantTrader:
                                qty=qty, tif='gtc', profit=self.profit)
            # self.order_log('Order: %s \n %s' % (ref, order))
 
-            notification_sys.create_message(order)
+            #notification_sys.create_message(order)
             return order
 
         elif ref == 'ctl':
@@ -212,5 +212,6 @@ class QuantTrader:
 # --------------------------------------------------
 
 if __name__ == '__main__':
+
     pass
 

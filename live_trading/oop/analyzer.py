@@ -224,18 +224,16 @@ class Analyzer:
         if len(self.df.time) == len(self.ticker_percent_change_history):
             self.df['pct_change'] = [i for i in self.ticker_percent_change_history]
 
+
         if self.spy:
             try:
                 self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
                 print('try loop')
             except ValueError:
                 self.spy_percent_change_history.append(0)
-
                 self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
                 print(self.df['spy_pct_change'])
-            except:
-                print(self.df['spy_pct_change'])
-                pass
+
             if spl == tpl and spl > 1:
                 self.df_corr_2 = self.df[['pct_change', 'spy_pct_change']].corr()['pct_change']['spy_pct_change']
                 self.df['pct_corr'] = self.df_corr_2
@@ -258,7 +256,7 @@ class Analyzer:
             print(self.df_corr_1, 'Volume Corr')
             logging.info('Volume Corr: %s' % self.df_corr_1)
 
-        #print(self.df)
+        print(self.df)
         return self.df
 
     def data_frame_prep(self, data, parameter='data_name'):

@@ -182,6 +182,8 @@ class SlowBull(Strategy):
         logging.info('Welcome to the SlowBull, its a quiet day but we see overall growth')
         QuantTrader(self.high,'TSLA').Volatility(self.vp)
 
+        #Make micos boolean and then add logic for ordering here
+
 
 class GrizzlyBear(Strategy):
     """

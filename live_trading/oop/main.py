@@ -9,6 +9,7 @@ import analyzer
 import strategy_factory
 import notification_sys
 import pandas as pd
+import stream_tools
 
 
 
@@ -59,7 +60,10 @@ def on_close(ws):
         logging.info('Metrics lost')
         #notification_sys.create_message('Metrics lost')
 
-    web_socket_start()
+    if stream_tools.StreamTools.stream_timer() == True:
+        quit()
+    else:
+        web_socket_start()
 
 def on_error(ws,error):
     pass
@@ -78,6 +82,7 @@ def on_message(ws,message):
 
 
 if __name__ == '__main__':
+
 
     ticker = 'TSLA'
     socket = "wss://alpaca.socket.polygon.io/stocks"

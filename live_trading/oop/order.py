@@ -22,7 +22,7 @@ class Order:
         self.ORDER_URL = f'{self.BASE_URL}/v2/orders'
 
         # --------------------------
-
+# maybe make this a steram tool
     def byte_decoder(self,need_decoded):
         """
         DECODES THE OUTPUT OF A REQUEST.GET()
@@ -227,7 +227,7 @@ class Order:
 if __name__ == '__main__':
 
     current_price = 420
-    #o = Order('TSLA',current_price,paper=True)
+    o = Order('TSLA',current_price,paper=True)
     #o.place_order()
     aa = a.Account().get_account()
     print(aa)

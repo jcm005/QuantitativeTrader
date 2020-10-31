@@ -39,6 +39,18 @@ class StreamTools:
         print(f'Extended hours are: {extended_hours}')
         return extended_hours
 
+    @classmethod
+    def stream_timer(cls):
+
+        tz = timezone('US/Eastern')
+        right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tz)
+        right_now = datetime.strftime(right_now, '%H:%M:%S')
+        if int(right_now[0:2]) > 16 or int(right_now[0:2]) <= 7:
+            extended_hours = True
+        else:
+            extended_hours = False
+        return extended_hours
+
     def localize_time(self):
         """Default set to eastern time, when runnign on a virtual machine timezone may be off"""
         right_now = pytz.utc.localize(datetime.utcnow()).astimezone(self.est)
