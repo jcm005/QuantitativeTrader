@@ -34,8 +34,11 @@ class Creator(ABC):
 class OrderFactory(Creator):
 
     def __init__(self,params):
-        self.params = params
 
+        self.params = params
+        self.symbol = params['symbol']
+        self.current_price = params['price']
+        self.ref = params['ref']
 
     def factory_method(self):
         """
@@ -44,23 +47,23 @@ class OrderFactory(Creator):
         :return:
         """
         if self.ref == 'sma1':
-            return Builder1(self.params)
+            return Builder2(self.params)
         elif self.ref == 'ctl':
-            return Builder2(self.params)
+            return Builder3(self.params)
         elif self.ref == 'sdr':
-            return Builder1(self.params)
+            return Builder2(self.params)
         elif self.ref == 'pj':
-            return Builder2(self.params)
+            return Builder3(self.params)
         elif self.ref == 'dt':
-            return Builder1(self.params)
+            return Builder2(self.params)
         elif self.ref == 'sma1ws':
-            return Builder1(self.params)
+            return Builder3(self.params)
         elif self.ref == 'ctlws':
-            return Builder2(self.params)
+            return Builder3(self.params)
         elif self.ref == 'sdrws':
-            return Builder1(self.params)
-        elif self.ref == 'pjws':
             return Builder2(self.params)
+        elif self.ref == 'pjws':
+            return Builder3(self.params)
 
 
     def load_order(self):
@@ -107,7 +110,7 @@ class Product(ABC):
     must implement
     """
     def __init__(self):
-        self
+
         pass
 
     @abstractmethod
@@ -127,22 +130,57 @@ class Builder1(Product):
     """Thin different builder style logic instructions"""
     def __init__(self, params):
 
-        self.params = params
-        self.ticker = params.symbol
-        self.price = params.current_price
+        # want to pass attributes without having to pass them
+        # order factory has no attributes beecause no instance has been made
 
+        self.params = params
+        self.ticker = None
+        self.symbol = params['symbol']
+        self.price = params['price']
+
+        self.director = order_builder.Director()
+        self.builder = order_builder.ConcreteBuilder1(self.symbol, self.price, paper=True)
+        self.director.builder = self.builder
 
 
     def build_order(self):
+        self.director.prepare_simple_order('market')
+        self.market_order = self.builder.product
+        self.market_order.show_order()
 
-        self.initiate_order()
-        print()
+
+    def send_order(self):
+        self.market_order.send_order()
+
+    def show_order(self):
+        self.market_order.show_order()
 
 
 class Builder2(Product):
 
-    def __init__(self):
-        pass
+    def __init__(self, params):
+        self.params = params
+        self.ticker = None
+        self.symbol = params['symbol']
+        self.price = params['price']
+
+        self.director = order_builder.Director()
+        self.builder = order_builder.ConcreteBuilder1(self.symbol, self.price, paper=True)
+        self.director.builder = self.builder
+
+
+    def build_order(self):
+        self.director.prepare_oto_order('market')
+        self.market_order = self.builder.product
+        self.market_order.show_order()
+
+
+    def send_order(self):
+        self.market_order.send_order()
+
+
+    def show_order(self):
+        self.market_order.show_order()
 
 
 class Builder3(Product):
@@ -152,7 +190,8 @@ class Builder3(Product):
 
 def get_order(parameters):
     # maybe call get profit here so we can load the profit into the order
-    return OrderFactory(parameters).load_order()
+        return OrderFactory(parameters).load_order()
+
 
 def get_profit(price):
     return ProfitFactory(price).load_profit()
@@ -166,8 +205,15 @@ if __name__ == '__main__':
     #profit = get_profit(price)
     #print(profit)
 # --------------------------------------------------
+    p = {'symbol':'TSLA',
+         'ref':'sma1',
+         'price':380
+         }
 
-    #order = get_order(ref)
+    order = get_order(p)
+    order.build_order()
+    order.show_order()
+    #order.send_order()
 
 # --------------------------------------------------
     pass

@@ -15,80 +15,43 @@ class Builder(ABC):
     """
     @abstractmethod
     def setTicker(self):
-        self._product.add({'symbol': self.symbol})
+        pass
 
     @abstractmethod
     def setOrderType(self, txt) -> None:
-        l = ['market', 'limit']
-        # does not support soley stop limit and stop orders
-        if txt.lower() in l:
-            if txt.lower() == 'market':
-                self._product.add({'type': txt})
-            elif txt.lower() == 'limit':
-                self._product.add({'type': txt})
-                self._product.add({'limit_price': self.price - 10})
-        else:
-            logging.warning('!! Invalid Order Type; Please Enter "market" or "limit" !!')
-
+        pass
     @abstractmethod
     def setQty(self, num=1) -> None:
-        self._product.add({'qty': num})
+        pass
 
     @abstractmethod
     def setTif(self, txt) -> None:
         # add list of options and check against all those
-        self._product.add({'time_in_force': txt})
+        pass
 
     @abstractmethod
     def setSide(self, txt='buy') -> None:
-        self._product.add({'side': txt})
+        pass
 
     @abstractmethod
     def getProfit(self) -> None:
-        self.profit = order_factory.get_profit(self.price)
+        pass
 
     @abstractmethod
     def setStopPrice(self) -> None:
-        self._product.add("PartA1")
+        pass
 
     @abstractmethod
     def setLimitPrice(self) -> None:
-        self._product.add("PartA1")
+        pass
 
     @abstractmethod
     def setStopLimitPrice(self) -> None:
-        self._product.add("PartA1")
+        pass
 
     @abstractmethod
     def setOrderClass(self, txt) -> None:
-        l = ['oto', 'bracket']
-        if txt.lower() in l:
-            if txt.lower() == 'oto':
-                self._product.add({'order_class': txt})
-                self._product.add({'take_profit': {
-                    'limit_price': self.price + self.profit
-                }})
-            elif txt.lower() == 'bracket':
-                stop_price = round(self.price - (self.profit / 2.25))
-                stop_limit_price = round(self.price - (self.profit / 2))
-                if stop_price < (self.price / 1.001):
-                    logging.info('Stop Price is < price/1001')
-
-                self._product.add({'order_class': 'bracket'})
-                self._product.add({'take_profit': {
-                    'limit_price': self.price + self.profit
-                }})
-
-                # stop price will probably be made in profit factory as well
-
-                self._product.add({'stop_loss': {
-                    'stop_price': stop_price,
-                    'limit_price': stop_limit_price
-                }})
-
-        else:
-            logging.warning('!! Invalid Order Class; Please Enter "oto" or "bracket" !!')
-
+        pass
 
 class ConcreteBuilder1(Builder):
     """

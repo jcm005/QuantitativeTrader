@@ -16,6 +16,7 @@ class BackLog:
         self.ticker = ticker
         self.time_interval = 'minute'
         self.over_night = []
+        self.spy_over_night = []
         self.raw_past = timedelta(days=1)
         self.raw_now = datetime.now()
         self.yesterday = self.raw_now - self.raw_past
@@ -30,14 +31,13 @@ class BackLog:
 
     def decipher(self):
 
-        for bar in self.data:
 
+        for bar in self.data:
             _open = str(bar.open)
             _high = str(bar.high)
             _low = str(bar.low)
             _close = str(bar.close)
             _volume = str(int(bar.volume))
-
             x = str(bar.timestamp)
             hour = int(x[11:13])
             day = int(x[8:10])

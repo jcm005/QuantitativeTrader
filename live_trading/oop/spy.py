@@ -45,8 +45,9 @@ class Builder:
             self.percent_change = round(((self._high[-1] - self._market_open) / self._market_open) * 100 ,ndigits=3)
             logging.info('SPY_500: PCT_CHANGE: %s' % self.percent_change)
         else:
-            self.percent_change = False
+            self.percent_change = round(((self._high[-1] - self._low[0]) / self._low[0]) * 100 ,ndigits=3)
             print('Market Is Not Open Yet')
+
 
         p = {
             'Time': self.time,                  # just time
@@ -55,7 +56,6 @@ class Builder:
             'market_open':self._market_open,    # single value
             'pct_change': self.percent_change,  # single value
         }
-
         return p
 
 

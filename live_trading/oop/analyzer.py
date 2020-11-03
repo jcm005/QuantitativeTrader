@@ -27,11 +27,8 @@ class Analyzer:
         self._market_open = False
         self.spy = False
         self.spy_500 = None
-
-
         self.spy_percent_change_history = []
         self.ticker_percent_change_history = []
-
         logging.basicConfig(level=logging.DEBUG,
                             filename='algorithm.log',
                             filemode='w',
@@ -74,8 +71,9 @@ class Analyzer:
             elif self._current_tick['sym'] == 'SPY':
                 try:
                     self.spy_500 = spy.Builder(self._current_tick).run()
-                    #self.spy_percent_change_history.append(self.spy_500['pct_change'])
+                    self.spy_percent_change_history.append(self.spy_500['pct_change'])
                     self.spy = True
+                    self.metrics()
                 except:
                     logging.warning(self._current_tick)
                     logging.warning('Spy Builder Failure/Insert Methodology for SPY_500')
@@ -126,12 +124,7 @@ class Analyzer:
             self._percent_change = round(((self._high[-1] - self._market_open) / self._market_open) * 100, ndigits=3)
             self.ticker_percent_change_history.append(self._percent_change)
         except:
-            logging.warning('Percent change')
-
-        try:
-            self.spy_percent_change_history.append(self.spy_500['pct_change'])
-        except:
-            logging.warning('SPY_PCT_CHANGE')
+            pass
 
         if len(self._minute_candlestick) > 1:
             self.vp = self._minute_candlestick[-1]['v_factor'] - self._minute_candlestick[-2]['v_factor']
@@ -172,6 +165,7 @@ class Analyzer:
             'over_night' : self.over_night_params,
             'ticker_pct_change': self.ticker_percent_change_history,
         }
+
         try:
             p['spy_market_pct_change'] = self.spy_percent_change_history
         except:
@@ -179,11 +173,7 @@ class Analyzer:
 
         return p
 
-    def run(self):
-
-        # if this runs first expect a missing SPY data not ready yet message.
-        self._candle_builder()
-        self._run_analytics() # try market open here if none then we get it in backlog
+    def _back_logger(self):
 
         while self.count == 1:  # Runs once
             self.over_night_params = bl.BackLog(self.ticker).run()
@@ -197,6 +187,12 @@ class Analyzer:
             logging.info('-- %s market open %s --' % (self.ticker, self._market_open))
             self.count = 0
             break
+
+    def run(self):
+
+        self._candle_builder()
+        self._run_analytics()
+        self._back_logger()
 
     def metrics(self):
         '''Exporting data for offline analysis and eventually SQL dumping/warehousing'''
@@ -217,39 +213,37 @@ class Analyzer:
         self.df['date'] = [i.split(',')[0] for i in self.df['time']]
         self.df['day'] = [i.split(',')[1] for i in self.df['time']]
         self.df['time'] = [i.split(',')[-1] for i in self.df['time']]
-
         tpl = len(self.ticker_percent_change_history)
         spl = len(self.spy_percent_change_history)
 
-        if len(self.df.time) == len(self.ticker_percent_change_history):
+
+        if len(self.df.time) == tpl:
             self.df['pct_change'] = [i for i in self.ticker_percent_change_history]
 
+        # IF SPY INFORMATION IS AVAILABLE
 
         if self.spy:
             try:
-                self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
-                print('try loop')
+                print(self.spy_percent_change_history)
+                if spl == len(self.df.time):
+                    self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
+
             except ValueError:
-                self.spy_percent_change_history.append(0)
-                self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
-                print(self.df['spy_pct_change'])
+                #self.spy_percent_change_history.append(0)
+                #self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
+                pass
 
             if spl == tpl and spl > 1:
                 self.df_corr_2 = self.df[['pct_change', 'spy_pct_change']].corr()['pct_change']['spy_pct_change']
                 self.df['pct_corr'] = self.df_corr_2
                 print(self.df_corr_2,'PCT_CORR')
                 logging.info('Pct_Corr: %s' % self.df_corr_2)
-        else:
-            while len(self.spy_percent_change_history) < 1:
-                self.spy_percent_change_history.append(0)
-                self.df['spy_pct_change'] = [i for i in self.spy_percent_change_history]
-                print('while loop')
 
-                break
+
 
         # ----------------------------------------------------------
-        print('spl',spl, 'tpl', tpl, 'time', len(self.df.time))
 
+        print('spl',spl, 'tpl', tpl, 'time', len(self.df.time))
         if tpl > 0:
             self.df_corr_1 = self.df[['volume', 'volatility']].corr()['volume']['volatility']
             self.df['volume:volatility'] = self.df_corr_1
