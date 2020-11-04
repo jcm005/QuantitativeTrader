@@ -114,8 +114,8 @@ class Analyzer:
         self._today_volume = self._minute_candlestick[-1]['today_volume'] / 1000000
 
         logging.info('Time: %s' % self._time)
-
         # ------------------------------ ROLLINGS ------------------------------
+
         try:
             self._market_open = self._current_tick['op']
         except:
@@ -278,7 +278,7 @@ if __name__ == '__main__':
 
     #b = stream_tools.StreamTools.time_converter(1536036818784)
     #print(b)
-   # message = [{"ev":"AM","sym":"TSLA","v":35177,"av":15407555,"op":446.24,"vw":438.9615,"o":438.72,"c":438.91,"h":439.2199,"l":438.72,"a":441.0544,"z":43,"n":1,"s":1603121220000,"e":1603121280000}]
+    # message = [{"ev":"AM","sym":"TSLA","v":35177,"av":15407555,"op":446.24,"vw":438.9615,"o":438.72,"c":438.91,"h":439.2199,"l":438.72,"a":441.0544,"z":43,"n":1,"s":1603121220000,"e":1603121280000}]
    # ticker = 'TSLA'
    # dp = Analyzer().load()
 

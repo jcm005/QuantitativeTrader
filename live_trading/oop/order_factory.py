@@ -72,6 +72,8 @@ class OrderFactory(Creator):
         logging.info('-- Sending Order --')
         return order
 
+
+
 class ProfitFactory(Creator):
 
     """ all thought the purpose of a factory is to return objects this just returns a price
@@ -109,84 +111,50 @@ class Product(ABC):
     Strategy interface declares all the operation that all the concrete products
     must implement
     """
-    def __init__(self):
 
-        pass
+    def __init__(self, params):
+        self.params = params
+        self.ticker = None
+        self.symbol = params['symbol']
+        self.price = params['price']
+
+        self.director = order_builder.Director()
+        self.builder = order_builder.ConcreteBuilder1(self.symbol, self.price, paper=True)
+        self.director.builder = self.builder
 
     @abstractmethod
     def build_order(self):
         pass
 
-    def operatiokn(self):
-        # a framework of infrastrucutre function.
-        pass
-
-    def run(self):
-        pass
-
-
-class Builder1(Product):
-
-    """Thin different builder style logic instructions"""
-    def __init__(self, params):
-
-        # want to pass attributes without having to pass them
-        # order factory has no attributes beecause no instance has been made
-
-        self.params = params
-        self.ticker = None
-        self.symbol = params['symbol']
-        self.price = params['price']
-
-        self.director = order_builder.Director()
-        self.builder = order_builder.ConcreteBuilder1(self.symbol, self.price, paper=True)
-        self.director.builder = self.builder
-
-
-    def build_order(self):
-        self.director.prepare_simple_order('market')
-        self.market_order = self.builder.product
-        self.market_order.show_order()
-
-
     def send_order(self):
         self.market_order.send_order()
 
     def show_order(self):
         self.market_order.show_order()
+
+
+class Builder1(Product):
+    """Thin different builder style logic instructions"""
+    def build_order(self):
+        self.director.prepare_simple_order('market')
+        self.market_order = self.builder.product
 
 
 class Builder2(Product):
 
-    def __init__(self, params):
-        self.params = params
-        self.ticker = None
-        self.symbol = params['symbol']
-        self.price = params['price']
-
-        self.director = order_builder.Director()
-        self.builder = order_builder.ConcreteBuilder1(self.symbol, self.price, paper=True)
-        self.director.builder = self.builder
-
-
     def build_order(self):
+
         self.director.prepare_oto_order('market')
         self.market_order = self.builder.product
-        self.market_order.show_order()
-
-
-    def send_order(self):
-        self.market_order.send_order()
-
-
-    def show_order(self):
-        self.market_order.show_order()
 
 
 class Builder3(Product):
 
-    def __init__(self):
-        pass
+    def build_order(self):
+
+        self.director.prepare_bracket_order('market')
+        self.market_order = self.builder.product
+
 
 def get_order(parameters):
     # maybe call get profit here so we can load the profit into the order

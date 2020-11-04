@@ -73,3 +73,20 @@ INFO:root:--------------------------------------
 INFO:root:SPY_500: PCT_CHANGE: 0.471
 INFO:root:Pct_Corr: 0.7796579604622057
 INFO:root:Volume Corr: 0.8798474718443406
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: 0.467
+INFO:root:Volume Corr: 0.8798474718443406
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-03, Tue, 09:53
+INFO:root:-- Time: 2020-11-03, Tue, 09:53, High: 415.67, Low: 415, Stream VP: -0.15, V/P Ratio: 0.16 --
+INFO:root:-- Factory Live --
+INFO:root:-- Evaluating Parameters... --
+INFO:root:-- The Market is Bull --
+INFO:root:Max price: 415.85  Min price: 412.29
+INFO:root:-- Loading up the SlowBull Strategy --
+INFO:root:-- Building Strategy --
+INFO:root:Welcome to the SlowBull, its a quiet day but we see overall growth
+INFO:root:-- Starting Defualt Operations --
+INFO:root:-- Checking Price Jump --
+INFO:root:Pct_Corr: 0.8166875105925298
+INFO:root:Volume Corr: 0.8435406291080122

@@ -140,7 +140,7 @@ class QuantTrader:
             if (self.price[-1] - self.sma_30) > (threshold):
                 logging.info('Climbing The Ladder Satisfied')
                 order = self.buy_order(ref, qty)
-                notification_sys.create_message('Sending Order %s' % order)
+                #notification_sys.create_message('Sending Order %s' % order)
 
                 return order
             else:
@@ -163,7 +163,7 @@ class QuantTrader:
                 logging.info('Stop Drop and Roll Satisfied')
                 order = self.buy_order(ref, qty)
 
-                notification_sys.create_message('Sending Order %s' % order)
+                #notification_sys.create_message('Sending Order %s' % order)
                 return order
             else:
                 logging.info('SDR Lower Than Threshold')
@@ -178,7 +178,7 @@ class QuantTrader:
         if volatility > parameter:
             logging.info('Volatility Order Satisfied')
             order = self.buy_order(ref, qty)
-            notification_sys.create_message('Sending Order %s' % order)
+            #notification_sys.create_message('Sending Order %s' % order)
 
             return order
         else:
@@ -192,7 +192,7 @@ class QuantTrader:
                 logging.info('Price Jump Satisfied')
                 order = self.buy_order(ref, qty)
 
-                notification_sys.create_message('Sending Order %s' % order)
+                #notification_sys.create_message('Sending Order %s' % order)
                 return order
             else:
                 logging.info('Price Jump Not Satisfied')

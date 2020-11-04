@@ -124,6 +124,7 @@ class Strategy(ABC):
         high = self.high
         logging.info('-- Building Strategy --')
         self.build_strategy()
+        # enter another function dictating wheter if the mirco strats are boolean true then get order then we can go another layer to send order
         self.operation(high)
 
 

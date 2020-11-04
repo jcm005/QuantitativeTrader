@@ -53,6 +53,7 @@ class Builder(ABC):
     def setOrderClass(self, txt) -> None:
         pass
 
+
 class ConcreteBuilder1(Builder):
     """
     The Concrete Builder classes follow the Builder interface and provide
@@ -68,7 +69,7 @@ class ConcreteBuilder1(Builder):
         self.paper = paper
         self.price = current_price
         self.symbol = ticker
-        self.reset()
+        self.reset() # may be a redundancy here
         self.getProfit()
 
 
@@ -94,14 +95,6 @@ class ConcreteBuilder1(Builder):
         product = self._product
         self.reset()
         return product
-# --------------------------------------------
-    def top_order(self) -> None:
-        pass
-    def bottom_order(self) -> None:
-        self._product.add("PartC1")
-    def middle_order(self) -> None:
-        self._product.add("PartB1")
-# --------------------------------------------
 
     def setTicker(self):
         self._product.add({'symbol':self.symbol})
@@ -169,14 +162,6 @@ class ConcreteBuilder1(Builder):
         else:
             logging.warning('!! Invalid Order Class; Please Enter "oto" or "bracket" !!')
 
-
-
-
-
-
-
-
-
 class Order:
     """
     It makes sense to use the Builder pattern only when your products are quite
@@ -232,6 +217,7 @@ class Order:
         logging.info('order: %s' % order_sender)
         print(order_sender)
 
+
 class Director:
     """
     The Director is only responsible for executing the building steps in a
@@ -282,7 +268,6 @@ class Director:
         self.builder.setOrderClass('bracket')
         self.builder.setTif('gtc')
         self.builder.setQty()
-        pass
 
 
 if __name__ == "__main__":
