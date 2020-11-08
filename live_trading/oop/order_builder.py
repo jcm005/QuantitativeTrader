@@ -162,6 +162,7 @@ class ConcreteBuilder1(Builder):
         else:
             logging.warning('!! Invalid Order Class; Please Enter "oto" or "bracket" !!')
 
+
 class Order:
     """
     It makes sense to use the Builder pattern only when your products are quite

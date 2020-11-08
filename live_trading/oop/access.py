@@ -10,14 +10,19 @@ from datetime import datetime
 
 class Account:
 
-    def __init__(self):
+    def __init__(self, paper=False):
 
-        self.BASE_URL = "https://api.alpaca.markets"
+        if paper == True:
+            self.BASE_URL = "https://paper-api.alpaca.markets"
+            self.HEADERS = {'APCA-API-KEY-ID': PAPER_KEY, 'APCA-API-SECRET-KEY': SECRET_KEY}
+        else:
+            self.BASE_URL = "https://api.alpaca.markets"
+            self.HEADERS = {'APCA-API-KEY-ID': API_KEY, 'APCA-API-SECRET-KEY': SECRET__KEY}
+
         self.ACCOUNT_URL = f'{self.BASE_URL}/v2/account'
         self.ORDERS_URL = f'{self.BASE_URL}/v2/orders'
         self.POSITIONS_URL = f'{self.BASE_URL}/v2/positions'
         self.POSITION_FOR_URL = f'{self.BASE_URL}/v2/positions/'
-        self.HEADERS = {'APCA-API-KEY-ID': API_KEY, 'APCA-API-SECRET-KEY': SECRET__KEY}
 
 
     def clean_and_load(self,message):
@@ -128,9 +133,7 @@ class Account:
 
 if __name__ == '__main__':
 
-    a = Account()
-    info = a.share_info('TSLA')
-    print(info)
+    pass
 
     #account = get_account()
     #tsla = get_position_for('TSLA')
