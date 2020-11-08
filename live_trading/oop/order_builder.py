@@ -242,10 +242,6 @@ class Director:
         """
         self._builder = builder
 
-    """
-    some things the ceo can do like hire or fire
-    """
-
     def prepare_simple_order(self, txt) -> None:
         self.builder.setTicker()
         self.builder.setSide()
@@ -268,6 +264,8 @@ class Director:
         self.builder.setOrderClass('bracket')
         self.builder.setTif('gtc')
         self.builder.setQty()
+
+
 
 
 if __name__ == "__main__":

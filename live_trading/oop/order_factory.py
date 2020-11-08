@@ -139,6 +139,9 @@ class Builder1(Product):
         self.director.prepare_simple_order('market')
         self.market_order = self.builder.product
 
+    def __str__(self) -> None:
+        return 'market'
+
 
 class Builder2(Product):
 
@@ -147,24 +150,27 @@ class Builder2(Product):
         self.director.prepare_oto_order('market')
         self.market_order = self.builder.product
 
+    def __str__(self) -> None:
+        return 'oto'
+
 
 class Builder3(Product):
 
     def build_order(self):
 
-        self.director.prepare_bracket_order('market')
+        self.director.prepare_bracket_order()
         self.market_order = self.builder.product
+
+    def __str__(self) -> None:
+        return 'bracket'
 
 
 def get_order(parameters):
     # maybe call get profit here so we can load the profit into the order
         return OrderFactory(parameters).load_order()
 
-
 def get_profit(price):
     return ProfitFactory(price).load_profit()
-
-
 
 if __name__ == '__main__':
 

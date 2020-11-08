@@ -1,12 +1,11 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-
 import access as a
 from trader import QuantTrader
 from analyzer import Analyzer
 import logging
 import notification_sys
-
+import order_factory
 
 
 class Creator(ABC):
@@ -34,6 +33,7 @@ class StrategyFactory(Creator):
     def __init__(self, parameter):
 
         self.par = parameter
+        self.symbol = parameter['symbol']
         self.high = parameter['high']
         self.low = parameter['low']
         self.volume = None
@@ -45,55 +45,40 @@ class StrategyFactory(Creator):
         self.min = min(self.low)
 
     def factory_method(self):
-        '''TREE'''
-
-       # print('-- In Factory Method... --')
-        logging.info('-- Evaluating Parameters... --')
 
         if self.market_open:
+            logging.info('Max price: %s  Min price: %s' % (self.max, self.min))
 
-            # -- Bull Case --
             if (self.high[-1] - 5) > self.market_open:
+
                 logging.info('-- The Market is Bull --')
-                logging.info('Max price: %s  Min price: %s' % (self.max, self.min))
-
                 if self.rolling_v_10 != False and self.rolling_v_10 > .5:
-                    #notification_sys.create_message('The Market Is Bullish,volatile; Rolling_v_10: %s' % self.rolling_v_10)
-                    #notification_sys.create_message('OpenPrice: %s, CurrentPrice: %s' % (self.market_open, self.high[-1]))
-                    return RagingBull(self.high)
+                    return RagingBull(self.par)
                 else:
-                    return SlowBull(self.high,self.vp)
+                    return SlowBull(self.par)
 
-            # -- Bear Case --
             elif (self.market_open - 5) > self.high[-1]:
                 logging.info('-- The market is Bear --')
-                logging.info('Max price: %s  Min price: %s' % (self.max, self.min))
 
                 if self.rolling_v_10 != False and self.rolling_v_10 > .5:
-                    #notification_sys.create_message('The Market Is Bearish,volatile; Rolling_v_10: %s' % self.rolling_v_10)
-                    #notification_sys.create_message('OpenPrice: %s, CurrentPrice: %s' % (self.market_open, self.high[-1]))
-                    return GrizzlyBear(self.high)
+                    return GrizzlyBear(self.par)
                 else:
-                    return Hibernation(self.high)
+                    return Hibernation(self.par)
 
-            # -- Small discrepancy in price, check volatility
             else:
                 if self.rolling_v_10 != False and self.rolling_v_10 >.5:
-                    return BuringEnds(self.high)
+                    return BuringEnds(self.par)
                 else:
-                    return Hibernation(self.high)
+                    return Hibernation(self.par)
 
         else:
             logging.warning('-- Market Open Failure --')
-            return Hibernation(self.high
-                               )
+            return Hibernation(self.par)
 
     def load_factory(self):
 
-        logging.info('-- Factory Live --')
         strategy = self.factory_method()
-        logging.info('-- Loading up the %s Strategy --' % strategy)
-
+        logging.info('-- Loading up  %s --' % strategy)
         if strategy == None:
             logging.warning('-- Strategy is of NoneType --')
             return Hibernation(self.high)
@@ -107,25 +92,41 @@ class Strategy(ABC):
     must implement
     """
 
-    @abstractmethod # has to be overwritten
+    def __init__(self, params):
+
+        self.high = params['high']
+        self.vp  = params['vp']
+
+        self.qt = QuantTrader(self.high)
+
+        self.parameters = {
+            'symbol': params['symbol'],
+            'price': self.high[-1]
+        }
+
+    @abstractmethod
     def build_strategy(self):
         pass
 
-    def operation(self, high):
+    def operation(self):
         """
         framework functions that will always
         run no matter what strategy is being called
         """
-        logging.info('-- Starting Defualt Operations --')
-        logging.info('-- Checking Price Jump --')
-        QuantTrader(high, 'TSLA').price_jump(ref='pj')
+
+        status = self.qt.price_jump()
+        if status:
+            self.parameters['ref'] = 'pj'
+            order = order_factory.get_order(self.parameters)
+            order.build_order()
+            order.show_order()
+            order.send_order()
 
     def run(self):
-        high = self.high
+
         logging.info('-- Building Strategy --')
         self.build_strategy()
-        # enter another function dictating wheter if the mirco strats are boolean true then get order then we can go another layer to send order
-        self.operation(high)
+        self.operation()
 
 
 class RagingBull(Strategy):
@@ -137,15 +138,25 @@ class RagingBull(Strategy):
     we know its a bull day we buy on that drop call SDR
     """
 
-    def __init__(self, high):
-        self.high = high
 
     def __str__(self):
         return 'RagingBull'
 
     def build_strategy(self):
+
         print('Welcome to raging bull where we got chronic volatitlity')
-        QuantTrader(self.high, 'TSLA').stop_drop_and_roll(ref='sdrws')
+
+        status = self.qt.stop_drop_and_roll()
+        if status:
+            self.parameters['ref'] = 'sdr'
+            order = order_factory.get_order(self.parameters)
+            order.build_order()
+            order.show_order()
+            order.send_order()
+
+        else:
+            print('SDR not satisfied')
+            logging.info('Req not satisfied')
 
 
 class Hibernation(Strategy):
@@ -153,8 +164,6 @@ class Hibernation(Strategy):
     """
     Call this in a non volatile markey
     """
-    def __init__(self, high):
-        self.high = high
 
     def __str__(self):
         return 'Hibernation'
@@ -170,10 +179,6 @@ class SlowBull(Strategy):
     eventaully we will get a small profit
     """
 
-    def __init__(self, high, vp):
-        self.vp = vp
-        self.high = high
-
     def __str__(self):
         return 'SlowBull'
 
@@ -181,9 +186,17 @@ class SlowBull(Strategy):
 
         print('Welcome to the SlowBull, its a quiet day but we see overall growth')
         logging.info('Welcome to the SlowBull, its a quiet day but we see overall growth')
-        QuantTrader(self.high,'TSLA').Volatility(self.vp)
 
-        #Make micos boolean and then add logic for ordering here
+        status = self.qt.Volatility(self.vp)
+        if status:
+            self.parameters['ref'] = 'sma1'
+            order = order_factory.get_order(self.parameters)
+            order.build_order()
+            order.show_order()
+            order.send_order()
+        else:
+            print('SMA! not satisfied')
+            logging.info('Not volatilie sma1')
 
 
 class GrizzlyBear(Strategy):
@@ -202,21 +215,26 @@ class GrizzlyBear(Strategy):
       i think it is important if the back logger cna preface this strategy
       """
 
-    def __init__(self, high):
-        self.high = high
+
 
     def __str__(self):
         return 'GrizzlyBear'
 
     def build_strategy(self):
         print('Welcome to GrizzlyBear where we got chronic volatitlity, and falling fast')
-        QuantTrader(self.high, 'TSLA').climb_the_ladder(ref='ctlws')
+        status = self.qt.climb_the_ladder()
+        if status:
+            self.parameters['ref'] = 'ctl'
+            order = order_factory.get_order(self.parameters)
+            order.build_order()
+            order.show_order()
+            order.send_order()
+        else:
+            print('nope')
 
 
 class BurningEnds(Strategy):
 
-    def __init__(self, high):
-        self.high = high
 
     def __str__(self):
         return 'BurningEnds'
@@ -227,14 +245,6 @@ class BurningEnds(Strategy):
 # -------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------
 
-def client_code(creator: Creator) -> creator.run():
-    """
-    The client code workks with an instance of a concrete creator, albeit through
-    its base interface. As long as the client keeps working with the creator via
-    the base interface, you can pass it any creator's subclass.
-    """
-    # creator.build()
-    creator.run()
 
 def get_strategy(parameters):
     """
@@ -246,6 +256,22 @@ def get_strategy(parameters):
 
 
 if __name__ == "__main__":
+    test = False
+    if test == True:
+        p = {
+            'symbol': 'TSLA',
+            'high': [i for i in range(1,440)],
+            'low': None,
+            'rolling_v_10': .6,
+            'market_open':400,
+            'rolling_high_10': 430,
+            'rolling_high_30': 431,
+            'vp':1.2,
+        }
 
-    strategy = get_strategy(parameters=10)
-    strategy.run()
+        strategy = get_strategy(p)
+        strategy.run()
+
+        #rage = GrizzlyBear(p)
+        #rage.build_strategy()
+        #rage.operation()

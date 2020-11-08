@@ -8,6 +8,7 @@ import spy
 import pandas as pd
 import back_logger as bl
 import stream_tools
+import alpaca_stream as stream
 
 class Analyzer:
     """
@@ -61,6 +62,16 @@ class Analyzer:
         :param ticker:
         :return:
         """
+       # data = stream.Message(message, ticker)
+        #if data.check_status() != True:
+         #   return False
+        #else:
+         #   if data.check_symbol():
+          #      return True
+           # elif data.spy:
+            #    self.spy_percent_change_history.append(data.spy_500['pct_change'])
+             #   self.metrics()
+
         self._current_tick = json.loads(message)[0]
         if self._current_tick['ev'] == 'status':
             logging.info(self._current_tick)
@@ -155,6 +166,7 @@ class Analyzer:
     def _market_analyzer(self):
 
         p = {
+            'symbol':self.ticker,
             'high': self._high,
             'low': self._low,
             'market_open': self._market_open,
