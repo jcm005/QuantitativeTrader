@@ -5,10 +5,10 @@ import backtrader as bt
 import backtrader.feeds as btfeeds
 from data_grabber import *
 
-asset = ['TSLA']
-start_date = '2020-09-22'  # ticker symbols to be tested
+asset = ['NIO']
+start_date = '2020-11-03'  # ticker symbols to be tested
 time_interval = 'minute'  # collect data per each ---
-time_delt = 1
+time_delt = 7
 time_period = 1
 
 
