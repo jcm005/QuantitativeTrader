@@ -67,7 +67,7 @@ class StrategyFactory(Creator):
 
             else:
                 if self.rolling_v_10 != False and self.rolling_v_10 >.5:
-                    return BuringEnds(self.par)
+                    return BurningEnds(self.par)
                 else:
                     return Hibernation(self.par)
 

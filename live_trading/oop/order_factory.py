@@ -119,7 +119,7 @@ class Product(ABC):
         self.price = params['price']
 
         self.director = order_builder.Director()
-        self.builder = order_builder.ConcreteBuilder1(self.symbol, self.price, paper=True)
+        self.builder = order_builder.ConcreteBuilder1(self.symbol, self.price)
         self.director.builder = self.builder
 
     @abstractmethod

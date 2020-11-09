@@ -278,7 +278,7 @@ if __name__ == "__main__":
 
     price = 380
     director = Director() # think of as CEO
-    builder = ConcreteBuilder1('TSLA',price, paper=True) # think of as employee
+    builder = ConcreteBuilder1('TSLA', price) # think of as employee
 
     director.builder = builder
 
