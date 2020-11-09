@@ -2,6 +2,7 @@ import json
 import logging as log
 import websocket
 from datetime import datetime
+import spy
 
 class WebConnection:
     """
@@ -64,11 +65,12 @@ class Message:
         self.message = json.loads(message)[0]
         self.status = self.message['ev']
         self.ticker = ticker
+        self.spy = None
 
     def check_status(self):
 
         if self.status == 'status':
-            logging.info(self.message)
+            log.info(self.message)
             return False
         else:
             return True
@@ -78,13 +80,13 @@ class Message:
         if self.status == 'AM':
             if self.message['sym'] == self.ticker:
                 return True
-            elif self._current_tick['sym'] == 'SPY':
+            elif self.message['sym'] == 'SPY':
                 try:
-                    self.spy_500 = spy.Builder(self._current_tick).run()
+                    self.spy_500 = spy.Builder(self.message).run()
                     self.spy = True
                 except:
-                    logging.warning(self._current_tick)
-                    logging.warning('Spy Builder Failure/Insert Methodology for SPY_500')
+                    log.warning(self.message)
+                    log.warning('Spy Builder Failure/Insert Methodology for SPY_500')
                 return False
 
 if __name__ == '__main__':

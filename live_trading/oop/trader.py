@@ -105,5 +105,11 @@ class QuantTrader:
 
 if __name__ == '__main__':
 
+
+    price = [i for i in range(0,100)]
+    a = QuantTrader(price)
+    b = a.price_jump()
+    print(b)
+
     pass
 

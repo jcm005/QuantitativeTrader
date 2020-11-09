@@ -81,7 +81,7 @@ class StrategyFactory(Creator):
         logging.info('-- Loading up  %s --' % strategy)
         if strategy == None:
             logging.warning('-- Strategy is of NoneType --')
-            return Hibernation(self.high)
+            return Hibernation(self.par)
         else:
             return strategy
 
@@ -115,6 +115,7 @@ class Strategy(ABC):
         """
 
         status = self.qt.price_jump()
+        print(status)
         if status:
             self.parameters['ref'] = 'pj'
             order = order_factory.get_order(self.parameters)
@@ -169,7 +170,8 @@ class Hibernation(Strategy):
         return 'Hibernation'
 
     def build_strategy(self):
-        pass
+        print('hibernation')
+
 
 
 class SlowBull(Strategy):

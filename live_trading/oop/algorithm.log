@@ -7,3 +7,340 @@ INFO:root:--------------------------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.SPY'}
 INFO:root:--------------------------------------
 INFO:root:{'ev': 'status', 'status': 'success', 'message': 'subscribed to: AM.TSLA'}
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.67
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:40
+INFO:root:-- Back Logging --
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.polygon.io:443
+DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/TSLA/range/1/minute/2020-11-08/2020-11-09?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://api.polygon.io:443 "GET /v2/aggs/ticker/SPY/range/1/minute/2020-11-08/2020-11-09?unadjusted=False&apiKey=AKLHG2FROVBZU52XU8AT HTTP/1.1" 200 None
+INFO:root:-- Overnight data --> 148 --
+INFO:root:-- Pre market Price: 439.5 --
+INFO:root:-- TSLA market open 439.5 --
+INFO:root:Max price: 437.6599  Min price: 436.55
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: nan
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:41
+INFO:root:-- Time: 2020-11-09, Mon, 12:41, High: 436.9099, Low: 436.51, Stream VP: -0.16, V/P Ratio: 0.09 --
+INFO:root:Max price: 437.6599  Min price: 436.51
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: -1.0
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.659
+INFO:root:Volume Corr: -1.0
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:42
+INFO:root:-- Time: 2020-11-09, Mon, 12:42, High: 436.88, Low: 436, Stream VP: 0.11, V/P Ratio: 0.2 --
+INFO:root:Max price: 437.6599  Min price: 436
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: -0.03994345950736112
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.666
+INFO:root:Volume Corr: -0.03994345950736112
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:43
+INFO:root:-- Time: 2020-11-09, Mon, 12:43, High: 436.664, Low: 436.3, Stream VP: -0.12, V/P Ratio: 0.08 --
+INFO:root:Max price: 437.6599  Min price: 436
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.5229832224888298
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.668
+INFO:root:Volume Corr: 0.5229832224888298
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:44
+INFO:root:-- Time: 2020-11-09, Mon, 12:44, High: 436.5305, Low: 435.9, Stream VP: 0.06, V/P Ratio: 0.14 --
+INFO:root:Max price: 437.6599  Min price: 435.9
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.44898846795207625
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.67
+INFO:root:Volume Corr: 0.44898846795207625
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.651
+INFO:root:Volume Corr: 0.44898846795207625
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:45
+INFO:root:-- Time: 2020-11-09, Mon, 12:45, High: 436.6199, Low: 435.8, Stream VP: 0.05, V/P Ratio: 0.19 --
+INFO:root:Max price: 437.6599  Min price: 435.8
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.31683577307062216
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.632
+INFO:root:Volume Corr: 0.31683577307062216
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:46
+INFO:root:-- Time: 2020-11-09, Mon, 12:46, High: 436.05, Low: 435.73, Stream VP: -0.12, V/P Ratio: 0.07 --
+INFO:root:Max price: 437.6599  Min price: 435.73
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.30741743617775885
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.626
+INFO:root:Volume Corr: 0.30741743617775885
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:47
+INFO:root:-- Time: 2020-11-09, Mon, 12:47, High: 436.2175, Low: 435.7, Stream VP: 0.05, V/P Ratio: 0.12 --
+INFO:root:Max price: 437.6599  Min price: 435.7
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.33928839067926464
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.659
+INFO:root:Volume Corr: 0.33928839067926464
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:48
+INFO:root:-- Time: 2020-11-09, Mon, 12:48, High: 436.095, Low: 435.49, Stream VP: 0.02, V/P Ratio: 0.14 --
+INFO:root:Max price: 437.6599  Min price: 435.49
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.34007958831000457
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.729
+INFO:root:Volume Corr: 0.34007958831000457
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:49
+INFO:root:-- Time: 2020-11-09, Mon, 12:49, High: 435.56, Low: 434.73, Stream VP: 0.05, V/P Ratio: 0.19 --
+INFO:root:Rolling_v_10 0.14700000000000002
+INFO:root:Rolling_high_10 436.5186700000001
+INFO:root:Max price: 437.6599  Min price: 434.73
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.39998013181725955
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:50
+INFO:root:-- Time: 2020-11-09, Mon, 12:50, High: 435.2442, Low: 434.76, Stream VP: -0.08, V/P Ratio: 0.11 --
+INFO:root:Rolling_v_10 0.133
+INFO:root:Rolling_high_10 436.27709999999996
+INFO:root:Max price: 437.6599  Min price: 434.73
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.410065248001806
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.778
+INFO:root:Volume Corr: 0.410065248001806
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.739
+INFO:root:Volume Corr: 0.410065248001806
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:51
+INFO:root:-- Time: 2020-11-09, Mon, 12:51, High: 435.4599, Low: 434.73, Stream VP: 0.06, V/P Ratio: 0.17 --
+INFO:root:Rolling_v_10 0.14100000000000001
+INFO:root:Rolling_high_10 436.1321000000001
+INFO:root:Max price: 437.6599  Min price: 434.73
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.42282449874319505
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.775
+INFO:root:Volume Corr: 0.42282449874319505
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:52
+INFO:root:-- Time: 2020-11-09, Mon, 12:52, High: 435.8491, Low: 435.19, Stream VP: -0.02, V/P Ratio: 0.15 --
+INFO:root:Rolling_v_10 0.136
+INFO:root:Rolling_high_10 436.02901
+INFO:root:Max price: 437.6599  Min price: 434.73
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.42323109462356684
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.816
+INFO:root:Volume Corr: 0.42323109462356684
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:53
+INFO:root:-- Time: 2020-11-09, Mon, 12:53, High: 435.554, Low: 434.8, Stream VP: 0.02, V/P Ratio: 0.17 --
+INFO:root:Rolling_v_10 0.145
+INFO:root:Rolling_high_10 435.91801
+INFO:root:Max price: 437.6599  Min price: 434.73
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.4230732731352042
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.811
+INFO:root:Volume Corr: 0.4230732731352042
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:54
+INFO:root:-- Time: 2020-11-09, Mon, 12:54, High: 435.46, Low: 435.04, Stream VP: -0.07, V/P Ratio: 0.1 --
+INFO:root:Rolling_v_10 0.141
+INFO:root:Rolling_high_10 435.81095999999997
+INFO:root:Max price: 437.6599  Min price: 434.73
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.4741781268224319
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:55
+INFO:root:-- Time: 2020-11-09, Mon, 12:55, High: 435.13, Low: 434.75, Stream VP: -0.01, V/P Ratio: 0.09 --
+INFO:root:Rolling_v_10 0.13100000000000003
+INFO:root:Rolling_high_10 435.66196999999994
+INFO:root:Max price: 437.6599  Min price: 434.73
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.49783158712620057
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.854
+INFO:root:Volume Corr: 0.49783158712620057
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:56
+INFO:root:-- Time: 2020-11-09, Mon, 12:56, High: 435.21, Low: 434.51, Stream VP: 0.07, V/P Ratio: 0.16 --
+INFO:root:Rolling_v_10 0.14
+INFO:root:Rolling_high_10 435.57797
+INFO:root:Max price: 437.6599  Min price: 434.51
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.5013513682258199
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.832
+INFO:root:Volume Corr: 0.5013513682258199
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.821
+INFO:root:Volume Corr: 0.5013513682258199
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:57
+INFO:root:-- Time: 2020-11-09, Mon, 12:57, High: 435.0185, Low: 434.5, Stream VP: -0.04, V/P Ratio: 0.12 --
+INFO:root:Rolling_v_10 0.13999999999999999
+INFO:root:Rolling_high_10 435.45807
+INFO:root:Max price: 437.6599  Min price: 434.5
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.5062940688366834
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:58
+INFO:root:-- Time: 2020-11-09, Mon, 12:58, High: 435, Low: 434.5257, Stream VP: -0.01, V/P Ratio: 0.11 --
+INFO:root:Rolling_v_10 0.13699999999999998
+INFO:root:Rolling_high_10 435.3485700000001
+INFO:root:Max price: 437.6599  Min price: 434.5
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.5153462277296273
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.786
+INFO:root:Volume Corr: 0.5153462277296273
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 12:59
+INFO:root:-- Time: 2020-11-09, Mon, 12:59, High: 435.0487, Low: 434.6, Stream VP: -0.01, V/P Ratio: 0.1 --
+INFO:root:Rolling_v_10 0.12800000000000003
+INFO:root:Rolling_high_10 435.29744
+INFO:root:Max price: 437.6599  Min price: 434.5
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.2116463706304472
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.714
+INFO:root:Volume Corr: 0.2116463706304472
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 13:00
+INFO:root:-- Time: 2020-11-09, Mon, 13:00, High: 435.49, Low: 434.74, Stream VP: 0.07, V/P Ratio: 0.17 --
+INFO:root:Rolling_v_10 0.134
+INFO:root:Rolling_high_10 435.32201999999995
+INFO:root:Max price: 437.6599  Min price: 434.5
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.22456567096249916
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.673
+INFO:root:Volume Corr: 0.22456567096249916
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 13:01
+INFO:root:-- Time: 2020-11-09, Mon, 13:01, High: 436.19, Low: 435.4, Stream VP: 0.01, V/P Ratio: 0.18 --
+INFO:root:Rolling_v_10 0.13499999999999998
+INFO:root:Rolling_high_10 435.39502999999996
+INFO:root:Max price: 437.6599  Min price: 434.5
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.2623611672232073
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.532
+INFO:root:Volume Corr: 0.2623611672232073
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.549
+INFO:root:Volume Corr: 0.2623611672232073
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 13:02
+INFO:root:-- Time: 2020-11-09, Mon, 13:02, High: 435.9299, Low: 435.55, Stream VP: -0.09, V/P Ratio: 0.09 --
+INFO:root:Rolling_v_10 0.129
+INFO:root:Rolling_high_10 435.4031099999999
+INFO:root:Max price: 437.6599  Min price: 434.5
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.3010694723204941
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 13:03
+INFO:root:-- Time: 2020-11-09, Mon, 13:03, High: 435.97, Low: 435.5401, Stream VP: 0.01, V/P Ratio: 0.1 --
+INFO:root:Rolling_v_10 0.12200000000000003
+INFO:root:Rolling_high_10 435.44470999999993
+INFO:root:Max price: 437.6599  Min price: 434.5
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.3186804985633087
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.582
+INFO:root:Volume Corr: 0.3186804985633087
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 13:04
+INFO:root:-- Time: 2020-11-09, Mon, 13:04, High: 435.87, Low: 432.87, Stream VP: 0.59, V/P Ratio: 0.69 --
+INFO:root:Rolling_v_10 0.181
+INFO:root:Rolling_high_10 435.4857099999999
+INFO:root:Max price: 437.6599  Min price: 432.87
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.011881400429807993
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.596
+INFO:root:Volume Corr: 0.011881400429807993
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.635
+INFO:root:Volume Corr: 0.011881400429807993
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 13:05
+INFO:root:-- Time: 2020-11-09, Mon, 13:05, High: 435.27, Low: 434.65, Stream VP: -0.55, V/P Ratio: 0.14 --
+INFO:root:Rolling_v_10 0.186
+INFO:root:Rolling_high_10 435.49971000000005
+INFO:root:Max price: 437.6599  Min price: 432.87
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.007942377461180419
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.613
+INFO:root:Volume Corr: 0.007942377461180419
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 13:06
+INFO:root:-- Time: 2020-11-09, Mon, 13:06, High: 434.9214, Low: 433.82, Stream VP: 0.11, V/P Ratio: 0.25 --
+INFO:root:Rolling_v_10 0.19499999999999998
+INFO:root:Rolling_high_10 435.47085
+INFO:root:Max price: 437.6599  Min price: 432.87
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.11194114602423848
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 13:07
+INFO:root:-- Time: 2020-11-09, Mon, 13:07, High: 434.064, Low: 433.4301, Stream VP: -0.1, V/P Ratio: 0.15 --
+INFO:root:Rolling_v_10 0.198
+INFO:root:Rolling_high_10 435.3754
+INFO:root:Max price: 437.6599  Min price: 432.87
+INFO:root:-- The market is Bear --
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.10246517329544352
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.592
+INFO:root:Volume Corr: 0.10246517329544352
+INFO:root:--------------------------------------
+INFO:root:Time: 2020-11-09, Mon, 13:08
+INFO:root:-- Time: 2020-11-09, Mon, 13:08, High: 433.77, Low: 433.1504, Stream VP: -0.01, V/P Ratio: 0.14 --
+INFO:root:Rolling_v_10 0.201
+INFO:root:Rolling_high_10 435.25239999999997
+INFO:root:Max price: 437.6599  Min price: 432.87
+INFO:root:-- The market is Bear --
+INFO:root:-- Loading up  Hibernation --
+INFO:root:-- Building Strategy --
+INFO:root:Volume Corr: 0.0919887108738515
+INFO:root:--------------------------------------
+INFO:root:SPY_500: PCT_CHANGE: -0.563
+INFO:root:Volume Corr: 0.0919887108738515

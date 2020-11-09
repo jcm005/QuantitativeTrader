@@ -62,33 +62,36 @@ class Analyzer:
         :param ticker:
         :return:
         """
-       # data = stream.Message(message, ticker)
-        #if data.check_status() != True:
-         #   return False
-        #else:
-         #   if data.check_symbol():
-          #      return True
-           # elif data.spy:
-            #    self.spy_percent_change_history.append(data.spy_500['pct_change'])
-             #   self.metrics()
 
-        self._current_tick = json.loads(message)[0]
-        if self._current_tick['ev'] == 'status':
-            logging.info(self._current_tick)
+        data = stream.Message(message, ticker)
+        self._current_tick = data.message
+        if data.check_status() != True:
             return False
         else:
-            if self._current_tick['sym'] == ticker:
+            if data.check_symbol():
                 return True
-            elif self._current_tick['sym'] == 'SPY':
-                try:
-                    self.spy_500 = spy.Builder(self._current_tick).run()
-                    self.spy_percent_change_history.append(self.spy_500['pct_change'])
-                    self.spy = True
+            else:
+                if data.spy:
+                    self.spy_percent_change_history.append(data.spy_500['pct_change'])
                     self.metrics()
-                except:
-                    logging.warning(self._current_tick)
-                    logging.warning('Spy Builder Failure/Insert Methodology for SPY_500')
-                return False
+
+        #self._current_tick = json.loads(message)[0]
+        #if self._current_tick['ev'] == 'status':
+         #   logging.info(self._current_tick)
+          #  return False
+        #else:
+         #   if self._current_tick['sym'] == ticker:
+          #      return True
+          #  elif self._current_tick['sym'] == 'SPY':
+           #     try:
+            #        self.spy_500 = spy.Builder(self._current_tick).run()
+             #       self.spy_percent_change_history.append(self.spy_500['pct_change'])
+              #      self.spy = True
+               #     self.metrics()
+               # except:
+                #    logging.warning(self._current_tick)
+                 #   logging.warning('Spy Builder Failure/Insert Methodology for SPY_500')
+                #return False
 
     def _candle_builder(self):
 
