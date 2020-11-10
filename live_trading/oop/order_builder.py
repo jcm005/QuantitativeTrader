@@ -111,7 +111,9 @@ class ConcreteBuilder1(Builder):
         else:
             logging.warning('!! Invalid Order Type; Please Enter "market" or "limit" !!')
 
-    def setQty(self, num=1) -> None:
+    def getQty(self, num=1) -> None:
+
+        # getqty here
         self._product.add({'qty': num})
 
     def setTif(self, txt) -> None:

@@ -75,23 +75,6 @@ class Analyzer:
                     self.spy_percent_change_history.append(data.spy_500['pct_change'])
                     self.metrics()
 
-        #self._current_tick = json.loads(message)[0]
-        #if self._current_tick['ev'] == 'status':
-         #   logging.info(self._current_tick)
-          #  return False
-        #else:
-         #   if self._current_tick['sym'] == ticker:
-          #      return True
-          #  elif self._current_tick['sym'] == 'SPY':
-           #     try:
-            #        self.spy_500 = spy.Builder(self._current_tick).run()
-             #       self.spy_percent_change_history.append(self.spy_500['pct_change'])
-              #      self.spy = True
-               #     self.metrics()
-               # except:
-                #    logging.warning(self._current_tick)
-                 #   logging.warning('Spy Builder Failure/Insert Methodology for SPY_500')
-                #return False
 
     def _candle_builder(self):
 
@@ -285,17 +268,5 @@ class Analyzer:
 
 
 if __name__ == '__main__':
-
-
-    # These must be kept clean because this is ran when imported
-   #back_log = bl.BackLog('TSLA')
-   #back_log.main()
-
-    #b = stream_tools.StreamTools.time_converter(1536036818784)
-    #print(b)
-    # message = [{"ev":"AM","sym":"TSLA","v":35177,"av":15407555,"op":446.24,"vw":438.9615,"o":438.72,"c":438.91,"h":439.2199,"l":438.72,"a":441.0544,"z":43,"n":1,"s":1603121220000,"e":1603121280000}]
-   # ticker = 'TSLA'
-   # dp = Analyzer().load()
-
     pass
 

@@ -1,13 +1,14 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
-import access as a
+import access
 from trader import QuantTrader
 from analyzer import Analyzer
 import logging
 import notification_sys
 import order
 import order_builder
+
 
 
 
@@ -73,7 +74,6 @@ class OrderFactory(Creator):
         return order
 
 
-
 class ProfitFactory(Creator):
 
     """ all thought the purpose of a factory is to return objects this just returns a price
@@ -104,6 +104,33 @@ class ProfitFactory(Creator):
 
         profit = self.factory_method()
         return profit
+
+
+class QtyFactory(Creator):
+
+    def __init__(self, current_price):
+        self.price = current_price
+        self.qty = None
+        self.a = access.Account()
+        self.account = self.a.account_info()
+        self.buying_power = self.account['buying_power']
+    def factory_method(self):
+
+        if buying_power < 1:
+            self.qty = 1
+            logging.info('No buying power')
+        else:
+            self.buying_power = int(int(self.buying_power)*(.75))
+
+            pass
+        pass
+
+    def load_qty(self):
+
+        qty = self.factory_method()
+        return qty
+
+
 
 
 class Product(ABC):
@@ -172,6 +199,9 @@ def get_order(parameters):
 def get_profit(price):
     return ProfitFactory(price).load_profit()
 
+def get_qty(price):
+    return QtyFactory(price).load_qty()
+
 if __name__ == '__main__':
 
 # --------------------------------------------------
@@ -179,15 +209,17 @@ if __name__ == '__main__':
     #profit = get_profit(price)
     #print(profit)
 # --------------------------------------------------
-    p = {'symbol':'TSLA',
-         'ref':'sma1',
-         'price':380
-         }
+   # p = {'symbol':'TSLA',
+      #   'ref':'sma1',
+       #  'price':380
+        # }
 
-    order = get_order(p)
-    order.build_order()
-    order.show_order()
-    #order.send_order()
+   # order = get_order(p)
+   # order.build_order()
+   # order.show_order()
+   # #order.send_order()
 
 # --------------------------------------------------
+
+    QtyFactory(420)
     pass

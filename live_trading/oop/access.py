@@ -112,24 +112,17 @@ class Account:
         elif output == 'detailed':
             return raw_order
 
-    def share_info(self, ticker):
+    def account_info(self):
         """
-
-        :param ticker:
-        :return:
         """
-        position = self.get_position_for(ticker)
         account = self.get_account()
-        print(account)
         information = {
             'cash':account['cash'].split('.')[0],
             'portfolio_value': account['portfolio_value'].split('.')[0],
-            'buying power': account['buying_power'].split('.')[0],
-            'qty_pos':  position['qty'],
-            'cost_basis':  position['cost_basis'],
-            'avg_price':  position['avg_entry_price'].split('.')[0],
+            'buying_power': account['buying_power'].split('.')[0],
             }
         return information
+
 
 if __name__ == '__main__':
 
