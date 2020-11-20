@@ -60,7 +60,7 @@ def on_close(ws):
         #notification_sys.create_message('Metrics lost')
 
     if stream_tools.StreamTools.stream_timer() == True:
-        quit()
+        pass
     else:
         web_socket_start()
 
