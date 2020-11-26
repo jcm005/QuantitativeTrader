@@ -75,7 +75,6 @@ class Analyzer:
                     self.spy_percent_change_history.append(data.spy_500['pct_change'])
                     self.metrics()
 
-
     def _candle_builder(self):
 
         self.time = stream_tools.StreamTools.time_converter(self._current_tick['e'])

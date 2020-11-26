@@ -59,10 +59,12 @@ def on_close(ws):
         logging.info('Metrics lost')
         #notification_sys.create_message('Metrics lost')
 
-    if stream_tools.StreamTools.stream_timer() == True:
+    if stream_tools.StreamTools.stream_timer() == False:
+        logging.info('Connection is closed Day has ended')
         pass
     else:
-        web_socket_start()
+        ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
+
 
 def on_error(ws,error):
     pass

@@ -24,8 +24,8 @@ rolling_30 = []
 
 asset = ['TSLA']
 time_interval = 'minute'
-start_date = '2020-08-24'
-time_delt = 7
+start_date = '2020-11-25'
+time_delt = 1
 time_period = 1
 
 

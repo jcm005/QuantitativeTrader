@@ -24,7 +24,6 @@ class Account:
         self.POSITIONS_URL = f'{self.BASE_URL}/v2/positions'
         self.POSITION_FOR_URL = f'{self.BASE_URL}/v2/positions/'
 
-
     def clean_and_load(self,message):
         # DO NOT MODIFY THIS CODE BELOW THIS CLEANS THE INPUT !!!!
         message = message.strip(message[0])
