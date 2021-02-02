@@ -73,9 +73,7 @@ def on_message(ws,message):
 
     logging.info('--------------------------------------')
     print('-------------------')
-
     while dp.load(message, ticker) == True:
-        print(message)
         dp.run()
         strategy = strategy_factory.get_strategy(dp._market_analyzer())
         strategy.run()

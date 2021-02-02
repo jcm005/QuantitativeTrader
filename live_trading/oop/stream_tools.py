@@ -45,7 +45,7 @@ class StreamTools:
         tz = timezone('US/Eastern')
         right_now = pytz.utc.localize(datetime.utcnow()).astimezone(tz)
         right_now = datetime.strftime(right_now, '%H:%M:%S')
-        if int(right_now[0:2]) > 16 or int(right_now[0:2]) <= 7:
+        if int(right_now[0:2]) > 21 or int(right_now[0:2]) <= 7:
             extended_hours = True
         else:
             extended_hours = False

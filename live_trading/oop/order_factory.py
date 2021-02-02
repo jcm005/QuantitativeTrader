@@ -94,7 +94,7 @@ class ProfitFactory(Creator):
         elif 850 >= self.price > 600:
             self.profit = 40
         elif 600 >= self.price > 400:
-            self.profit = 30
+            self.profit = 20
         elif 400 >= self.price:
             self.profit = 20
 
@@ -113,16 +113,21 @@ class QtyFactory(Creator):
         self.qty = None
         self.a = access.Account()
         self.account = self.a.account_info()
-        self.buying_power = self.account['buying_power']
+        self.buying_power = int(self.account['buying_power'])
+
     def factory_method(self):
 
-        if buying_power < 1:
+        if self.buying_power < 1:
             self.qty = 1
             logging.info('No buying power')
+            print('No buying power')
+            return self.qty
         else:
-            self.buying_power = int(int(self.buying_power)*(.75))
 
-            pass
+            #self.buying_power = int(int(self.buying_power)*(.75))
+            self.qty = int(self.buying_power/self.price)
+            return self.qty
+
         pass
 
     def load_qty(self):
@@ -221,5 +226,6 @@ if __name__ == '__main__':
 
 # --------------------------------------------------
 
-    QtyFactory(420)
+    a = QtyFactory(420).load_qty()
+    print(a)
     pass
